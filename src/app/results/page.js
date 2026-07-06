@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Our Work | Case Studies",
+  title: "Results | Case Studies",
   description: "Browse our performance-driven growth cases spanning fine dining restaurants, e-commerce, healthcare diagnostics, commercial finance, and franchise brands."
 };
 
@@ -107,7 +107,7 @@ export default function WorkIndex() {
         <div className="work-hero-overlay"></div>
         <div className="container">
           <div className="work-hero-content text-center">
-            <h1>Our Work</h1>
+            <h1>Results</h1>
             <p>
               Getting started is easy! Simply reach out to us through our contact form or give us a call, and our team will schedule a consultation to discuss your marketing needs and provide you with a tailored solution to propel your business forward.
             </p>
@@ -127,7 +127,7 @@ export default function WorkIndex() {
                     <span className="card-category">{study.category}</span>
                     <h3>{study.title}</h3>
                     <p>{study.excerpt}</p>
-                    <Link href={`/ourwork/${study.slug}`} className="card-btn">
+                    <Link href={`/results/${study.slug}`} className="card-btn">
                       Read Case Study <i className="fa fa-arrow-right" aria-hidden="true"></i>
                     </Link>
                   </div>

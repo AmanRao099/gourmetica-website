@@ -56,7 +56,7 @@ export default function Header() {
               <Link href="/#services" role="menuitem">Services</Link>
             </li>
             <li className="nav-item" role="none">
-              <Link href="/ourwork" role="menuitem">Work</Link>
+              <Link href="/results" role="menuitem">Results</Link>
             </li>
             <li className="nav-item" role="none">
               <Link href="/products" role="menuitem">Products</Link>

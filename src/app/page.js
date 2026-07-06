@@ -15,30 +15,81 @@ export default function Home() {
     }
   };
 
+  const services = [
+    {
+      title: "Strategy",
+      desc: "Every successful business starts with the right strategy. We create tailored growth strategies that align with your goals, identify new opportunities and provide a clear roadmap for sustainable business growth."
+    },
+    {
+      title: "Branding",
+      desc: "Your brand is more than a logo—it's how people recognise, remember and trust your business. We create distinctive brand identities that combine strategy, visual design and messaging to help your business stand out. From logo design and brand positioning to complete visual identity systems, we build brands designed for long-term growth.",
+      subItems: ["Logo Design", "Brand Identity Systems", "Print & Marketing Collateral", "Signage & Interior Concepts"]
+    },
+    {
+      title: "Website Design and Development",
+      desc: "Your website is the first impression of your business—and first impressions matter. We design and develop fast, responsive, and conversion-focused websites that combine exceptional UI/UX with modern design, optimized to increase direct sales.",
+      subItems: ["Custom UI/UX Design", "Mobile Optimization", "Easy Content Management (CMS)", "Technical SEO Setup", "High-performance Load Speeds"]
+    },
+    {
+      title: "Search Engine Optimization (SEO)",
+      desc: "Dominating search engine results is the key to organic visibility. Leveraging our proficiency in local and national SEO, we help businesses rank for searches that matter, converting search intent into direct leads."
+    },
+    {
+      title: "Social Media Management",
+      desc: "Managing and leveraging popular social media platforms (Facebook, Instagram, TikTok) to tell your brand story, engage with your local community, and run campaigns that drive direct customer actions."
+    },
+    {
+      title: "Photography",
+      desc: "Our photography service goes beyond capturing stunning visuals; we expertly craft compelling narratives through our lens. We deliver high-quality, impactful branding imagery designed to elevate your brand presence and engage your target audience."
+    },
+    {
+      title: "Advertising",
+      desc: "From Google Search and Shopping to Meta (Facebook & Instagram) ads and remarketing campaigns, we put your brand in front of high-intent clients at the exact moment they are looking to book or purchase.",
+      subItems: ["PPC Ads & Search Campaigns", "Social Retargeting Ads", "Display & Banner Ad Campaigns", "Conversion Optimization & Analytics"]
+    },
+    {
+      title: "Email Marketing",
+      desc: "Stay connected with the customers who already know your brand. We set up automated email flows, newsletters, and personalized birthday campaigns that cultivate loyalty, repeat visits, and increase sales."
+    },
+    {
+      title: "Reputation Management",
+      desc: "Your online reputation directly impacts your bookings. We help you monitor, manage, and grow your online reviews across major platforms, responding to feedback and implementing automated systems to capture positive client sentiment and drive repeat business.",
+      subItems: ["Google & TripAdvisor Review Generation", "Review Monitoring & Response Systems", "Crisis & Sentiment Management", "Local Citation Audits"]
+    },
+    {
+      title: "Google My Business Optimization",
+      desc: "Being on Google isn't enough—being visible is what matters. We optimize your local profiles and maps listings, improving rankings and review collections to drive organic calls, map actions, and walk-ins."
+    },
+    {
+      title: "Event Marketing",
+      desc: "Planning and promoting seasonal events, limited-time campaigns, and special openings. We design creative promotions that drive instant action and maximize engagement."
+    }
+  ];
+
   const caseStudies = [
     {
       title: "No5 DINING & LOUNGE",
       excerpt: "NO5, a prominent fine dining restaurant in North London, sought to establish a strong brand presence and differentiate themselves in the fine dining sector.",
       image: "/images/results/GBD/_DSF8945 kopya.jpg", // Using a premium food/dining photo from results
-      link: "/ourwork/no5"
+      link: "/results/no5"
     },
     {
       title: "SWISS SCENT",
       excerpt: "Swiss Scent B2B platform needed a scalable digital system capable of managing fragrances, inventory, B2B account orders, and operations.",
       image: "/images/services/ChatGPT Image 4 Tem 2026 16_58_47.png",
-      link: "/ourwork/swiss-scent"
+      link: "/results/swiss-scent"
     },
     {
       title: "LEONIDAS CHOCOLATES",
       excerpt: "A premium Belgian chocolate retailer partnering with Gourmetica to scale e-commerce operations and search advertising campaigns.",
       image: "/images/results/LEONIDAS/kendi-kutunu-olustur-leonidas-cikolata-2.jpg",
-      link: "/ourwork/leonidas"
+      link: "/results/leonidas"
     },
     {
       title: "PHOENIX FINANCE",
       excerpt: "Phoenix Commercial Finance required website redesign and conversion strategy to drive commercial SME finance queries.",
       image: "/images/results/PHOENIX/30 JULY.png",
-      link: "/ourwork/phoenix"
+      link: "/results/phoenix"
     }
   ];
 
@@ -77,7 +128,7 @@ export default function Home() {
               </p>
               <div className="hero-buttons">
                 <Link href="/getintouch" className="btn btn-primary">Book A Call</Link>
-                <Link href="/ourwork" className="btn btn-outline-white" style={{ marginLeft: "15px" }}>Our Work</Link>
+                <Link href="/results" className="btn btn-outline-white" style={{ marginLeft: "15px" }}>Results</Link>
               </div>
               <div className="trusted-by">
                 <i className="fa fa-star" aria-hidden="true" style={{ color: "var(--color-primary)", marginRight: "5px" }}></i>
@@ -152,95 +203,21 @@ export default function Home() {
       {/* 4. Marketing Services Section */}
       <section className="our-expertise section-padding" id="services">
         <div className="container">
-          <div className="section-title-wrapper">
-            <h2 className="section-heading text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" width="31" height="8" fill="none"><path fill="#fff" fill-opacity=".2" d="M30.354 4.354a.5.5 0 0 0 0-.708L27.172.464a.5.5 0 1 0-.707.708L29.293 4l-2.828 2.828a.5.5 0 1 0 .707.708l3.182-3.182ZM0 4.5h30v-1H0v1Z"></path></svg>
-              Growth Marketing Services
-            </h2>
+          <div className="marketing-services-header">
+            <div className="marketing-services-logo">
+              <img src="/images/logo/PNG.4.png" alt="Gourmetica Logo" />
+            </div>
+            <div className="marketing-services-title">
+              <span className="arrow">→</span>
+              <span className="title-text">MARKETING SERVICES</span>
+            </div>
           </div>
 
           <div className="services-grid">
-            {/* Left Column */}
+            {/* Left Column (Items 1-6) */}
             <div className="accordion-wrapper">
-              {[
-                {
-                  title: "Strategy",
-                  desc: "Every successful business starts with the right strategy. We create tailored growth strategies that align with your goals, identify new opportunities and provide a clear roadmap for sustainable business growth."
-                },
-                {
-                  title: "Branding",
-                  desc: "Your brand is more than a logo—it's how people recognise, remember and trust your business. We create distinctive brand identities that combine strategy, visual design and messaging to help your business stand out. From logo design and brand positioning to complete visual identity systems, we build brands designed for long-term growth.",
-                  subItems: ["Logo Design", "Brand Identity Systems", "Print & Marketing Collateral", "Signage & Interior Concepts"]
-                },
-                {
-                  title: "Website Design & Development",
-                  desc: "Your website is the first impression of your business—and first impressions matter. We design and develop fast, responsive, and conversion-focused websites that combine exceptional UI/UX with modern design, optimized to increase direct sales.",
-                  subItems: ["Custom UI/UX Design", "Mobile Optimization", "Easy Content Management (CMS)", "technical SEO setup", "High-performance load speeds"]
-                },
-                {
-                  title: "Search Engine Optimization (SEO)",
-                  desc: "Dominating search engine results is the key to organic visibility. Leveraging our proficiency in local and national SEO, we help businesses rank for searches that matter, converting search intent into direct leads."
-                },
-                {
-                  title: "Social Media Management",
-                  desc: "Managing and leveraging popular social media platforms (Facebook, Instagram, TikTok) to tell your brand story, engage with your local community, and run campaigns that drive direct customer actions."
-                }
-              ].map((service, index) => (
-                <div 
-                  key={index} 
-                  className={`accordion-item ${activeAccordion === index ? "active" : ""}`}
-                >
-                  <div className="panel-heading" onClick={() => toggleAccordion(index)}>
-                    <h4>
-                      <span className="count">{index + 1}</span>
-                      <span>{service.title}</span>
-                    </h4>
-                    <span className="icon-toggle">
-                      <i className="fa fa-plus" aria-hidden="true"></i>
-                    </span>
-                  </div>
-                  <div className="panel-body" style={{ maxHeight: activeAccordion === index ? "500px" : "0" }}>
-                    <div className="panel-body-inner">
-                      <p>{service.desc}</p>
-                      {service.subItems && (
-                        <ul className="accordion-sub-list">
-                          {service.subItems.map((item, itemIdx) => (
-                            <li key={itemIdx}>{item}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Right Column */}
-            <div className="accordion-wrapper">
-              {[
-                {
-                  title: "Photography",
-                  desc: "Our photography service goes beyond capturing stunning visuals; we expertly craft compelling narratives through our lens. We deliver high-quality, impactful branding imagery designed to elevate your brand presence and engage your target audience.",
-                },
-                {
-                  title: "Advertising & Performance Marketing",
-                  desc: "From Google Search and Shopping to Meta (Facebook & Instagram) ads and remarketing campaigns, we put your brand in front of high-intent clients at the exact moment they are looking to book or purchase.",
-                  subItems: ["PPC Ads & Search Campaigns", "Social Retargeting Ads", "Display & Banner Ad campaigns", "Conversion Optimization & Analytics"]
-                },
-                {
-                  title: "Email Marketing & Automation",
-                  desc: "Stay connected with the customers who already know your brand. We set up automated email flows, newsletters, and personalized birthday campaigns that cultivate loyalty, repeat visits, and increase sales."
-                },
-                {
-                  title: "Google Business Profile Optimisation",
-                  desc: "Being on Google isn't enough—being visible is what matters. We optimize your local profiles and maps listings, improving rankings and review collections to drive organic calls, map actions, and walk-ins."
-                },
-                {
-                  title: "Event & Campaign Marketing",
-                  desc: "Planning and promoting seasonal events, limited-time campaigns, and special openings. We design creative promotions that drive instant action and maximize engagement."
-                }
-              ].map((service, index) => {
-                const globalIndex = index + 5;
+              {services.slice(0, 6).map((service, idx) => {
+                const globalIndex = idx;
                 return (
                   <div 
                     key={globalIndex} 
@@ -248,14 +225,13 @@ export default function Home() {
                   >
                     <div className="panel-heading" onClick={() => toggleAccordion(globalIndex)}>
                       <h4>
-                        <span className="count">{globalIndex + 1}</span>
                         <span>{service.title}</span>
                       </h4>
                       <span className="icon-toggle">
                         <i className="fa fa-plus" aria-hidden="true"></i>
                       </span>
                     </div>
-                    <div className="panel-body" style={{ maxHeight: activeAccordion === globalIndex ? "500px" : "0" }}>
+                    <div className="panel-body" style={{ maxHeight: activeAccordion === globalIndex ? "800px" : "0" }}>
                       <div className="panel-body-inner">
                         <p>{service.desc}</p>
                         {service.subItems && (
@@ -266,6 +242,46 @@ export default function Home() {
                           </ul>
                         )}
                       </div>
+                    </div>
+                    <div className="item-number">
+                      {globalIndex + 1}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Right Column (Items 7-11) */}
+            <div className="accordion-wrapper">
+              {services.slice(6, 11).map((service, idx) => {
+                const globalIndex = idx + 6;
+                return (
+                  <div 
+                    key={globalIndex} 
+                    className={`accordion-item ${activeAccordion === globalIndex ? "active" : ""}`}
+                  >
+                    <div className="panel-heading" onClick={() => toggleAccordion(globalIndex)}>
+                      <h4>
+                        <span>{service.title}</span>
+                      </h4>
+                      <span className="icon-toggle">
+                        <i className="fa fa-plus" aria-hidden="true"></i>
+                      </span>
+                    </div>
+                    <div className="panel-body" style={{ maxHeight: activeAccordion === globalIndex ? "800px" : "0" }}>
+                      <div className="panel-body-inner">
+                        <p>{service.desc}</p>
+                        {service.subItems && (
+                          <ul className="accordion-sub-list">
+                            {service.subItems.map((item, itemIdx) => (
+                              <li key={itemIdx}>{item}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+                    <div className="item-number">
+                      {globalIndex + 1}
                     </div>
                   </div>
                 );
@@ -279,8 +295,8 @@ export default function Home() {
       <section className="casestudy-section section-padding">
         <div className="container">
           <div className="section-header-row">
-            <h2>Featured Work</h2>
-            <Link href="/ourwork" className="view-all-link">
+            <h2>Featured Results</h2>
+            <Link href="/results" className="view-all-link">
               View All Client Stories <i className="fa fa-arrow-right" aria-hidden="true"></i>
             </Link>
           </div>
@@ -465,21 +481,11 @@ export default function Home() {
           background-color: var(--color-black);
         }
 
-        .section-title-wrapper {
-          margin-bottom: 60px;
-        }
-
-        .section-heading {
-          font-size: 32px;
-          display: flex;
-          align-items: center;
-          gap: 15px;
-        }
-
         .services-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 30px;
+          column-gap: 80px;
+          row-gap: 30px;
           align-items: start;
         }
 

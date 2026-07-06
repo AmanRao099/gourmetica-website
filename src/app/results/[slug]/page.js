@@ -231,8 +231,8 @@ export default async function WorkDetail({ params }) {
       <section className="work-hero-detail" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.9)), url('${study.banner}')` }}>
         <div className="container">
           <div className="hero-content text-center">
-            <Link href="/ourwork" className="back-link">
-              <i className="fa fa-chevron-left" aria-hidden="true"></i> Back to Work
+            <Link href="/results" className="back-link">
+              <i className="fa fa-chevron-left" aria-hidden="true"></i> Back to Results
             </Link>
             <h1>{study.title}</h1>
           </div>
