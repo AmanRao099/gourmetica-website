@@ -1,8 +1,30 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Script from "next/script";
+import { HeaderBlock, FooterBlock } from "@/blocks";
+
+const montFont = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Eina03-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Eina03-SemiBold.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Eina03-Bold.woff2",
+      weight: "800",
+      style: "normal",
+    }
+  ],
+  variable: "--font-mont",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -40,27 +62,25 @@ export default function RootLayout({ children }: RootLayoutProps) {
           rel="stylesheet" 
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" 
         />
-        
-        {/* Google tag (gtag.js) */}
-        <script 
-          async 
-          src="https://www.googletagmanager.com/gtag/js?id=G-XRCVNK07NE"
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-XRCVNK07NE');
-            `
-          }}
-        />
       </head>
-      <body>
-        <Header />
+      <body className={montFont.className}>
+        {/* Google tag (gtag.js) */}
+        <Script 
+          src="https://www.googletagmanager.com/gtag/js?id=G-XRCVNK07NE"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-XRCVNK07NE');
+          `}
+        </Script>
+        
+        <HeaderBlock />
         {children}
-        <Footer />
+        <FooterBlock />
       </body>
     </html>
   );

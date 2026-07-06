@@ -49,3 +49,5 @@ CLAUDE.md
 
 # Large Media Assets
 /public/videos/*.mp4
+*storybook.log
+storybook-static

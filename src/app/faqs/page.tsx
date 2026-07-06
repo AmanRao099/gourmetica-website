@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Section, Container, Stack, Box } from "@/core/primitives";
+import { Heading, Text } from "@/core/typography";
+import { Button } from "@/core/components";
+import { Reveal, Stagger } from "@/core/motion";
 
 interface FAQItem {
   question: string;
@@ -12,11 +16,7 @@ export default function FAQs() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
-    if (activeIndex === index) {
-      setActiveIndex(null);
-    } else {
-      setActiveIndex(index);
-    }
+    setActiveIndex(activeIndex === index ? null : index);
   };
 
   const faqData: FAQItem[] = [
@@ -43,197 +43,87 @@ export default function FAQs() {
   ];
 
   return (
-    <main className="faq-page">
+    <main className="bg-warm-white min-h-screen">
       {/* Hero Header */}
-      <section className="faq-hero">
-        <div className="faq-hero-overlay"></div>
-        <div className="container">
-          <div className="faq-hero-content text-center">
-            <h1>Frequently Asked Questions</h1>
-            <p>Answers to common questions about onboarding, campaigns, and results.</p>
-          </div>
-        </div>
-      </section>
+      <Section className="bg-neutral-950 dark text-white pt-32 pb-24 border-b border-white/5" spacing="none">
+        <Container size="wide">
+          <Reveal>
+            <Stack gap="md">
+              <Heading level={1} size="display-lg">
+                Frequently Asked Questions
+              </Heading>
+              <Text size="body-lg" className="text-neutral-400 max-w-2xl">
+                Answers to common questions about onboarding, campaigns, and results.
+              </Text>
+            </Stack>
+          </Reveal>
+        </Container>
+      </Section>
 
       {/* Accordions */}
-      <section className="faq-content-section section-padding">
-        <div className="container">
-          <div className="faq-wrapper">
-            {faqData.map((faq, index) => (
-              <div 
-                key={index} 
-                className={`faq-item ${activeIndex === index ? "active" : ""}`}
-              >
-                <button 
-                  className="faq-question-btn" 
-                  onClick={() => toggleFAQ(index)}
-                  aria-expanded={activeIndex === index}
-                >
-                  <span>{faq.question}</span>
-                  <span className="faq-toggle-icon">
-                    <i className={`fa ${activeIndex === index ? "fa-minus" : "fa-plus"}`} aria-hidden="true"></i>
-                  </span>
-                </button>
-                <div 
-                  className="faq-answer-panel"
-                  style={{ maxHeight: activeIndex === index ? "300px" : "0" }}
-                >
-                  <div className="faq-answer-inner">
-                    <p>{faq.answer}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      <Section spacing="lg">
+        <Container size="narrow">
+          <Stagger>
+            <Stack gap="md" className="mb-20">
+              {faqData.map((faq, index) => (
+                <Reveal key={index}>
+                  <Box 
+                    className={`bg-white border rounded-md overflow-hidden shadow-sm transition-all duration-300 ${
+                      activeIndex === index 
+                        ? "border-primary shadow-md" 
+                        : "border-neutral-200/60 hover:border-neutral-300"
+                    }`}
+                  >
+                    <button 
+                      className="w-full flex items-center justify-between text-left px-6 py-5 font-heading font-bold text-neutral-800 hover:text-primary transition-colors focus:outline-none" 
+                      onClick={() => toggleFAQ(index)}
+                      aria-expanded={activeIndex === index}
+                    >
+                      <span className="text-base md:text-lg pr-4">{faq.question}</span>
+                      <Box className={`text-primary transition-transform duration-300 ${activeIndex === index ? "rotate-180" : ""}`}>
+                        <i className={`fa ${activeIndex === index ? "fa-minus" : "fa-plus"}`} aria-hidden="true"></i>
+                      </Box>
+                    </button>
+                    
+                    <Box 
+                      className="transition-all duration-300 ease-in-out overflow-hidden"
+                      style={{ 
+                        maxHeight: activeIndex === index ? "500px" : "0",
+                        opacity: activeIndex === index ? 1 : 0
+                      }}
+                    >
+                      <Box className="px-6 pb-6 pt-2 border-t border-neutral-100/50">
+                        <Text size="body-sm" className="text-neutral-600 leading-relaxed text-justify">
+                          {faq.answer}
+                        </Text>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Reveal>
+              ))}
+            </Stack>
+          </Stagger>
 
-          <div className="faq-more-questions text-center">
-            <h3>Still have questions?</h3>
-            <p>We are here to help. Reach out to our strategy team and get the answers you need.</p>
-            <div style={{ marginTop: "25px" }}>
-              <Link href="/getintouch" className="btn btn-primary">
-                Book A Strategy Call
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <style jsx>{`
-        .faq-page {
-          width: 100%;
-        }
-
-        /* Hero */
-        .faq-hero {
-          height: 45vh;
-          min-height: 350px;
-          background-color: var(--color-black);
-          background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url('/images/banner/ChatGPT Image 4 Tem 2026 16_54_25.png');
-          background-size: cover;
-          background-position: center;
-          position: relative;
-          display: flex;
-          align-items: center;
-          padding-top: var(--header-height);
-        }
-
-        .faq-hero-content h1 {
-          color: white;
-          font-size: 54px;
-          margin-bottom: 15px;
-          text-transform: uppercase;
-        }
-
-        .faq-hero-content p {
-          color: var(--color-text-gray);
-          font-size: 18px;
-          max-width: 600px;
-          margin: 0 auto;
-        }
-
-        /* FAQ Content */
-        .faq-content-section {
-          background-color: var(--color-gray-light);
-        }
-
-        .faq-wrapper {
-          max-width: 800px;
-          margin: 0 auto 80px;
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-
-        .faq-item {
-          background-color: var(--color-white);
-          border: 1px solid rgba(0, 0, 0, 0.05);
-          border-radius: 6px;
-          overflow: hidden;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-          transition: all 0.3s ease;
-        }
-
-        .faq-item.active {
-          border-color: var(--color-primary);
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-        }
-
-        .faq-question-btn {
-          width: 100%;
-          padding: 24px 30px;
-          background: transparent;
-          border: none;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          text-align: left;
-          cursor: pointer;
-          font-family: var(--font-heading);
-          font-size: 17px;
-          font-weight: 800;
-          color: var(--color-black);
-          outline: none;
-        }
-
-        .faq-question-btn span {
-          padding-right: 20px;
-        }
-
-        .faq-toggle-icon {
-          color: var(--color-primary);
-          font-size: 16px;
-          flex-shrink: 0;
-        }
-
-        .faq-answer-panel {
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.35s ease-out;
-        }
-
-        .faq-answer-inner {
-          padding: 0 30px 30px;
-          border-top: 1px solid rgba(0, 0, 0, 0.03);
-        }
-
-        .faq-answer-inner p {
-          color: #555;
-          font-size: 15.5px;
-          line-height: 1.65;
-          text-align: justify;
-        }
-
-        /* More Questions */
-        .faq-more-questions {
-          max-width: 600px;
-          margin: 0 auto;
-        }
-
-        .faq-more-questions h3 {
-          font-size: 28px;
-          margin-bottom: 12px;
-        }
-
-        .faq-more-questions p {
-          color: #666;
-          font-size: 16px;
-        }
-
-        @media (max-width: 767px) {
-          .faq-hero-content h1 {
-            font-size: 34px;
-          }
-          
-          .faq-question-btn {
-            font-size: 15px;
-            padding: 20px;
-          }
-          
-          .faq-answer-inner {
-            padding: 0 20px 20px;
-          }
-        }
-      `}</style>
+          {/* More Questions */}
+          <Reveal>
+            <Stack gap="md" align="center" className="text-center max-w-2xl mx-auto pt-8 border-t border-neutral-200/50">
+              <Heading level={2} size="heading-md">
+                Still have questions?
+              </Heading>
+              <Text size="body-sm" className="text-neutral-500">
+                We are here to help. Reach out to our strategy team and get the answers you need.
+              </Text>
+              <Box className="pt-2">
+                <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto">
+                  <Link href="/getintouch">
+                    Book A Strategy Call
+                  </Link>
+                </Button>
+              </Box>
+            </Stack>
+          </Reveal>
+        </Container>
+      </Section>
     </main>
   );
 }

@@ -1,16 +1,50 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import type { SyntheticEvent } from "react";
+import { useState } from "react";
 import Link from "next/link";
-
 import { SERVICES } from "@/constants/services";
-import { CASE_STUDIES } from "@/constants/results";
+import { 
+  HeroBlock, 
+  LogoCloudBlock 
+} from "@/blocks";
+import { homeContent } from "@/features/home/content/home";
+import { ArrowRight } from 'lucide-react';
+
+const sliderSlides = [
+  {
+    title: "Advertising",
+    tag: "Case Study",
+    excerpt: "Our advertising team welds their Growth Marketing background together with the fresh dynamics of digital technologies. From Google Ads to display ads, we have the answers for every kind of question to advertise your restaurant.",
+    image: "/images/banner/NO5Main-min-min.jpg",
+    link: "/results/no5",
+    partners: [
+      { src: "/HOME PAGE/product/badge-google-partner.png", alt: "Google Partner" },
+      { src: "/HOME PAGE/product/badge-google-hotel-ads.jpg", alt: "Google Hotel Ads" }
+    ]
+  },
+  {
+    title: "Website Design",
+    tag: "Case Study",
+    excerpt: "Neatly designed website architectures, captivating landing pages, chic and simple designs. Our website designs will hand you the keys to ultimate success, higher conversion rates, increased sales, and impressed visitors by applying your marketing strategies into a web design.",
+    image: "/images/banner/OttoKichenMain-min-min.jpg",
+    link: "/results/ottokitchen",
+    partners: [
+      { src: "/HOME PAGE/product/logo-hubspot.png", alt: "Hubspot" },
+      { src: "/HOME PAGE/product/logo-wordpress.png", alt: "WordPress" }
+    ]
+  },
+  {
+    title: "Digital Strategy",
+    tag: "Case Study",
+    excerpt: "Rest assured, your brand's digital success is our top priority. Let our expert team be your guiding light on the journey towards digital excellence. With Gourmetica by your side, you can trust that your digital presence is in the hands of skilled professionals.",
+    image: "/images/banner/PiyazMain-min-min.jpg",
+    link: "/results/payiz",
+    partners: []
+  }
+];
 
 export default function Home() {
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   const toggleAccordion = (index: number) => {
     if (activeAccordion === index) {
@@ -20,123 +54,70 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % CASE_STUDIES.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleVideoLoadedData = (e: SyntheticEvent<HTMLVideoElement, Event>) => {
-    console.log("Hero video loaded data successfully", e.currentTarget.videoWidth);
-  };
-
-  const handleVideoCanPlay = (e: SyntheticEvent<HTMLVideoElement, Event>) => {
-    console.log("Hero video can play", e.currentTarget.readyState);
-  };
-
-  const handleVideoError = (e: SyntheticEvent<HTMLVideoElement, Event>) => {
-    console.warn("Hero video not loaded (this is expected if local video assets are not present in workspace):", e.currentTarget.src);
-  };
-
   return (
     <main className="home-page-wrapper">
-      {/* 1. Hero Section with Video Banner */}
-      <section className="hero-slider-section">
-        <div className="slider-container">
-          <div className="slide-item active">
-            <div className="slide-media-wrapper">
-              <video 
-                ref={videoRef}
-                src="/videos/home-bg.mp4" 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
-                className="slide-video"
-                onLoadedData={handleVideoLoadedData}
-                onCanPlay={handleVideoCanPlay}
-                onError={handleVideoError}
-              />
-            </div>
-            <div className="slide-content-inner">
-              <div className="hero-badge">Growth Marketing Agency</div>
-              <h2>
-                Growth Marketing<br />
-                <span className="font-medium text-red">That Delivers</span><br />
-                <strong>Results.</strong>
-              </h2>
-              <p>
-                Tailor-Made Strategies. Measurable Growth.
-              </p>
-              <div className="hero-buttons">
-                <Link href="/getintouch" className="btn btn-primary">Book A Call</Link>
-                <Link href="/results" className="btn btn-outline-white" style={{ marginLeft: "15px" }}>Results</Link>
-              </div>
-              <div className="trusted-by">
-                <i className="fa fa-star" aria-hidden="true" style={{ color: "var(--color-primary)", marginRight: "5px" }}></i>
-                <span>Trusted by 70+ Businesses across the UK</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 1. Hero Block */}
+      <HeroBlock 
+        title="Growth Marketing That Delivers Results."
+        subtitle="Growth Marketing Agency"
+        description="We help hospitality brands strengthen their digital presence, generate qualified leads, and achieve sustainable growth."
+        variant="video"
+        theme="dark"
+        alignment="left"
+        media={
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="slide-video"
+          >
+            <source src="/HOME PAGE/VIDEO BANNER/0704.mp4" type="video/mp4" />
+          </video>
+        }
+        actions={
+          <Link 
+            href="/getintouch" 
+            className="inline-flex items-center justify-center gap-2 group h-14 px-8 bg-[#e62656] hover:bg-[#bd1a1d] text-white text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:scale-[1.02] hover:shadow-lg focus:outline-none"
+          >
+            <span>Book A Call Now</span>
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+          </Link>
+        }
+      />
 
-      {/* 2. Client Logo Marquee Bar */}
-      <section className="marquee-section">
-        <div className="marquee-container">
-          <div className="marquee-title">Trusted by Leading Brands</div>
-          <div className="marquee-content">
-            <div className="marquee-track">
-              {/* Loop logos twice for continuous scroll */}
-              {[
-                "antepkitchen.co.uk.jpg", "beboz-zebra-printer-logo.png", "carnivoorkitchen.com.png",
-                "gbddoner.com.png", "gustoricco.com.png", "ivytreeessex.co.uk.png",
-                "jennys-brackleyonline.co.uk.png", "leilabrasserie.co.uk.png", "mysarestaurant.co.uk.png",
-                "sofra.co.uk.jpg", "theshiregrill.co.uk.jpg", "thedirectpizzaco.co.uk.jpg"
-              ].map((logo, idx) => (
-                <div key={idx} className="marquee-logo">
-                  <img src={`/images/clients/${logo}`} alt="Client Logo" />
-                </div>
-              ))}
-              {[
-                "antepkitchen.co.uk.jpg", "beboz-zebra-printer-logo.png", "carnivoorkitchen.com.png",
-                "gbddoner.com.png", "gustoricco.com.png", "ivytreeessex.co.uk.png",
-                "jennys-brackleyonline.co.uk.png", "leilabrasserie.co.uk.png", "mysarestaurant.co.uk.png",
-                "sofra.co.uk.jpg", "theshiregrill.co.uk.jpg", "thedirectpizzaco.co.uk.jpg"
-              ].map((logo, idx) => (
-                <div key={`dup-${idx}`} className="marquee-logo">
-                  <img src={`/images/clients/${logo}`} alt="Client Logo Duplicate" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 2. Client Logo Cloud Block */}
+      <LogoCloudBlock 
+        title="Trusted by 70+ Businesses"
+        subtitle="TRUSTED BY LEADING RESTAURANTS ACROSS THE UK"
+        logos={homeContent.logoCloud.logos}
+        variant="marquee"
+      />
 
       {/* 3. Opening Remark Section */}
       <section className="opening-remark-section section-padding">
         <div className="container">
-          <div className="opening-remark-grid">
-            <div className="opening-remark-content">
-              <h2>Tailor-Made Strategies. Measurable Growth.</h2>
-              <p className="lead-text">
-                At Gourmetica, we don&apos;t believe in generic marketing. Every strategy we develop is built around your objectives, your market, and your ambitions.
-              </p>
-              <p>
-                Combining strategy, creativity, and technology, we help brands strengthen their digital presence, generate qualified leads, and achieve sustainable growth. Whether you are an established business or an ambitious brand ready to scale, we become an extension of your team—focused on delivering results that matter.
-              </p>
-              <p>
-                Arrange a call with us and let&apos;s start a digital transformation journey in your business right now. You provide the business goals and statements, and we&apos;ll bring out the branding, business growth and expert level of sales generation for your business instantly.
-              </p>
-              <div style={{ marginTop: "30px" }}>
-                <Link href="/getintouch" className="btn btn-primary">Book A Call</Link>
+          <div className="opening-remark">
+            <div className="opening-remark-txt">
+              <h2 className="opening-remark-txt--heading">
+                Tailor-Made Strategies for Your Business
+              </h2>
+              <div className="opening-remark-txt--richtext">
+                <p>
+                  At Gourmetica, we specialize in providing top-notch marketing solutions tailored specifically for businesses in the hospitality sector. With a deep understanding of the industry and a passion for helping our clients succeed, we are dedicated to driving growth and maximizing your brand&apos;s potential. Trust us to deliver innovative marketing strategies that will elevate your business and leave a lasting impression on your guests
+                </p>
+                <p>
+                  Learn more about our proven process and explore how Gourmetica can help you maximize results by scheduling a short introductory call with us.
+                </p>
               </div>
             </div>
-            <div className="opening-remark-image">
+            <div className="opening-remark-img">
               <img 
-                src="/images/banner/ChatGPT Image 4 Tem 2026 11_15_58.png" 
-                alt="Hospitality Marketing Workspace" 
+                src="/images/banner/sevices2.jpg" 
+                alt="Strategy Banner"
+                loading="lazy" 
+                width={441} 
+                height={565} 
               />
             </div>
           </div>
@@ -244,22 +225,42 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="slider-showcase-container">
-            {CASE_STUDIES.map((study, idx) => (
+          <div className="casestudy-card">
+            {sliderSlides.map((study, idx) => (
               <div 
                 key={idx} 
-                className={`case-showcase-card ${idx === currentSlide ? "active" : ""}`}
+                className="casestudy-card--container"
               >
-                <div className="card-image">
-                  <img src={study.image} alt={study.title} />
+                <div className="casestudy-card--main">
+                  <div className="casestudy-card--main-img">
+                    <img src={study.image} alt={study.title} />
+                  </div>
+                  <div className="casestudy-card--main-text">
+                    <Link className="read-case-study" href={study.link}>
+                      Read Case Study
+                      <div className="arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 11">
+                          <path d="m5.594 4.879-3.886-3.71a.955.955 0 0 0-1.302 0 .855.855 0 0 0-.267.617c0 .23.096.453.267.616L3.65 5.5.406 8.597a.855.855 0 0 0-.267.617c0 .232.096.453.267.617a.953.953 0 0 0 .65.254.953.953 0 0 0 .652-.254l3.886-3.71a.84.84 0 0 0 0-1.243Z"></path>
+                        </svg>
+                      </div>
+                    </Link>
+                  </div>
                 </div>
-                <div className="card-content">
-                  <span className="case-tag">Case Study</span>
-                  <h3>{study.title}</h3>
-                  <p>{study.excerpt}</p>
-                  <Link href={study.link} className="read-case-study-btn">
-                    Read Case Study <i className="fa fa-chevron-right" aria-hidden="true"></i>
-                  </Link>
+                <div className="casestudy-card-secondary">
+                  <div className="casestudy-card-secondary--text">
+                    <h4>{study.title}</h4>
+                    <p>{study.excerpt}</p>
+                  </div>
+                  <div className="casestudy-card-secondary--partners">
+                    {study.partners.map((partner, pIdx) => (
+                      <img 
+                        key={pIdx}
+                        src={partner.src} 
+                        alt={partner.alt} 
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
