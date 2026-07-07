@@ -73,7 +73,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
         }}
         {...props}
       >
-        <div className="w-full mx-auto max-w-[1440px] flex items-center justify-between" style={{ paddingLeft: 80, paddingRight: 80 }}>
+        <div className="w-full mx-auto max-w-[1440px] flex items-center justify-between" style={{ paddingLeft: 120, paddingRight: 120 }}>
           <Link href="/" className="logo-link shrink-0" onClick={() => setIsOpen(false)}>
             {resolvedLogo}
           </Link>
@@ -85,7 +85,8 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                 <li key={item.label} className="nav-item">
                   <Link
                     href={item.href}
-                    className="font-heading font-bold text-sm tracking-wide text-white/90 hover:text-white transition-colors duration-200"
+                    className="font-heading font-semibold tracking-wider text-white/90 hover:text-white transition-colors duration-200"
+                    style={{ fontSize: '15px', letterSpacing: '0.08em' }}
                   >
                     {item.label}
                   </Link>

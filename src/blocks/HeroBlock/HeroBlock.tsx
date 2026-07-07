@@ -16,7 +16,7 @@ import { HeroBlockProps } from './HeroBlock.types';
 const GUTTER = {
   mobile: 40,
   tablet: 64,
-  desktop: 80,
+  desktop: 120,
 };
 
 export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
@@ -179,10 +179,10 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
           style={{ paddingLeft: GUTTER.desktop, paddingRight: GUTTER.desktop }}
         >
           <div className="w-full text-left" style={{ maxWidth: 580 }}>
-            <FadeUp delay={heroMotion.delay.heading1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading1} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 36 }}>
+            <FadeUp delay={heroMotion.delay.heading1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading1} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 34 }}>
               <span style={primaryStyle}>Growth Marketing</span>
             </FadeUp>
-            <FadeUp delay={heroMotion.delay.heading2} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading2} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 36 }}>
+            <FadeUp delay={heroMotion.delay.heading2} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading2} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 30 }}>
               <span style={secondaryStyle}>That Delivers</span>
             </FadeUp>
             <FadeUp delay={heroMotion.delay.heading3} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading3} viewport={{ once: true, margin: "200px" }}>

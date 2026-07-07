@@ -88,7 +88,7 @@
   --radius-pill: 9999px;
 
   /* Animations */
-  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee: marquee 26s linear infinite;
 
   @keyframes marquee {
     from { transform: translateX(0); }

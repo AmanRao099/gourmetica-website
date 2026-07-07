@@ -48,20 +48,20 @@ export const typography = {
   },
   hero: {
     primary: {
-      fontSize: "clamp(3.8rem, 5.5vw, 5.5rem)",
+      fontSize: "clamp(3.2rem, 5vw, 5.25rem)",
       fontWeight: "700",
       lineHeight: "0.9",
       letterSpacing: "-0.03em",
     },
     secondary: {
-      fontSize: "clamp(3.0rem, 4.5vw, 4.4rem)",
+      fontSize: "clamp(2.6rem, 4vw, 4.25rem)",
       fontWeight: "500",
       fontStyle: "italic",
       lineHeight: "0.9",
       letterSpacing: "-0.03em",
     },
     accent: {
-      fontSize: "clamp(4.0rem, 5.8vw, 5.8rem)",
+      fontSize: "clamp(3.5rem, 5.2vw, 5.5rem)",
       fontWeight: "800",
       lineHeight: "0.9",
       letterSpacing: "-0.03em",

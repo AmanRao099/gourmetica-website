@@ -7,4 +7,5 @@ export * from './FadeIn';
 export * from './FadeUp';
 export * from './Parallax';
 export * from './hero';
+export * from './trust';
 

@@ -1,9 +1,8 @@
 "use client";
 
 import * as React from 'react';
-import { PageContainer } from '@/core/primitives';
 import { cn } from '@/core/utils';
-import { motion } from 'framer-motion';
+import { FadeIn, FadeUp, trustMotion } from '@/core/motion';
 import { LogoCloudBlockProps } from './LogoCloudBlock.types';
 
 export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockProps>(
@@ -19,19 +18,30 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
     ref
   ) => {
     const [isPaused, setIsPaused] = React.useState(false);
-    
+
     const renderLogo = (logo: { src: string; alt: string; href?: string }, index: number) => {
       const img = (
-        <div className="flex items-center justify-center shrink-0 h-[80px] w-[160px] p-2 transition-all duration-300">
+        <div className="flex items-center justify-center shrink-0 px-8" style={{ height: 56 }}>
           <img
             src={logo.src}
             alt={logo.alt}
-            className="max-h-10 max-w-full object-contain grayscale opacity-35 hover:opacity-100 hover:scale-105 hover:grayscale-0 transition-all duration-500 ease-out cursor-pointer"
+            className="max-h-10 max-w-full object-contain transition-all duration-300 ease-out cursor-pointer"
+            style={{ opacity: 0.35, filter: 'grayscale(100%)' }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.opacity = '1';
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.filter = 'grayscale(0%)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.opacity = '0.35';
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.filter = 'grayscale(100%)';
+            }}
             loading="lazy"
           />
         </div>
       );
-      
+
       if (logo.href) {
         return (
           <a key={index} href={logo.href} target="_blank" rel="noopener noreferrer" className="block focus-visible:outline-none">
@@ -45,63 +55,111 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
     return (
       <section
         ref={ref}
-        className={cn('w-full bg-[#fcfbf9] overflow-hidden', className)}
-        aria-label="Partner logos carousel"
+        className={cn('w-full overflow-hidden', className)}
+        style={{ backgroundColor: '#FAFAF9' }}
+        aria-label="Trusted partners"
         {...props}
       >
-        {/* Spacing 1: 120px space before Divider */}
-        <div className="h-[120px]" />
+        {/* ── Gradient Transition from Hero ── */}
+        <div
+          style={{
+            height: 96,
+            background: 'linear-gradient(to bottom, rgba(9,9,11,0.12) 0%, rgba(250,250,249,0.45) 30%, rgba(250,250,249,0.80) 65%, #FAFAF9 100%)',
+          }}
+        />
 
-        {/* Tiny Luxury Divider */}
-        <PageContainer size="standard" className="flex justify-center">
-          <div className="w-[40px] h-[1px] bg-neutral-200" />
-        </PageContainer>
+        {/* ── Section Content ── */}
+        <div
+          className="w-full mx-auto"
+          style={{
+            maxWidth: 1320,
+            paddingLeft: 96,
+            paddingRight: 96,
+            paddingTop: 80,
+            paddingBottom: 80,
+          }}
+        >
+          {/* Editorial Divider */}
+          <FadeIn
+            delay={trustMotion.divider.delay}
+            duration={trustMotion.divider.duration}
+            viewport={{ once: true, margin: '-40px' }}
+            className="flex justify-center"
+          >
+            <div
+              style={{
+                width: 72,
+                height: 1,
+                backgroundColor: '#D6D3D1',
+                opacity: 0.6,
+              }}
+            />
+          </FadeIn>
 
-        {/* Spacing 2: 40px space after Divider */}
-        <div className="h-[40px]" />
+          {/* 32px spacing */}
+          <div style={{ height: 32 }} />
 
-        <PageContainer size="standard">
-          {/* Headline (with faded-up scroll animation) */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="text-center"
+          {/* Heading */}
+          <FadeUp
+            delay={trustMotion.heading.delay}
+            duration={trustMotion.heading.duration}
+            yOffset={14}
+            viewport={{ once: true, margin: '-40px' }}
+            className="flex justify-center"
           >
             {subtitle && (
-              <p className="text-[10px] md:text-[11px] font-bold text-neutral-400 tracking-[0.3em] uppercase font-sans">
+              <p
+                className="text-center"
+                style={{
+                  fontFamily: 'var(--font-mont)',
+                  fontSize: 13,
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.22em',
+                  color: '#525252',
+                  maxWidth: 720,
+                }}
+              >
                 {subtitle}
               </p>
             )}
-          </motion.div>
-        </PageContainer>
+          </FadeUp>
 
-        {/* Spacing 3: 40px space after Heading */}
-        <div className="h-[40px]" />
+          {/* 56px spacing */}
+          <div style={{ height: 56 }} />
 
-        {/* Logo Strip (moves entire row slowly, 25s loop, infinite, no pauses) */}
-        <div 
-          className="overflow-hidden py-4 border-t border-b border-neutral-100/50 bg-white"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          <div 
-            className={cn(
-              "flex gap-12 w-max items-center py-1",
-              !isPaused && "animate-marquee"
-            )}
-            style={{
-              animationPlayState: isPaused ? 'paused' : 'running'
-            }}
+          {/* Logo Band */}
+          <FadeIn
+            delay={trustMotion.logos.delay}
+            duration={trustMotion.logos.duration}
+            viewport={{ once: true, margin: '-40px' }}
           >
-            {/* Triple concatenation for completely seamless looping */}
-            {[...logos, ...logos, ...logos].map((logo, index) => renderLogo(logo, index))}
-          </div>
+            <div
+              className="overflow-hidden"
+              style={{
+                borderTop: '1px solid rgba(0,0,0,0.06)',
+                borderBottom: '1px solid rgba(0,0,0,0.06)',
+                paddingTop: 36,
+                paddingBottom: 36,
+              }}
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+            >
+              <div
+                className={cn(
+                  "flex w-max items-center",
+                  !isPaused && "animate-marquee"
+                )}
+                style={{
+                  gap: 24,
+                  animationPlayState: isPaused ? 'paused' : 'running',
+                }}
+              >
+                {[...logos, ...logos, ...logos].map((logo, index) => renderLogo(logo, index))}
+              </div>
+            </div>
+          </FadeIn>
         </div>
-
-        {/* Spacing 4: 120px space after Logo Strip */}
-        <div className="h-[120px]" />
       </section>
     );
   }
