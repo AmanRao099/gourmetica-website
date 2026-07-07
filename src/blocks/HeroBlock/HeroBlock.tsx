@@ -2,12 +2,22 @@
 
 import * as React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { PageContainer } from '@/core/primitives';
 import { cn } from '@/core/utils';
 import { motion } from 'framer-motion';
 import { FadeIn, FadeUp, heroMotion } from '@/core/motion';
 import { typography } from '@/core/tokens/typography';
 import { HeroBlockProps } from './HeroBlock.types';
+
+/**
+ * Shared gutter value used by both Header and Hero.
+ * Mobile: 40px | Tablet: 64px | Desktop: 80px
+ * Applied via inline style to avoid any Tailwind class conflicts.
+ */
+const GUTTER = {
+  mobile: 40,
+  tablet: 64,
+  desktop: 80,
+};
 
 export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
   (
@@ -64,39 +74,39 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
         })
       : null;
 
-    const primaryStyle = {
+    const primaryStyle: React.CSSProperties = {
       fontSize: typography.hero.primary.fontSize,
-      fontWeight: typography.hero.primary.fontWeight,
+      fontWeight: typography.hero.primary.fontWeight as any,
       lineHeight: typography.hero.primary.lineHeight,
       letterSpacing: typography.hero.primary.letterSpacing,
       fontFamily: "var(--font-mont)",
       color: "#ffffff",
       textShadow: "0 2px 18px rgba(0,0,0,.28)",
-      display: "block"
+      display: "block",
     };
 
-    const secondaryStyle = {
+    const secondaryStyle: React.CSSProperties = {
       fontSize: typography.hero.secondary.fontSize,
-      fontWeight: typography.hero.secondary.fontWeight,
-      fontStyle: typography.hero.secondary.fontStyle,
+      fontWeight: typography.hero.secondary.fontWeight as any,
+      fontStyle: typography.hero.secondary.fontStyle as any,
       lineHeight: typography.hero.secondary.lineHeight,
       letterSpacing: typography.hero.secondary.letterSpacing,
       fontFamily: "var(--font-mont)",
       opacity: 0.85,
       color: "#ffffff",
       textShadow: "0 2px 18px rgba(0,0,0,.28)",
-      display: "block"
+      display: "block",
     };
 
-    const accentStyle = {
+    const accentStyle: React.CSSProperties = {
       fontSize: typography.hero.accent.fontSize,
-      fontWeight: typography.hero.accent.fontWeight,
+      fontWeight: typography.hero.accent.fontWeight as any,
       lineHeight: typography.hero.accent.lineHeight,
       letterSpacing: typography.hero.accent.letterSpacing,
       fontFamily: "var(--font-mont)",
       color: "#ffffff",
       textShadow: "0 2px 18px rgba(0,0,0,.28)",
-      display: "block"
+      display: "block",
     };
 
     return (
@@ -108,7 +118,7 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
         )}
         {...props}
       >
-        {/* BackgroundLayer (z-0) — video only, no fallback image */}
+        {/* ── BackgroundLayer ── video only, no fallback image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <motion.div
             className="w-full h-full"
@@ -151,25 +161,35 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
           />
         </div>
 
-        {/* Inset Border Frame — visible luxury framing */}
-        <div className="absolute inset-0 z-40 pointer-events-none p-5 md:p-6">
-          <div className="w-full h-full border border-white/10" />
-        </div>
+        {/* ── Inset Border Frame ── visible luxury border */}
+        <div
+          className="absolute z-40 pointer-events-none"
+          style={{
+            top: GUTTER.mobile / 2,
+            left: GUTTER.mobile / 2,
+            right: GUTTER.mobile / 2,
+            bottom: GUTTER.mobile / 2,
+            border: "1px solid rgba(255,255,255,0.10)",
+          }}
+        />
 
-        {/* ContentLayer (z-30) */}
-        <PageContainer size="hero" className="relative z-30 w-full px-10 md:px-16 lg:px-24 xl:px-28 mx-auto max-w-[1440px]">
-          <div className="w-full text-left" style={{ maxWidth: "580px" }}>
-            <FadeUp delay={heroMotion.delay.heading1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading1} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: "36px" }}>
+        {/* ── ContentLayer ── uses inline paddingLeft to guarantee alignment */}
+        <div
+          className="relative z-30 w-full max-w-[1440px] mx-auto"
+          style={{ paddingLeft: GUTTER.desktop, paddingRight: GUTTER.desktop }}
+        >
+          <div className="w-full text-left" style={{ maxWidth: 580 }}>
+            <FadeUp delay={heroMotion.delay.heading1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading1} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 36 }}>
               <span style={primaryStyle}>Growth Marketing</span>
             </FadeUp>
-            <FadeUp delay={heroMotion.delay.heading2} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading2} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: "36px" }}>
+            <FadeUp delay={heroMotion.delay.heading2} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading2} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 36 }}>
               <span style={secondaryStyle}>That Delivers</span>
             </FadeUp>
             <FadeUp delay={heroMotion.delay.heading3} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading3} viewport={{ once: true, margin: "200px" }}>
               <span style={accentStyle}>Results.</span>
             </FadeUp>
           </div>
-        </PageContainer>
+        </div>
       </section>
     );
   }

@@ -73,7 +73,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
         }}
         {...props}
       >
-        <div className="w-full mx-auto px-8 lg:px-20 max-w-[1440px] flex items-center justify-between">
+        <div className="w-full mx-auto max-w-[1440px] flex items-center justify-between" style={{ paddingLeft: 80, paddingRight: 80 }}>
           <Link href="/" className="logo-link shrink-0" onClick={() => setIsOpen(false)}>
             {resolvedLogo}
           </Link>
