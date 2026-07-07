@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { SERVICES } from "@/constants/services";
 import {
   HeroBlock,
   LogoCloudBlock
 } from "@/blocks";
 import { homeContent } from "@/features/home/content/home";
+import { HomeServicesSection } from "@/features/services/components/HomeServicesSection";
 
 const sliderSlides = [
   {
@@ -43,16 +42,6 @@ const sliderSlides = [
 ];
 
 export default function Home() {
-  const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
-
-  const toggleAccordion = (index: number) => {
-    if (activeAccordion === index) {
-      setActiveAccordion(null);
-    } else {
-      setActiveAccordion(index);
-    }
-  };
-
   return (
     <main className="home-page-wrapper">
       {/* 1. Hero Block */}
@@ -104,95 +93,7 @@ export default function Home() {
       </section>
 
       {/* 4. Marketing Services Section */}
-      <section className="our-expertise section-padding" id="services">
-        <div className="container">
-          <div className="marketing-services-header">
-            <div className="marketing-services-logo">
-              <img src="/images/logo/PNG.4.png" alt="Gourmetica Logo" />
-            </div>
-            <div className="marketing-services-title">
-              <span className="arrow">→</span>
-              <span className="title-text">MARKETING SERVICES</span>
-            </div>
-          </div>
-
-          <div className="services-grid">
-            {/* Left Column (Items 1-6) */}
-            <div className="accordion-wrapper">
-              {SERVICES.slice(0, 6).map((service, idx) => {
-                const globalIndex = idx;
-                return (
-                  <div
-                    key={globalIndex}
-                    className={`accordion-item ${activeAccordion === globalIndex ? "active" : ""}`}
-                  >
-                    <div className="panel-heading" onClick={() => toggleAccordion(globalIndex)}>
-                      <h4>
-                        <span>{service.title}</span>
-                      </h4>
-                      <span className="icon-toggle">
-                        <i className="fa fa-plus" aria-hidden="true"></i>
-                      </span>
-                    </div>
-                    <div className="panel-body" style={{ maxHeight: activeAccordion === globalIndex ? "800px" : "0" }}>
-                      <div className="panel-body-inner">
-                        <p>{service.desc}</p>
-                        {service.subItems && (
-                          <ul className="accordion-sub-list">
-                            {service.subItems.map((item, itemIdx) => (
-                              <li key={itemIdx}>{item}</li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    </div>
-                    <div className="item-number">
-                      {globalIndex + 1}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Right Column (Items 7-11) */}
-            <div className="accordion-wrapper">
-              {SERVICES.slice(6, 11).map((service, idx) => {
-                const globalIndex = idx + 6;
-                return (
-                  <div
-                    key={globalIndex}
-                    className={`accordion-item ${activeAccordion === globalIndex ? "active" : ""}`}
-                  >
-                    <div className="panel-heading" onClick={() => toggleAccordion(globalIndex)}>
-                      <h4>
-                        <span>{service.title}</span>
-                      </h4>
-                      <span className="icon-toggle">
-                        <i className="fa fa-plus" aria-hidden="true"></i>
-                      </span>
-                    </div>
-                    <div className="panel-body" style={{ maxHeight: activeAccordion === globalIndex ? "800px" : "0" }}>
-                      <div className="panel-body-inner">
-                        <p>{service.desc}</p>
-                        {service.subItems && (
-                          <ul className="accordion-sub-list">
-                            {service.subItems.map((item, itemIdx) => (
-                              <li key={itemIdx}>{item}</li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    </div>
-                    <div className="item-number">
-                      {globalIndex + 1}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeServicesSection />
 
       {/* 5. Interactive Case Study slider section */}
       <section className="casestudy-section section-padding">

@@ -26,7 +26,7 @@ export const FooterBlock = React.forwardRef<HTMLDivElement, FooterBlockProps>(
             <ul role="menu">
               {/* Contact Column */}
               <li role="none">
-                <a href="javascript:;" role="menuitem">Contact</a>
+                <span role="heading" aria-level={4}>Contact</span>
                 <ul role="menu">
                   <li className="flex items-center gap-3">
                     <svg className="w-[14px] h-[14px] text-white flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@ export const FooterBlock = React.forwardRef<HTMLDivElement, FooterBlockProps>(
 
               {/* Navigation Column */}
               <li role="none">
-                <a href="javascript:;" role="menuitem">Navigation</a>
+                <span role="heading" aria-level={4}>Navigation</span>
                 <ul role="menu">
                   <li><Link href="/#services">Services</Link></li>
                   <li><Link href="/results">Work</Link></li>
@@ -56,7 +56,7 @@ export const FooterBlock = React.forwardRef<HTMLDivElement, FooterBlockProps>(
 
               {/* Marketing Services Column */}
               <li role="none">
-                <a href="javascript:;" role="menuitem">Marketing Services</a>
+                <span role="heading" aria-level={4}>Marketing Services</span>
                 <ul role="menu">
                   <li><Link href="/#services">Branding</Link></li>
                   <li><Link href="/#services">Advertising</Link></li>

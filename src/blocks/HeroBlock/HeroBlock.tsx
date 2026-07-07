@@ -41,7 +41,7 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
     useEffect(() => {
       // Force play on mount for browsers that block autoplay
       if (videoRef.current) {
-        videoRef.current.play().catch(() => {});
+        videoRef.current.play().catch(() => { });
       }
 
       const zoomTimer = setTimeout(() => {
@@ -56,22 +56,22 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
     // Clone the video element with proper attributes
     const renderedVideo = React.isValidElement(media)
       ? React.cloneElement(media as React.ReactElement<any>, {
-          ref: videoRef,
-          preload: "auto",
-          autoPlay: true,
-          loop: true,
-          muted: true,
-          playsInline: true,
-          style: {
-            objectPosition: "65% center",
-            filter: "brightness(0.68) contrast(0.95) saturate(0.82) grayscale(0.05)",
-            ...((media.props as any).style || {})
-          },
-          className: cn(
-            "w-full h-full object-cover",
-            (media.props as any).className
-          )
-        })
+        ref: videoRef,
+        preload: "auto",
+        autoPlay: true,
+        loop: true,
+        muted: true,
+        playsInline: true,
+        style: {
+          objectPosition: "65% center",
+          filter: "brightness(0.68) contrast(0.95) saturate(0.82) grayscale(0.05)",
+          ...((media.props as any).style || {})
+        },
+        className: cn(
+          "w-full h-full object-cover",
+          (media.props as any).className
+        )
+      })
       : null;
 
     const primaryStyle: React.CSSProperties = {

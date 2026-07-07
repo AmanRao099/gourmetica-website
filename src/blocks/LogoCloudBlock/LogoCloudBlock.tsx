@@ -21,12 +21,21 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
 
     const renderLogo = (logo: { src: string; alt: string; href?: string }, index: number) => {
       const img = (
-        <div className="flex items-center justify-center shrink-0 px-8" style={{ height: 56 }}>
+        <div
+          className="flex items-center justify-center shrink-0 px-8"
+          style={{ height: 56 }}
+        >
           <img
             src={logo.src}
             alt={logo.alt}
-            className="max-h-10 max-w-full object-contain transition-all duration-300 ease-out cursor-pointer"
-            style={{ opacity: 0.35, filter: 'grayscale(100%)' }}
+            style={{
+              maxHeight: 32,
+              width: 'auto',
+              opacity: 0.35,
+              filter: 'grayscale(100%)',
+              transition: 'all 300ms ease-out',
+              cursor: 'pointer',
+            }}
             onMouseEnter={(e) => {
               e.currentTarget.style.opacity = '1';
               e.currentTarget.style.transform = 'scale(1.05)';
@@ -63,8 +72,8 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
         {/* ── Gradient Transition from Hero ── */}
         <div
           style={{
-            height: 96,
-            background: 'linear-gradient(to bottom, rgba(9,9,11,0.12) 0%, rgba(250,250,249,0.45) 30%, rgba(250,250,249,0.80) 65%, #FAFAF9 100%)',
+            height: 80,
+            background: 'linear-gradient(to bottom, rgba(9,9,11,0.10) 0%, rgba(250,250,249,0.45) 30%, rgba(250,250,249,0.80) 65%, #FAFAF9 100%)',
           }}
         />
 
@@ -75,8 +84,6 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
             maxWidth: 1320,
             paddingLeft: 96,
             paddingRight: 96,
-            paddingTop: 80,
-            paddingBottom: 80,
           }}
         >
           {/* Editorial Divider */}
@@ -96,8 +103,8 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
             />
           </FadeIn>
 
-          {/* 32px spacing */}
-          <div style={{ height: 32 }} />
+          {/* 28px after divider */}
+          <div style={{ height: 28 }} />
 
           {/* Heading */}
           <FadeUp
@@ -118,6 +125,7 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
                   letterSpacing: '0.22em',
                   color: '#525252',
                   maxWidth: 720,
+                  margin: 0,
                 }}
               >
                 {subtitle}
@@ -125,10 +133,10 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
             )}
           </FadeUp>
 
-          {/* 56px spacing */}
-          <div style={{ height: 56 }} />
+          {/* 48px before logo band */}
+          <div style={{ height: 48 }} />
 
-          {/* Logo Band */}
+          {/* Logo Band with structural borders */}
           <FadeIn
             delay={trustMotion.logos.delay}
             duration={trustMotion.logos.duration}
@@ -137,8 +145,8 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
             <div
               className="overflow-hidden"
               style={{
-                borderTop: '1px solid rgba(0,0,0,0.06)',
-                borderBottom: '1px solid rgba(0,0,0,0.06)',
+                borderTop: '1px solid rgba(0,0,0,0.08)',
+                borderBottom: '1px solid rgba(0,0,0,0.08)',
                 paddingTop: 36,
                 paddingBottom: 36,
               }}
@@ -160,6 +168,9 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
             </div>
           </FadeIn>
         </div>
+
+        {/* 80px bottom spacing before next section */}
+        <div style={{ height: 80 }} />
       </section>
     );
   }

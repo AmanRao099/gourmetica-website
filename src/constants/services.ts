@@ -7,46 +7,34 @@ export const SERVICES: Service[] = [
   },
   {
     title: "Branding",
-    desc: "Your brand is more than a logo—it's how people recognise, remember and trust your business. We create distinctive brand identities that combine strategy, visual design and messaging to help your business stand out. From logo design and brand positioning to complete visual identity systems, we build brands designed for long-term growth.",
-    subItems: ["Logo Design", "Brand Identity Systems", "Print & Marketing Collateral", "Signage & Interior Concepts"]
+    desc: "Your brand is more than a logo\u2014it\u2019s how people recognise, remember and trust your business. We create distinctive brand identities that combine strategy, visual design and messaging to help your business stand out. From logo design and brand positioning to complete visual identity systems, we build brands designed for long-term growth."
   },
   {
-    title: "Website Design and Development",
-    desc: "Your website is the first impression of your business—and first impressions matter. We design and develop fast, responsive, and conversion-focused websites that combine exceptional UI/UX with modern design, optimized to increase direct sales.",
-    subItems: ["Custom UI/UX Design", "Mobile Optimization", "Easy Content Management (CMS)", "Technical SEO Setup", "High-performance Load Speeds"]
+    title: "Website Design & Development",
+    desc: "Your website is often the first impression of your business\u2014and first impressions matter. We design and develop fast, responsive and conversion-focused websites that combine exceptional user experience with modern design. Whether you\u2019re launching a new website or improving an existing one, every solution is built to support your business goals and drive measurable results."
   },
   {
-    title: "Search Engine Optimization (SEO)",
-    desc: "Dominating search engine results is the key to organic visibility. Leveraging our proficiency in local and national SEO, we help businesses rank for searches that matter, converting search intent into direct leads."
+    title: "Search Engine Optimisation (SEO)",
+    desc: "Great businesses deserve to be found. We develop SEO strategies that improve your visibility, increase organic traffic and help your business rank for the searches that matter most. Every strategy is built around sustainable, measurable growth\u2014not short-term wins."
   },
   {
     title: "Social Media Management",
-    desc: "Managing and leveraging popular social media platforms (Facebook, Instagram, TikTok) to tell your brand story, engage with your local community, and run campaigns that drive direct customer actions."
+    desc: "Managing and leveraging popular social media platforms (such as Facebook, Instagram, Twitter) to engage with your audience, promote your brand, and drive customer engagement."
   },
   {
     title: "Photography",
-    desc: "Our photography service goes beyond capturing stunning visuals; we expertly craft compelling narratives through our lens. We deliver high-quality, impactful branding imagery designed to elevate your brand presence and engage your target audience."
+    desc: "Our photography service as a marketing agency goes beyond capturing stunning visuals; we expertly craft compelling narratives through our lens, creating impactful imagery that elevates your brand, engages your audience, and drives meaningful connections that lead to increased brand recognition and business growth."
   },
   {
     title: "Advertising",
-    desc: "From Google Search and Shopping to Meta (Facebook & Instagram) ads and remarketing campaigns, we put your brand in front of high-intent clients at the exact moment they are looking to book or purchase.",
-    subItems: ["PPC Ads & Search Campaigns", "Social Retargeting Ads", "Display & Banner Ad Campaigns", "Conversion Optimization & Analytics"]
+    desc: "Performance-driven advertising that delivers measurable growth. From Google Ads and Meta campaigns to remarketing and conversion optimisation, we help businesses reach the right audience, reduce wasted spend and generate real business results."
   },
   {
     title: "Email Marketing",
-    desc: "Stay connected with the customers who already know your brand. We set up automated email flows, newsletters, and personalized birthday campaigns that cultivate loyalty, repeat visits, and increase sales."
+    desc: "Stay connected with the customers who already know your brand. From automated journeys and newsletters to personalised campaigns, we help businesses increase repeat purchases, improve customer retention and build lasting relationships through data-driven email marketing."
   },
   {
-    title: "Reputation Management",
-    desc: "Your online reputation directly impacts your bookings. We help you monitor, manage, and grow your online reviews across major platforms, responding to feedback and implementing automated systems to capture positive client sentiment and drive repeat business.",
-    subItems: ["Google & TripAdvisor Review Generation", "Review Monitoring & Response Systems", "Crisis & Sentiment Management", "Local Citation Audits"]
-  },
-  {
-    title: "Google My Business Optimization",
-    desc: "Being on Google isn't enough—being visible is what matters. We optimize your local profiles and maps listings, improving rankings and review collections to drive organic calls, map actions, and walk-ins."
-  },
-  {
-    title: "Event Marketing",
-    desc: "Planning and promoting seasonal events, limited-time campaigns, and special openings. We design creative promotions that drive instant action and maximize engagement."
+    title: "Google Business Profile Optimisation",
+    desc: "Being on Google isn\u2019t enough\u2014being visible is what matters. We optimise your Google Business Profile to improve local rankings, increase visibility and attract more enquiries. From profile management and local SEO to reviews and performance optimisation, we help your business stand out where customers are searching."
   }
 ];
