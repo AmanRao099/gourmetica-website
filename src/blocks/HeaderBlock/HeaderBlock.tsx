@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Box, Flex, PageContainer } from '@/core/primitives';
+import { Box, Flex } from '@/core/primitives';
 import { Button } from '@/core/components';
 import { cn } from '@/core/utils';
 import { useScrollHeader } from '@/core/hooks/useScrollHeader';
@@ -30,13 +30,13 @@ const defaultCta: NavItem = { label: 'Get In Touch', href: '/getintouch' };
 
 export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
   (
-    { 
-      logo, 
-      navItems = defaultNavItems, 
-      cta = defaultCta, 
-      className, 
-      ...props 
-    }, 
+    {
+      logo,
+      navItems = defaultNavItems,
+      cta = defaultCta,
+      className,
+      ...props
+    },
     ref
   ) => {
     const { isScrolled } = useScrollHeader(20);
@@ -44,12 +44,12 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
 
     const logoSrc = isScrolled ? "/images/logo/logoscroll.png" : "/images/logo/logo.png";
     const resolvedLogo = logo || (
-      <img 
-        src={logoSrc} 
-        alt="Gourmetica Logo" 
+      <img
+        src={logoSrc}
+        alt="Gourmetica Logo"
         style={{
-          width: isScrolled ? "46px" : "290px", // Increased by 20%
-          height: "auto",
+          height: isScrolled ? "60px" : "68px",
+          width: "auto",
           display: "block"
         }}
         className="transition-all duration-300"
@@ -60,15 +60,20 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
       <header
         ref={ref}
         className={cn(
-          'fixed top-0 left-0 w-full z-[1000] flex items-center transition-all duration-300',
-          isScrolled 
-            ? 'h-[88px] bg-black/95 backdrop-blur-[24px] border-b border-white/5 shadow-sm shadow-black/10' 
-            : 'h-[104px] bg-transparent border-b border-white/10',
+          'fixed top-0 left-0 w-full z-[1000] flex items-center transition-all duration-300 border-b',
+          isScrolled
+            ? 'h-[88px] border-white/5 shadow-[0_8px_40px_rgba(0,0,0,0.28)]'
+            : 'h-[104px] border-transparent',
           className
         )}
+        style={{
+          backgroundColor: isScrolled ? "rgba(10, 10, 10, 0.72)" : "transparent",
+          backdropFilter: isScrolled ? "blur(18px) saturate(160%)" : "none",
+          WebkitBackdropFilter: isScrolled ? "blur(18px) saturate(160%)" : "none",
+        }}
         {...props}
       >
-        <PageContainer size="hero" className="flex items-center justify-between w-full">
+        <div className="w-full mx-auto px-8 lg:px-20 max-w-[1440px] flex items-center justify-between">
           <Link href="/" className="logo-link shrink-0" onClick={() => setIsOpen(false)}>
             {resolvedLogo}
           </Link>
@@ -78,9 +83,9 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
             <ul className="flex items-center list-none" style={{ gap: '56px' }}>
               {navItems.map((item) => (
                 <li key={item.label} className="nav-item">
-                  <Link 
+                  <Link
                     href={item.href}
-                    className="font-heading font-bold text-sm tracking-wide text-white/80 hover:text-white transition-colors duration-200"
+                    className="font-heading font-bold text-sm tracking-wide text-white/90 hover:text-white transition-colors duration-200"
                   >
                     {item.label}
                   </Link>
@@ -88,7 +93,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
               ))}
               {cta && (
                 <li className="nav-item cta-btn">
-                  <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto">
+                  <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[34px] py-[18px] font-bold uppercase tracking-[0.05em] text-[12px] h-14">
                     <Link href={cta.href}>
                       {cta.label}
                     </Link>
@@ -99,7 +104,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
           </nav>
 
           {/* Mobile Toggle */}
-          <button 
+          <button
             className="lg:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-50"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
@@ -108,15 +113,15 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
             <span className={cn('block w-6 h-0.5 bg-white transition-opacity duration-300', isOpen && 'opacity-0')} />
             <span className={cn('block w-6 h-0.5 bg-white transition-transform duration-300', isOpen && '-rotate-45 -translate-y-2')} />
           </button>
-        </PageContainer>
+        </div>
 
         {/* Mobile Menu Overlay */}
         {isOpen && (
           <Box className="fixed inset-0 bg-neutral-950 z-40 lg:hidden pt-24 px-8 flex flex-col h-screen">
             <Flex direction="col" gap="xl" as="nav">
               {navItems.map((item) => (
-                <Link 
-                  key={item.label} 
+                <Link
+                  key={item.label}
                   href={item.href}
                   className="font-heading font-bold text-2xl uppercase text-white hover:text-brand-500 transition-colors"
                   onClick={() => setIsOpen(false)}

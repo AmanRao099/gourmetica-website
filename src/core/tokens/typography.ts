@@ -45,5 +45,26 @@ export const typography = {
     'body-sm': '0',
     'caption': '0',
     'overline': '0.05em',
+  },
+  hero: {
+    primary: {
+      fontSize: "clamp(3.8rem, 5.5vw, 5.5rem)",
+      fontWeight: "700",
+      lineHeight: "0.9",
+      letterSpacing: "-0.03em",
+    },
+    secondary: {
+      fontSize: "clamp(3.0rem, 4.5vw, 4.4rem)",
+      fontWeight: "500",
+      fontStyle: "italic",
+      lineHeight: "0.9",
+      letterSpacing: "-0.03em",
+    },
+    accent: {
+      fontSize: "clamp(4.0rem, 5.8vw, 5.8rem)",
+      fontWeight: "800",
+      lineHeight: "0.9",
+      letterSpacing: "-0.03em",
+    }
   }
 } as const;

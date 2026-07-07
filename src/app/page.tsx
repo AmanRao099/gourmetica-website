@@ -3,12 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { SERVICES } from "@/constants/services";
-import { 
-  HeroBlock, 
-  LogoCloudBlock 
+import {
+  HeroBlock,
+  LogoCloudBlock
 } from "@/blocks";
 import { homeContent } from "@/features/home/content/home";
-import { ArrowRight } from 'lucide-react';
 
 const sliderSlides = [
   {
@@ -57,37 +56,17 @@ export default function Home() {
   return (
     <main className="home-page-wrapper">
       {/* 1. Hero Block */}
-      <HeroBlock 
+      <HeroBlock
         title="Growth Marketing That Delivers Results."
-        subtitle="Growth Marketing Agency"
-        description="We help hospitality brands strengthen their digital presence, generate qualified leads, and achieve sustainable growth."
-        variant="video"
-        theme="dark"
-        alignment="left"
         media={
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            className="slide-video"
-          >
+          <video>
             <source src="/HOME PAGE/VIDEO BANNER/0704.mp4" type="video/mp4" />
           </video>
-        }
-        actions={
-          <Link 
-            href="/getintouch" 
-            className="inline-flex items-center justify-center gap-2 group h-14 px-8 bg-[#e62656] hover:bg-[#bd1a1d] text-white text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:scale-[1.02] hover:shadow-lg focus:outline-none"
-          >
-            <span>Book A Call Now</span>
-            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-          </Link>
         }
       />
 
       {/* 2. Client Logo Cloud Block */}
-      <LogoCloudBlock 
+      <LogoCloudBlock
         title="Trusted by 70+ Businesses"
         subtitle="TRUSTED BY LEADING RESTAURANTS ACROSS THE UK"
         logos={homeContent.logoCloud.logos}
@@ -112,12 +91,12 @@ export default function Home() {
               </div>
             </div>
             <div className="opening-remark-img">
-              <img 
-                src="/images/banner/sevices2.jpg" 
+              <img
+                src="/images/banner/sevices2.jpg"
                 alt="Strategy Banner"
-                loading="lazy" 
-                width={441} 
-                height={565} 
+                loading="lazy"
+                width={441}
+                height={565}
               />
             </div>
           </div>
@@ -143,8 +122,8 @@ export default function Home() {
               {SERVICES.slice(0, 6).map((service, idx) => {
                 const globalIndex = idx;
                 return (
-                  <div 
-                    key={globalIndex} 
+                  <div
+                    key={globalIndex}
                     className={`accordion-item ${activeAccordion === globalIndex ? "active" : ""}`}
                   >
                     <div className="panel-heading" onClick={() => toggleAccordion(globalIndex)}>
@@ -180,8 +159,8 @@ export default function Home() {
               {SERVICES.slice(6, 11).map((service, idx) => {
                 const globalIndex = idx + 6;
                 return (
-                  <div 
-                    key={globalIndex} 
+                  <div
+                    key={globalIndex}
                     className={`accordion-item ${activeAccordion === globalIndex ? "active" : ""}`}
                   >
                     <div className="panel-heading" onClick={() => toggleAccordion(globalIndex)}>
@@ -227,8 +206,8 @@ export default function Home() {
 
           <div className="casestudy-card">
             {sliderSlides.map((study, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="casestudy-card--container"
               >
                 <div className="casestudy-card--main">
@@ -253,10 +232,10 @@ export default function Home() {
                   </div>
                   <div className="casestudy-card-secondary--partners">
                     {study.partners.map((partner, pIdx) => (
-                      <img 
+                      <img
                         key={pIdx}
-                        src={partner.src} 
-                        alt={partner.alt} 
+                        src={partner.src}
+                        alt={partner.alt}
                         loading="lazy"
                       />
                     ))}
@@ -268,20 +247,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. Lead Generation CTA Section */}
-      <section className="ebook-cta-section section-padding">
-        <div className="container text-center">
-          <h2>Ready to grow your business?</h2>
-          <p>
-            Let&apos;s discuss your goals and build a marketing strategy that delivers measurable results.
-          </p>
-          <div style={{ marginTop: "40px" }}>
-            <Link href="/getintouch" className="btn btn-primary" style={{ padding: "20px 50px", fontSize: "15px" }}>
-              Book A Call Now
-            </Link>
-          </div>
-        </div>
-      </section>
 
       <style jsx>{`
         /* Local Scoped Component Styles */

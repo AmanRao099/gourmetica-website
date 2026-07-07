@@ -6,4 +6,5 @@ export * from './HoverScale';
 export * from './FadeIn';
 export * from './FadeUp';
 export * from './Parallax';
+export * from './hero';
 
