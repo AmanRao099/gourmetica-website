@@ -70,6 +70,20 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
       closeTimer.current = setTimeout(() => setDropdownOpen(false), 220);
     }, []);
 
+    const handleLinkClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      if (href.includes('#')) {
+        const parts = href.split('#');
+        const hash = parts[parts.length - 1];
+        if (hash) {
+          const element = document.getElementById(hash);
+          if (element) {
+            e.preventDefault();
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
+    }, []);
+
     const logoSrc = isScrolled ? "/images/logo/logoscroll.png" : "/images/logo/logo.png";
     const resolvedLogo = logo || (
       <img
@@ -110,7 +124,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
 
           {/* ── Desktop Nav ── */}
           <nav className="hidden lg:flex items-center">
-            <ul className="flex items-center list-none" style={{ gap: 40 }}>
+            <ul className="flex items-center list-none" style={{ gap: 18 }}>
               {navItems.map((item) => {
                 if (item.label === 'Services') {
                   return (
@@ -121,21 +135,28 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                       onMouseEnter={enter}
                       onMouseLeave={leave}
                     >
-                      <button
+                      <Link
+                        href={item.href}
                         className={cn(navLinkClass, "flex items-center gap-1.5 bg-transparent border-none cursor-pointer")}
                         style={navLinkStyle}
-                        onClick={() => setDropdownOpen(!dropdownOpen)}
-                        aria-expanded={dropdownOpen}
-                        aria-haspopup="true"
+                        onClick={(e) => {
+                          setDropdownOpen(false);
+                          handleLinkClick(e, item.href);
+                        }}
                       >
                         {item.label}
                         <svg
                           className={cn("w-2.5 h-2.5 transition-transform duration-200 ml-0.5", dropdownOpen && "rotate-180")}
                           fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setDropdownOpen(!dropdownOpen);
+                          }}
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                         </svg>
-                      </button>
+                      </Link>
 
                       {/* ── Clean White Dropdown ── */}
                       <div
@@ -173,7 +194,10 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                                     backgroundColor: 'transparent',
                                     borderLeft: '2px solid transparent',
                                   }}
-                                  onClick={() => setDropdownOpen(false)}
+                                  onClick={(e) => {
+                                    setDropdownOpen(false);
+                                    handleLinkClick(e, service.href);
+                                  }}
                                   onMouseEnter={(e) => {
                                     const el = e.currentTarget as HTMLElement;
                                     el.style.backgroundColor = 'rgba(255,255,255,0.03)';
@@ -211,7 +235,12 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
 
                 return (
                   <li key={item.label} className="nav-item">
-                    <Link href={item.href} className={navLinkClass} style={navLinkStyle}>
+                    <Link
+                      href={item.href}
+                      className={navLinkClass}
+                      style={navLinkStyle}
+                      onClick={(e) => handleLinkClick(e, item.href)}
+                    >
                       {item.label}
                     </Link>
                   </li>
@@ -250,18 +279,31 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                 if (item.label === 'Services') {
                   return (
                     <div key="services-mobile">
-                      <button
-                        className="font-heading font-bold text-2xl uppercase text-white hover:text-brand-500 transition-colors flex items-center gap-2 bg-transparent border-none cursor-pointer w-full text-left"
-                        onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                      >
-                        {item.label}
-                        <svg
-                          className={cn("w-4 h-4 transition-transform duration-200", mobileServicesOpen && "rotate-180")}
-                          fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
+                      <div className="flex items-center justify-between w-full">
+                        <Link
+                          href={item.href}
+                          className="font-heading font-bold text-2xl uppercase text-white hover:text-brand-500 transition-colors"
+                          onClick={(e) => {
+                            setIsOpen(false);
+                            setMobileServicesOpen(false);
+                            handleLinkClick(e, item.href);
+                          }}
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </button>
+                          {item.label}
+                        </Link>
+                        <button
+                          className="p-2 text-white hover:text-brand-500 bg-transparent border-none cursor-pointer"
+                          onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                          aria-label="Toggle services menu"
+                        >
+                          <svg
+                            className={cn("w-6 h-6 transition-transform duration-200", mobileServicesOpen && "rotate-180")}
+                            fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                      </div>
                       {mobileServicesOpen && (
                         <div className="mt-3 ml-1 flex flex-col border-l border-white/10 pl-4">
                           {SERVICES.map((service, idx) => (
@@ -270,7 +312,11 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                               href={service.href}
                               className="font-heading font-medium text-white/70 hover:text-white py-2.5 transition-colors"
                               style={{ fontSize: 15 }}
-                              onClick={() => { setIsOpen(false); setMobileServicesOpen(false); }}
+                              onClick={(e) => {
+                                setIsOpen(false);
+                                setMobileServicesOpen(false);
+                                handleLinkClick(e, service.href);
+                              }}
                             >
                               {service.title}
                             </Link>
@@ -285,7 +331,10 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                     key={item.label}
                     href={item.href}
                     className="font-heading font-bold text-2xl uppercase text-white hover:text-brand-500 transition-colors"
-                    onClick={() => setIsOpen(false)}
+                    onClick={(e) => {
+                      setIsOpen(false);
+                      handleLinkClick(e, item.href);
+                    }}
                   >
                     {item.label}
                   </Link>

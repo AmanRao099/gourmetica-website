@@ -2,13 +2,13 @@ import Link from 'next/link';
 import { PageContainer } from '@/core/primitives';
 import { ServiceLayout } from '../layouts/ServiceLayout';
 import { ServiceTextHero } from '../components/ServiceTextHero';
-import { ServiceSplitBackground } from '../components/ServiceSplitBackground';
+import { SplitBackgroundBlock } from '@/blocks';
 import { ServiceBodyText } from '../components/ServiceBodyText';
 import { ServiceBodyImage } from '../components/ServiceBodyImage';
 import { ServiceFeatureListGrid } from '../components/ServiceFeatureListGrid';
 
 const PARAGRAPHS = [
-  "Our marketing wizards have honed the skill of irresistible allure through our advertising prowess. Allow us to assist you in pinpointing your ideal audience precisely when they are primed to be captivated, igniting a love affair from the very first glimpse. Whether it's retargeting, display ads, influencer marketing, PPC ads, or an array of other dynamic techniques, we possess the perfect arsenal of tools to entice new customers and propel your business to unprecedented heights.",
+  'From Google Ads and Meta campaigns to remarketing and conversion optimisation, we help businesses reach the right audience, reduce wasted spend and generate real business results.',
 ];
 
 const FEATURES = [
@@ -37,8 +37,12 @@ const FEATURES = [
 export function AdvertisingPage() {
   return (
     <ServiceLayout>
-      <ServiceTextHero title="Advertising" size="xl" />
-      <ServiceSplitBackground>
+      <ServiceTextHero
+        title="Advertising"
+        subtitle="Performance-driven advertising that delivers measurable growth."
+        size="xl"
+      />
+      <SplitBackgroundBlock>
         <PageContainer size="standard" className="pb-[50px] md:pb-[60px]">
           <ServiceBodyText paragraphs={PARAGRAPHS} />
         </PageContainer>
@@ -61,7 +65,7 @@ export function AdvertisingPage() {
             services.
           </p>
         </PageContainer>
-      </ServiceSplitBackground>
+      </SplitBackgroundBlock>
     </ServiceLayout>
   );
 }

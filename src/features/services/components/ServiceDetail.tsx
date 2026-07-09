@@ -6,6 +6,8 @@ import { SeoPage } from '../pages/SeoPage';
 import { SocialMediaPage } from '../pages/SocialMediaPage';
 import { PhotographyPage } from '../pages/PhotographyPage';
 import { AdvertisingPage } from '../pages/AdvertisingPage';
+import { EmailMarketingPage } from '../pages/EmailMarketingPage';
+import { GoogleBusinessProfilePage } from '../pages/GoogleBusinessProfilePage';
 
 const SERVICE_PAGES: Record<string, ComponentType> = {
   branding: BrandingPage,
@@ -14,6 +16,8 @@ const SERVICE_PAGES: Record<string, ComponentType> = {
   'social-media-management': SocialMediaPage,
   photography: PhotographyPage,
   advertising: AdvertisingPage,
+  'email-marketing': EmailMarketingPage,
+  'google-business-profile-optimisation': GoogleBusinessProfilePage,
 };
 
 interface ServiceDetailProps {

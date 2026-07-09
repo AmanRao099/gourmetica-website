@@ -9,3 +9,4 @@ export * from './StatsBlock';
 export * from './TestimonialsBlock';
 export * from './HeaderBlock';
 export * from './FooterBlock';
+export * from './SplitBackgroundBlock';

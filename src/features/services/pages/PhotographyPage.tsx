@@ -1,7 +1,7 @@
 import { PageContainer } from '@/core/primitives';
 import { ServiceLayout } from '../layouts/ServiceLayout';
 import { ServiceImageHero } from '../components/ServiceImageHero';
-import { ServiceSplitBackground } from '../components/ServiceSplitBackground';
+import { SplitBackgroundBlock } from '@/blocks';
 import { ServiceSectionHeading } from '../components/ServiceSectionHeading';
 import { ServiceFeatureListGrid } from '../components/ServiceFeatureListGrid';
 
@@ -38,15 +38,15 @@ export function PhotographyPage() {
         title="Photography"
         align="center"
       />
-      <ServiceSplitBackground>
+      <SplitBackgroundBlock>
         <PageContainer size="standard" className="py-[70px] md:py-[110px] flex flex-col gap-10">
           <ServiceSectionHeading
-            heading="Food Photography"
+            heading="Photography"
             subtext="It's all about presentation. Create images of your cuisine to entice customers"
           />
           <ServiceFeatureListGrid features={FEATURES} />
         </PageContainer>
-      </ServiceSplitBackground>
+      </SplitBackgroundBlock>
     </ServiceLayout>
   );
 }

@@ -1,0 +1,1 @@
+export { SplitBackgroundBlock } from './SplitBackgroundBlock';

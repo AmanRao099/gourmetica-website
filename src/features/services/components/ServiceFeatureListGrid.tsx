@@ -1,5 +1,7 @@
+import type { ReactNode } from 'react';
+
 interface ServiceFeatureItem {
-  icon: string;
+  icon: string | ReactNode;
   title: string;
   description: string;
 }
@@ -21,12 +23,18 @@ export function ServiceFeatureListGrid({ features }: ServiceFeatureListGridProps
               {feature.description}
             </p>
           </div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={feature.icon}
-            alt=""
-            className="w-[42px] h-[42px] md:w-[50px] md:h-[50px] object-contain flex-shrink-0"
-          />
+          {typeof feature.icon === 'string' ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={feature.icon}
+              alt=""
+              className="w-[42px] h-[42px] md:w-[50px] md:h-[50px] object-contain flex-shrink-0"
+            />
+          ) : (
+            <div className="w-[42px] h-[42px] md:w-[50px] md:h-[50px] flex items-center justify-center flex-shrink-0 text-neutral-800">
+              {feature.icon}
+            </div>
+          )}
         </div>
       ))}
     </div>

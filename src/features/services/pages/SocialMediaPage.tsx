@@ -1,7 +1,7 @@
 import { PageContainer } from '@/core/primitives';
 import { ServiceLayout } from '../layouts/ServiceLayout';
 import { ServiceImageHero } from '../components/ServiceImageHero';
-import { ServiceSplitBackground } from '../components/ServiceSplitBackground';
+import { SplitBackgroundBlock } from '@/blocks';
 import { ServiceSectionHeading } from '../components/ServiceSectionHeading';
 import { ServiceBodyText } from '../components/ServiceBodyText';
 import { ServiceFeatureListGrid } from '../components/ServiceFeatureListGrid';
@@ -48,7 +48,7 @@ export function SocialMediaPage() {
         title="Social Media Management (SMM)"
         align="left"
       />
-      <ServiceSplitBackground>
+      <SplitBackgroundBlock>
         <PageContainer size="standard" className="py-[60px] md:py-[80px] flex flex-col gap-6">
           <ServiceSectionHeading heading="Social Media Management (SMM)" />
           <ServiceBodyText paragraphs={INTRO_PARAGRAPHS} />
@@ -60,7 +60,7 @@ export function SocialMediaPage() {
           />
           <ServiceFeatureListGrid features={FEATURES} />
         </PageContainer>
-      </ServiceSplitBackground>
+      </SplitBackgroundBlock>
     </ServiceLayout>
   );
 }
