@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ALL_CASE_STUDIES } from "@/constants/results";
 import { PageContainer } from "@/core/primitives";
+import { WorkGrid } from "./WorkGrid";
 
 export const metadata: Metadata = {
   title: "Results | Case Studies",
@@ -23,45 +23,7 @@ export default function WorkIndex() {
         </PageContainer>
       </section>
 
-      {/* Desktop / tablet — edge-to-edge photo grid */}
-      <div className="hidden md:grid md:grid-cols-3">
-        {ALL_CASE_STUDIES.map((study) => (
-          <Link
-            key={study.slug}
-            href={`/results/${study.slug}`}
-            className="relative block overflow-hidden group aspect-[4/3]"
-          >
-            <img
-              src={study.image}
-              alt={study.title}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-            <span className="absolute left-6 bottom-6 right-6 font-heading font-bold uppercase text-white text-[20px] lg:text-[22px] leading-tight">
-              {study.title}
-            </span>
-          </Link>
-        ))}
-      </div>
-
-      {/* Mobile — stacked list with excerpt and read more link */}
-      <PageContainer size="standard" className="md:hidden pb-[60px] flex flex-col">
-        {ALL_CASE_STUDIES.map((study) => (
-          <div key={study.slug} className="py-8 border-t border-neutral-200 first:border-t-0 first:pt-0">
-            <div className="relative w-full aspect-[4/3] mb-5 overflow-hidden">
-              <img src={study.image} alt={study.title} className="absolute inset-0 w-full h-full object-cover" />
-            </div>
-            <h2 className="font-heading font-bold uppercase text-black text-[19px] mb-2">{study.title}</h2>
-            <p className="text-[14px] leading-[1.6] text-neutral-600 mb-3 line-clamp-2">{study.excerpt}</p>
-            <Link
-              href={`/results/${study.slug}`}
-              className="inline-flex items-center gap-2 text-primary font-heading font-bold uppercase text-[12px] tracking-widest"
-            >
-              Read More <i className="fa fa-arrow-right" aria-hidden="true" />
-            </Link>
-          </div>
-        ))}
-      </PageContainer>
+      <WorkGrid cases={ALL_CASE_STUDIES} />
     </main>
   );
 }

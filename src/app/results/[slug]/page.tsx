@@ -4,9 +4,9 @@ import { notFound } from "next/navigation";
 import { CASE_STUDY_DETAILS } from "@/constants/results";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export async function generateStaticParams() {
@@ -27,8 +27,8 @@ export async function generateStaticParams() {
   ];
 }
 
-export default function WorkDetail({ params }: PageProps) {
-  const { slug } = params;
+export default async function WorkDetail({ params }: PageProps) {
+  const { slug } = await params;
   const study = CASE_STUDY_DETAILS[slug];
 
   if (!study) {
@@ -45,23 +45,36 @@ export default function WorkDetail({ params }: PageProps) {
               <i className="fa fa-chevron-left" aria-hidden="true"></i> Back to Results
             </Link>
             <h1>{study.title}</h1>
+            {study.websiteUrl && (
+              <a
+                href={study.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="back-link"
+                style={{ display: "inline-block", marginTop: "12px" }}
+              >
+                Visit Website <i className="fa fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            )}
           </div>
         </div>
       </section>
 
       {/* Scope Bar */}
-      <section className="scope-section">
-        <div className="container">
-          <div className="scope-box">
-            <span className="scope-title">Scope:</span>
-            <ul className="scope-list">
-              {study.scope.map((item, idx) => (
-                <li key={idx}>{item}</li>
-              ))}
-            </ul>
+      {study.scope && study.scope.length > 0 && (
+        <section className="scope-section">
+          <div className="container">
+            <div className="scope-box">
+              <span className="scope-title">Scope:</span>
+              <ul className="scope-list">
+                {study.scope.map((item, idx) => (
+                  <li key={idx}>{item}</li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Core Details Grid */}
       <section className="details-section section-padding">
@@ -71,20 +84,30 @@ export default function WorkDetail({ params }: PageProps) {
               <div className="detail-block">
                 <h3>Client Overview</h3>
                 <div className="accent-line"></div>
-                <p>{study.overview}</p>
+                {study.overview.split("\n\n").map((paragraph, idx) => (
+                  <p key={idx} style={{ marginBottom: "16px" }}>{paragraph}</p>
+                ))}
               </div>
 
-              <div className="detail-block">
-                <h3>Challenges</h3>
-                <div className="accent-line"></div>
-                <p>{study.challenge}</p>
-              </div>
+              {study.challenge && (
+                <div className="detail-block">
+                  <h3>Challenges</h3>
+                  <div className="accent-line"></div>
+                  {study.challenge.split("\n\n").map((paragraph, idx) => (
+                    <p key={idx} style={{ marginBottom: "16px" }}>{paragraph}</p>
+                  ))}
+                </div>
+              )}
 
-              <div className="detail-block">
-                <h3>Solution</h3>
-                <div className="accent-line"></div>
-                <p>{study.solution}</p>
-              </div>
+              {study.solution && (
+                <div className="detail-block">
+                  <h3>Solution</h3>
+                  <div className="accent-line"></div>
+                  {study.solution.split("\n\n").map((paragraph, idx) => (
+                    <p key={idx} style={{ marginBottom: "16px" }}>{paragraph}</p>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="details-right">
@@ -116,6 +139,23 @@ export default function WorkDetail({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      {/* Services Delivered */}
+      {study.servicesDelivered && study.servicesDelivered.length > 0 && (
+        <section className="services-delivered-section section-padding">
+          <div className="container">
+            <h2 className="section-title text-center">Services Delivered</h2>
+            <div className="services-delivered-grid">
+              {study.servicesDelivered.map((service, idx) => (
+                <div key={idx} className="service-delivered-card">
+                  <h4>{service.title}</h4>
+                  {service.description && <p>{service.description}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Gallery Section */}
       {study.gallery && study.gallery.length > 0 && (
