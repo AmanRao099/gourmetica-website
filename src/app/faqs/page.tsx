@@ -22,78 +22,72 @@ export default function FAQs() {
   const faqData: FAQItem[] = [
     {
       question: "How can your marketing agency help my business grow?",
-      answer: "Our agency specializes in developing tailored growth strategies that align with your business goals, target the right audience, and enhance your digital brand presence. Through our integrated expertise (branding, web development, SEO, ads, and social), we drive qualified leads, increase direct bookings, and maximize customer lifetime value."
+      answer: "Our agency specializes in developing tailored strategies that align with your business goals, target the right audience, and enhance your brand visibility. Through our expertise and effective implementation, we can drive increased customer engagement, leads, and conversions to help your business thrive."
     },
     {
       question: "How do you measure the success of marketing campaigns?",
-      answer: "We utilize advanced analytics tools and tracking structures to monitor Key Performance Indicators (KPIs) such as website traffic, conversion rates (forms completed, calls placed, table reservations), cost per acquisition (CPA), social engagement, and direct Return on Investment (ROI). This data-driven model allows us to continually test, optimize, and scale campaigns."
+      answer: "We utilize advanced analytics tools to track key performance indicators (KPIs) such as website traffic, conversion rates, engagement metrics, and return on investment (ROI). This data-driven approach enables us to continually optimize and improve our strategies for maximum results."
     },
     {
       question: "Will I have a dedicated account manager throughout the project?",
-      answer: "Yes, we prioritize strong partner communication. You will be assigned a dedicated account manager who acts as your primary point of contact. They coordinate with our branding, SEO, design, and advertising specialists, providing regular reports and scheduling feedback calls to discuss campaign progress."
+      answer: "Yes, we believe in providing personalized attention and excellent customer service. You will be assigned a dedicated account manager who will serve as your main point of contact, ensuring clear communication, addressing your queries, and overseeing the progress of your marketing campaigns."
     },
     {
-      question: "What is the timeline for seeing measurable results?",
-      answer: "The timeline varies based on service scope and goals. Performance marketing (like Google Ads and Meta campaigns) can drive visibility and leads within the first few days of launching. Organic strategies like SEO and branding typically show compounding long-term value over 3 to 6 months. We design campaigns to target quick wins while building sustainable long-term channels."
+      question: "How can I get started to benefit from your services?",
+      answer: "The timeline for achieving results varies depending on various factors, such as the complexity of the campaign, industry dynamics, and your specific goals. We strive for both short-term wins and long-term growth, and we'll provide you with a realistic timeframe based on our assessment and past experience."
     },
     {
-      question: "How can I get started with Gourmetica?",
-      answer: "Getting started is straightforward! Simply fill out our contact form on the Get In Touch page or send us an email. Our team will schedule an initial discovery call to review your current digital footprint, discuss your business objectives, and prepare a custom growth proposal tailored to your needs."
+      question: "How can I get started with your marketing agency?",
+      answer: "Getting started is easy! Simply reach out to us through our contact form or give us a call, and our team will schedule a consultation to discuss your marketing needs and provide you with a tailored solution to propel your business forward."
     }
   ];
 
   return (
-    <main className="bg-warm-white min-h-screen">
-      {/* Hero Header */}
-      <Section className="bg-neutral-950 dark text-white pt-32 pb-24 border-b border-white/5" spacing="none">
-        <Container size="wide">
-          <Reveal>
-            <Stack gap="md">
-              <Heading level={1} size="display-lg">
-                Frequently Asked Questions
-              </Heading>
-              <Text size="body-lg" className="text-neutral-400 max-w-2xl">
-                Answers to common questions about onboarding, campaigns, and results.
-              </Text>
-            </Stack>
-          </Reveal>
-        </Container>
-      </Section>
+    <main className="bg-[#fafaf9] min-h-screen pb-24" style={{ backgroundColor: "#fafaf9", paddingTop: "8rem", paddingBottom: "6rem" }}>
+      <Container size="wide">
+        <Box 
+          className="mx-auto bg-white border border-neutral-200/50 rounded-sm shadow-sm p-6 md:p-12 lg:p-16"
+          style={{ 
+            maxWidth: "1140px", 
+            backgroundColor: "#ffffff", 
+            marginTop: "20px" 
+          }}
+        >
+          {/* Title Header */}
+          <Box className="text-center mb-12" style={{ marginBottom: "3rem" }}>
+            <Heading level={1} className="font-mont font-black text-[32px] md:text-[37px] text-neutral-900 tracking-tight max-w-none">
+              Frequently Asked Questions
+            </Heading>
+          </Box>
 
-      {/* Accordions */}
-      <Section spacing="lg">
-        <Container size="narrow">
+          {/* Accordions */}
           <Stagger>
-            <Stack gap="md" className="mb-20">
+            <Stack gap="none" className="mb-20 border border-[#5f5d5d] bg-white overflow-hidden rounded-sm shadow-sm" style={{ marginBottom: "5rem" }}>
               {faqData.map((faq, index) => (
-                <Reveal key={index}>
-                  <Box 
-                    className={`bg-white border rounded-md overflow-hidden shadow-sm transition-all duration-300 ${
-                      activeIndex === index 
-                        ? "border-primary shadow-md" 
-                        : "border-neutral-200/60 hover:border-neutral-300"
-                    }`}
-                  >
+                <Reveal key={index} className="w-full">
+                  <Box className="w-full border-t border-white first:border-t-0" style={{ borderTop: index > 0 ? "1px solid white" : "none" }}>
                     <button 
-                      className="w-full flex items-center justify-between text-left px-6 py-5 font-heading font-bold text-neutral-800 hover:text-primary transition-colors focus:outline-none" 
+                      className={`w-full flex items-center justify-between text-left font-mont font-bold transition-all duration-300 focus:outline-none text-[16px] md:text-[17px] ${
+                        activeIndex === index 
+                          ? "bg-[#ccc] text-neutral-900" 
+                          : "bg-[#5f5d5d] text-white hover:bg-[#ccc] hover:text-neutral-900"
+                      }`} 
                       onClick={() => toggleFAQ(index)}
                       aria-expanded={activeIndex === index}
+                      style={{ padding: "20px 24px" }}
                     >
-                      <span className="text-base md:text-lg pr-4">{faq.question}</span>
-                      <Box className={`text-primary transition-transform duration-300 ${activeIndex === index ? "rotate-180" : ""}`}>
-                        <i className={`fa ${activeIndex === index ? "fa-minus" : "fa-plus"}`} aria-hidden="true"></i>
-                      </Box>
+                      <span className="pr-4 leading-snug">{faq.question}</span>
                     </button>
                     
                     <Box 
-                      className="transition-all duration-300 ease-in-out overflow-hidden"
+                      className="transition-all duration-300 ease-in-out overflow-hidden bg-white"
                       style={{ 
                         maxHeight: activeIndex === index ? "500px" : "0",
                         opacity: activeIndex === index ? 1 : 0
                       }}
                     >
-                      <Box className="px-6 pb-6 pt-2 border-t border-neutral-100/50">
-                        <Text size="body-sm" className="text-neutral-600 leading-relaxed text-justify">
+                      <Box className="border-b border-neutral-100/50" style={{ padding: "24px", borderBottom: "1px solid rgba(229, 229, 229, 0.5)" }}>
+                        <Text size="body" className="text-neutral-800 leading-relaxed text-justify max-w-none">
                           {faq.answer}
                         </Text>
                       </Box>
@@ -106,15 +100,15 @@ export default function FAQs() {
 
           {/* More Questions */}
           <Reveal>
-            <Stack gap="md" align="center" className="text-center max-w-2xl mx-auto pt-8 border-t border-neutral-200/50">
+            <Stack gap="md" align="center" className="text-center max-w-2xl mx-auto pt-8 border-t border-neutral-200/50" style={{ paddingTop: "2rem", borderTop: "1px solid rgba(229, 229, 229, 0.5)" }}>
               <Heading level={2} size="heading-md">
                 Still have questions?
               </Heading>
-              <Text size="body-sm" className="text-neutral-500">
+              <Text size="body-sm" className="text-neutral-500" style={{ marginBottom: "1rem" }}>
                 We are here to help. Reach out to our strategy team and get the answers you need.
               </Text>
-              <Box className="pt-2">
-                <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto">
+              <Box className="pt-2" style={{ paddingTop: "0.5rem" }}>
+                <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none font-bold uppercase tracking-[0.05em] text-[12px] h-auto" style={{ padding: "15px 22px 13px" }}>
                   <Link href="/getintouch">
                     Book A Strategy Call
                   </Link>
@@ -122,8 +116,8 @@ export default function FAQs() {
               </Box>
             </Stack>
           </Reveal>
-        </Container>
-      </Section>
+        </Box>
+      </Container>
     </main>
   );
 }

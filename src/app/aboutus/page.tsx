@@ -1,164 +1,109 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Section, Container, Grid, Stack, Box } from "@/core/primitives";
+import { Section, Container, Stack, Box } from "@/core/primitives";
 import { Heading, Text } from "@/core/typography";
-import { Button } from "@/core/components";
-import { Reveal, Stagger, HoverLift } from "@/core/motion";
+import { Reveal, Stagger } from "@/core/motion";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "Learn more about Gourmetica's philosophy, expertise, and dedication to helping UK hospitality and B2B brands scale sustainably."
+  description: "Learn more about Gourmetica's philosophy, expertise, and dedication to helping UK hospitality brands scale sustainably."
 };
 
 export default function AboutUs() {
   return (
-    <main className="bg-warm-white min-h-screen">
-      {/* Hero Header */}
-      <Section className="bg-neutral-950 dark text-white pt-32 pb-24 border-b border-white/5" spacing="none">
-        <Container size="wide">
-          <Reveal>
-            <Stack gap="md">
-              <Heading level={1} size="display-lg">
-                About Us
-              </Heading>
-              <Text size="body-lg" className="text-neutral-400 max-w-2xl">
-                Our philosophy, our expertise, and our commitment to your growth.
-              </Text>
-            </Stack>
-          </Reveal>
-        </Container>
-      </Section>
+    <main className="bg-[#fafaf9] min-h-screen pb-24" style={{ backgroundColor: "#fafaf9", paddingTop: "8rem", paddingBottom: "6rem" }}>
+      <Container size="wide">
+        <Box 
+          className="mx-auto bg-white border border-neutral-200/50 rounded-sm shadow-sm p-6 md:p-12 lg:p-16"
+          style={{ 
+            maxWidth: "1140px", 
+            backgroundColor: "#ffffff", 
+            marginTop: "20px" 
+          }}
+        >
+          {/* Title Header */}
+          <Box className="text-center mb-12" style={{ marginBottom: "3rem" }}>
+            <Heading level={1} className="font-mont font-black text-[32px] md:text-[37px] text-neutral-900 tracking-tight max-w-none uppercase">
+              About Us
+            </Heading>
+          </Box>
 
-      {/* Main Philosophy Section */}
-      <Section spacing="lg">
-        <Container size="wide">
-          <Grid columns={1} gap="xl" className="lg:grid-cols-12 items-start">
-            <Box className="lg:col-span-5">
-              <Reveal>
-                <Stack gap="md">
-                  <Heading level={2} size="heading-xl" className="max-w-[14ch]">
-                    Building Foundations For Long-Term Success
-                  </Heading>
-                  <Box className="w-12 h-1 bg-primary" />
-                </Stack>
-              </Reveal>
-            </Box>
-            
-            <Box className="lg:col-span-7">
-              <Reveal delay={0.1}>
-                <Stack gap="lg">
-                  <Text size="body-lg" className="font-semibold text-neutral-800 leading-relaxed">
-                    At Gourmetica, we understand the unique needs of the hospitality and service industries. Our team has over 10 years of experience in this sector, meaning we deeply understand how to create marketing campaigns and copy that effectively engage your audience.
-                  </Text>
-                  <Text size="body" className="text-neutral-600 leading-relaxed">
-                    We combine persuasive messaging with data-driven insights to help you create compelling content that resonates with your guests and drives more revenue for your business. With our help, you can stand out in the competitive UK market and increase your ROI.
-                  </Text>
-                  <Text size="body" className="text-neutral-600 leading-relaxed">
-                    By prioritizing repeat business, we help you build a solid foundation of loyal customers who become an integral part of your success story. Through strategic marketing initiatives, we aim to inspire customer loyalty, driving increased visit frequency, higher average spend, and a positive word-of-mouth ripple effect that extends your reach far beyond traditional marketing channels.
-                  </Text>
-                  <Text size="body" className="text-neutral-600 leading-relaxed">
-                    We have the privilege of collaborating with numerous establishments in the dynamic and lucrative hospitality and B2B sectors. We implement optimized marketing strategies to captivate your target audience, elevate product value, and scale your operations sustainably.
-                  </Text>
-                </Stack>
-              </Reveal>
-            </Box>
-          </Grid>
-        </Container>
-      </Section>
-
-      {/* Core Values Section */}
-      <Section spacing="lg" className="bg-stone border-y border-neutral-200/40">
-        <Container size="wide">
-          <Reveal className="mb-16">
-            <Stack gap="md" align="center" className="text-center">
-              <Heading level={2} size="heading-lg">
-                Why Partners Choose Gourmetica
-              </Heading>
-              <Text size="body-lg" className="text-neutral-500 max-w-2xl">
-                Our core operating values guide how we work and deliver results for our clients.
-              </Text>
-            </Stack>
-          </Reveal>
-
+          {/* Main Content Section */}
           <Stagger>
-            <Grid columns={1} gap="lg" className="md:grid-cols-3">
-              {/* Value Card 1 */}
+            <Stack gap="md" className="mb-16" style={{ marginBottom: "4rem", gap: "1.5rem" }}>
               <Reveal>
-                <HoverLift>
-                  <Box className="bg-white border border-neutral-200/50 p-8 h-full rounded-md shadow-sm">
-                    <Box className="w-12 h-12 bg-primary/10 text-primary rounded-md flex items-center justify-center text-xl mb-6">
-                      <i className="fa fa-line-chart" aria-hidden="true"></i>
-                    </Box>
-                    <Heading level={3} size="heading-sm" className="mb-4">
-                      Strategic Outlook & Solution Oriented
-                    </Heading>
-                    <Text size="body-sm" className="text-neutral-600 leading-relaxed">
-                      Our approach to marketing is holistic. As everything is interconnected, it must be understood from the ground up, recognizing all moving parts and how they connect. We track the entire customer experience—from the first click of an ad to the moment they dine at the restaurant or purchase a product—identifying missed opportunities and resolving operational blockages.
-                    </Text>
-                  </Box>
-                </HoverLift>
+                <Text size="body" className="text-neutral-800 leading-relaxed text-justify max-w-none" style={{ fontSize: "17px" }}>
+                  At Gourmetica, we understand the unique needs of the hospitality industry. Our team has over 10 years of experience in this sector, meaning we deeply understand how to create copy that effectively engages your audience. We combine persuasive language with data-driven insights to help you create compelling content that resonates with your guests and drives more revenue for your business. With our help, you can stand out in the competitive hospitality market and increase your ROI.
+                </Text>
               </Reveal>
-
-              {/* Value Card 2 */}
-              <Reveal>
-                <HoverLift>
-                  <Box className="bg-white border border-neutral-200/50 p-8 h-full rounded-md shadow-sm">
-                    <Box className="w-12 h-12 bg-primary/10 text-primary rounded-md flex items-center justify-center text-xl mb-6">
-                      <i className="fa fa-bolt" aria-hidden="true"></i>
-                    </Box>
-                    <Heading level={3} size="heading-sm" className="mb-4">
-                      Expertise & Speed
-                    </Heading>
-                    <Text size="body-sm" className="text-neutral-600 leading-relaxed">
-                      We have successfully developed many businesses from the ground up, identifying weaknesses and implementing fast-track solutions. Because of our experience, we foresee issues before they arise, preventing them from escalating. We apply a wealth of proven, benchmarked strategies to drive quick wins alongside long-term scaling.
-                    </Text>
-                  </Box>
-                </HoverLift>
+              <Reveal delay={0.05}>
+                <Text size="body" className="text-neutral-800 leading-relaxed text-justify max-w-none" style={{ fontSize: "17px" }}>
+                  By prioritizing repeat business, we help you build a solid foundation of loyal customers who become an integral part of your success story. Through strategic marketing initiatives, we aim to inspire customer loyalty, driving increased visit frequency, higher average spend, and a positive word-of-mouth ripple effect that extends your reach far beyond traditional marketing channels.
+                </Text>
               </Reveal>
-
-              {/* Value Card 3 */}
-              <Reveal>
-                <HoverLift>
-                  <Box className="bg-white border border-neutral-200/50 p-8 h-full rounded-md shadow-sm">
-                    <Box className="w-12 h-12 bg-primary/10 text-primary rounded-md flex items-center justify-center text-xl mb-6">
-                      <i className="fa fa-users" aria-hidden="true"></i>
-                    </Box>
-                    <Heading level={3} size="heading-sm" className="mb-4">
-                      We Are Personally Invested
-                    </Heading>
-                    <Text size="body-sm" className="text-neutral-600 leading-relaxed">
-                      We take pride in the high standards we set, attracting clients primarily through word of mouth. Any business we take on is one we feel personally responsible for. We treat your business like our own, integrating as an extension of your internal team and going above and beyond to ensure your ambitions are met.
-                    </Text>
-                  </Box>
-                </HoverLift>
+              <Reveal delay={0.1}>
+                <Text size="body" className="text-neutral-800 leading-relaxed text-justify max-w-none" style={{ fontSize: "17px" }}>
+                  At Gourmetica, we preserve the significance of the repeat customers' contribution over sustaining and growing your business. Based on our expertise in the UK hospitality industry, we are thoroughly performing most effective and optimized marketing strategies in order to captivate the target audience and elevate the product value all time.
+                </Text>
               </Reveal>
-            </Grid>
-          </Stagger>
-        </Container>
-      </Section>
-
-      {/* CTA Footer */}
-      <Section spacing="xl" className="bg-neutral-950 dark text-white">
-        <Container size="wide">
-          <Reveal>
-            <Stack gap="lg" align="center" className="text-center max-w-3xl mx-auto">
-              <Heading level={2} size="heading-xl">
-                Let&apos;s Start Your Transformation Journey
-              </Heading>
-              <Text size="body-lg" className="text-neutral-400">
-                You provide the business goals and statements, and we&apos;ll bring the branding, web development, and sales generation systems.
-              </Text>
-              <Box className="pt-4">
-                <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto">
-                  <Link href="/getintouch">
-                    Arrange A Discovery Call
-                  </Link>
-                </Button>
-              </Box>
+              <Reveal delay={0.15}>
+                <Text size="body" className="text-neutral-800 leading-relaxed text-justify max-w-none" style={{ fontSize: "17px" }}>
+                  We have the privilege of collaborating with numerous establishments in the dynamic and lucrative hospitality sector. We make some special offers in national holidays, bank holidays and special occasions. In addition to that, share some limited time offers within unrivaled techniques to propel your business in this digital transformation journey.
+                </Text>
+              </Reveal>
+              <Reveal delay={0.2}>
+                <Text size="body" className="text-neutral-800 leading-relaxed text-justify max-w-none" style={{ fontSize: "17px" }}>
+                  Arrange a call with us and let's start a digital transformation journey in your business right now. You provide the business goals and statements, and we'll bring out the branding, business growth and expert level of sales generation for your business instantly.
+                </Text>
+              </Reveal>
             </Stack>
-          </Reveal>
-        </Container>
-      </Section>
+          </Stagger>
+
+          {/* Strategic Values */}
+          <Stack gap="lg" style={{ gap: "2rem" }}>
+            <Reveal>
+              <Stack gap="sm" style={{ gap: "0.75rem" }}>
+                <Heading level={2} className="text-primary font-mont font-bold text-[22px] md:text-[26px] tracking-tight max-w-none" style={{ color: "#E42528" }}>
+                  Strategic outlook and solution oriented
+                </Heading>
+                <Text size="body" className="text-neutral-800 leading-relaxed text-justify max-w-none" style={{ fontSize: "17px" }}>
+                  Our approach to marketing is holistic. As everything is interconnected, it must be understood from the ground up, recognising all the moving parts and how they need to be connected.
+                </Text>
+                <Text size="body" className="text-neutral-800 leading-relaxed text-justify max-w-none" style={{ fontSize: "17px" }}>
+                  We track the entire customer experience from the first click of an ad to the moment they are dining at the restaurant for instance. Diving further into this, we can identify aspects of the business model that are working and what isn't and identify any missed opportunities. From here, we can put a plan into place to address those issues.
+                </Text>
+              </Stack>
+            </Reveal>
+
+            <Reveal delay={0.05}>
+              <Stack gap="sm" style={{ gap: "0.75rem" }}>
+                <Heading level={2} className="text-primary font-mont font-bold text-[22px] md:text-[26px] tracking-tight max-w-none" style={{ color: "#E42528" }}>
+                  Expertise and speed
+                </Heading>
+                <Text size="body" className="text-neutral-800 leading-relaxed text-justify max-w-none" style={{ fontSize: "17px" }}>
+                  We have successfully developed many businesses from the ground up and identified all the weaknesses and found solutions to fast track success. It has taken years for us to get here.
+                </Text>
+                <Text size="body" className="text-neutral-800 leading-relaxed text-justify max-w-none" style={{ fontSize: "17px" }}>
+                  Because of that experience, we can foresee and identify any issues before they arise and prevent them from escalating. We have a wealth of proven strategies to drive business with a track record to back this.
+                </Text>
+              </Stack>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <Stack gap="sm" style={{ gap: "0.75rem" }}>
+                <Heading level={2} className="text-primary font-mont font-bold text-[22px] md:text-[26px] tracking-tight max-w-none" style={{ color: "#E42528" }}>
+                  We are personally invested
+                </Heading>
+                <Text size="body" className="text-neutral-800 leading-relaxed text-justify max-w-none" style={{ fontSize: "17px" }}>
+                  We take pride in the level of service we provide. Through word of mouth alone we have attracted clients wanting to work with us because of the high standards we set.
+                </Text>
+                <Text size="body" className="text-neutral-800 leading-relaxed text-justify max-w-none" style={{ fontSize: "17px" }}>
+                  So any business we take on is one we feel personally responsible for as it has our name associated with it. This is a responsibility we take very seriously which is why we become so personally invested, treating your business like our own and going above and beyond for you.
+                </Text>
+              </Stack>
+            </Reveal>
+          </Stack>
+        </Box>
+      </Container>
     </main>
   );
 }

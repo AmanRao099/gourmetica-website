@@ -35,6 +35,6 @@ export default async function ServicePage({ params }: PageProps) {
     notFound();
   }
 
-  return <ServiceDetail content={content} />;
+  return <ServiceDetail slug={slug} />;
 }
 

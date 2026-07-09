@@ -32,6 +32,8 @@ const defaultNavItems: NavItem[] = [
   { label: 'Services', href: '/#services' },
   { label: 'Work', href: '/results' },
   { label: 'About Us', href: '/aboutus' },
+  { label: 'Clients', href: '/clients' },
+  { label: 'News', href: '/news' },
   { label: 'FAQs', href: '/faqs' },
 ];
 const defaultCta: NavItem = { label: 'Get In Touch', href: '/getintouch' };
@@ -79,7 +81,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
     );
 
     const navLinkStyle: React.CSSProperties = { fontSize: 15, letterSpacing: '0.08em' };
-    const navLinkClass = "font-heading font-semibold tracking-wider text-white/90 hover:text-white transition-colors duration-200";
+    const navLinkClass = "font-heading font-semibold tracking-wider text-white/90 hover:text-white transition-colors duration-200 uppercase";
 
     return (
       <header
@@ -108,7 +110,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
 
           {/* ── Desktop Nav ── */}
           <nav className="hidden lg:flex items-center">
-            <ul className="flex items-center list-none" style={{ gap: 56 }}>
+            <ul className="flex items-center list-none" style={{ gap: 40 }}>
               {navItems.map((item) => {
                 if (item.label === 'Services') {
                   return (
@@ -160,18 +162,6 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                           <div className="py-4 px-3 flex flex-col gap-1.5">
                             {SERVICES.map((service, idx) => {
                               const hasPage = !service.href.startsWith('/#');
-                              const descriptions: Record<string, string> = {
-                                'Strategy': 'Tailored growth strategies aligned with your goals.',
-                                'Branding': 'Memorable brand design, positioning and systems.',
-                                'Website Design & Development': 'Fast, responsive websites built for growth.',
-                                'Search Engine Optimisation': 'SEO strategies for organic search growth.',
-                                'Social Media Management': 'Engaged social presence and campaigns.',
-                                'Photography': 'Enticing food, space and brand photography.',
-                                'Advertising': 'PPC, search and retargeting campaigns.',
-                                'Email Marketing': 'Data-driven automated campaigns.',
-                                'Google Business Profile': 'Optimize local visibility and reviews.',
-                              };
-                              const desc = descriptions[service.title] || '';
 
                               return (
                                 <Link
@@ -179,7 +169,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                                   href={service.href}
                                   className="group flex flex-col transition-all duration-[260ms] ease-out rounded-xl"
                                   style={{
-                                    padding: '12px 20px',
+                                    padding: '10px 20px',
                                     backgroundColor: 'transparent',
                                     borderLeft: '2px solid transparent',
                                   }}
@@ -187,7 +177,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                                   onMouseEnter={(e) => {
                                     const el = e.currentTarget as HTMLElement;
                                     el.style.backgroundColor = 'rgba(255,255,255,0.03)';
-                                    el.style.paddingLeft = '28px'; // +8px from 20px default
+                                    el.style.paddingLeft = '28px';
                                     if (hasPage) {
                                       el.style.borderLeftColor = '#E42528';
                                     }
@@ -209,30 +199,6 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                                   >
                                     {service.title}
                                   </span>
-
-                                  {/* Description */}
-                                  <span
-                                    className="text-white/40 font-secondary mt-1 block"
-                                    style={{ fontSize: 12, lineHeight: 1.4, maxWidth: '36ch' }}
-                                  >
-                                    {desc}
-                                  </span>
-
-                                  {/* Learn More (if page exists) */}
-                                  {hasPage && (
-                                    <span
-                                      className="inline-flex items-center gap-1.5 font-heading font-semibold uppercase tracking-[0.06em] text-[#E42528] mt-2.5 transition-colors duration-200"
-                                      style={{ fontSize: 11 }}
-                                    >
-                                      Learn More
-                                      <svg
-                                        className="w-3 h-3 transition-transform duration-[180ms] ease-out group-hover:translate-x-1"
-                                        fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
-                                      >
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                      </svg>
-                                    </span>
-                                  )}
                                 </Link>
                               );
                             })}
@@ -253,7 +219,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
               })}
               {cta && (
                 <li className="nav-item cta-btn">
-                  <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[34px] py-[18px] font-bold uppercase tracking-[0.05em] text-[12px] h-14">
+                  <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[34px] py-3.5 font-bold uppercase tracking-[0.05em] text-[12px] h-auto">
                     <Link href={cta.href}>{cta.label}</Link>
                   </Button>
                 </li>
