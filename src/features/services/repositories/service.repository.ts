@@ -1,18 +1,18 @@
 import { SERVICE_CONTENT_MAP } from '../content';
-import type { ServiceContent } from '../types';
+import type { ServiceSEOEntry } from '../types';
 
 /**
- * Get a single service by slug.
+ * Get a single service's SEO metadata by slug.
  * Returns null if the slug doesn't match any service with a detail page.
  */
-export function getService(slug: string): ServiceContent | null {
+export function getService(slug: string): ServiceSEOEntry | null {
   return SERVICE_CONTENT_MAP[slug] ?? null;
 }
 
 /**
  * Get all services that have detail pages.
  */
-export function getAllServices(): ServiceContent[] {
+export function getAllServices(): ServiceSEOEntry[] {
   return Object.values(SERVICE_CONTENT_MAP);
 }
 

@@ -1,7 +1,7 @@
 import { BoxProps } from '../Box';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-export const pageContainerVariants = cva('mx-auto w-full px-8 lg:px-20', {
+export const pageContainerVariants = cva('mx-auto w-full px-8 lg:px-12', {
   variants: {
     size: {
       standard: 'max-w-[1320px]',

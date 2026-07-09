@@ -1,7 +1,1 @@
-export type {
-  ServiceContent,
-  ServiceHero,
-  ServiceFeature,
-  ServiceCTA,
-  ServiceSEO,
-} from './service-content';
+export type { ServiceSEO, ServiceSEOEntry } from './service-content';

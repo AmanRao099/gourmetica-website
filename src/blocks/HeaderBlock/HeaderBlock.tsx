@@ -30,8 +30,11 @@ const SERVICES = getServiceNavItems();
    ─────────────────────────────────────────── */
 const defaultNavItems: NavItem[] = [
   { label: 'Services', href: '/#services' },
+  { label: 'Products', href: '/products' },
   { label: 'Work', href: '/results' },
   { label: 'About Us', href: '/aboutus' },
+  { label: 'Clients', href: '/clients' },
+  { label: 'News', href: '/news' },
   { label: 'FAQs', href: '/faqs' },
 ];
 const defaultCta: NavItem = { label: 'Get In Touch', href: '/getintouch' };
@@ -68,6 +71,20 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
       closeTimer.current = setTimeout(() => setDropdownOpen(false), 220);
     }, []);
 
+    const handleLinkClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      if (href.includes('#')) {
+        const parts = href.split('#');
+        const hash = parts[parts.length - 1];
+        if (hash) {
+          const element = document.getElementById(hash);
+          if (element) {
+            e.preventDefault();
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
+    }, []);
+
     const logoSrc = isScrolled ? "/images/logo/logoscroll.png" : "/images/logo/logo.png";
     const resolvedLogo = logo || (
       <img
@@ -79,7 +96,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
     );
 
     const navLinkStyle: React.CSSProperties = { fontSize: 15, letterSpacing: '0.08em' };
-    const navLinkClass = "font-heading font-semibold tracking-wider text-white/90 hover:text-white transition-colors duration-200";
+    const navLinkClass = "font-heading font-semibold tracking-wider text-white/90 hover:text-white transition-colors duration-200 uppercase";
 
     return (
       <header
@@ -108,7 +125,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
 
           {/* ── Desktop Nav ── */}
           <nav className="hidden lg:flex items-center">
-            <ul className="flex items-center list-none" style={{ gap: 56 }}>
+            <ul className="flex items-center list-none" style={{ gap: 18 }}>
               {navItems.map((item) => {
                 if (item.label === 'Services') {
                   return (
@@ -119,21 +136,28 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                       onMouseEnter={enter}
                       onMouseLeave={leave}
                     >
-                      <button
+                      <Link
+                        href={item.href}
                         className={cn(navLinkClass, "flex items-center gap-1.5 bg-transparent border-none cursor-pointer")}
                         style={navLinkStyle}
-                        onClick={() => setDropdownOpen(!dropdownOpen)}
-                        aria-expanded={dropdownOpen}
-                        aria-haspopup="true"
+                        onClick={(e) => {
+                          setDropdownOpen(false);
+                          handleLinkClick(e, item.href);
+                        }}
                       >
                         {item.label}
                         <svg
                           className={cn("w-2.5 h-2.5 transition-transform duration-200 ml-0.5", dropdownOpen && "rotate-180")}
                           fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setDropdownOpen(!dropdownOpen);
+                          }}
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                         </svg>
-                      </button>
+                      </Link>
 
                       {/* ── Clean White Dropdown ── */}
                       <div
@@ -160,18 +184,6 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                           <div className="py-4 px-3 flex flex-col gap-1.5">
                             {SERVICES.map((service, idx) => {
                               const hasPage = !service.href.startsWith('/#');
-                              const descriptions: Record<string, string> = {
-                                'Strategy': 'Tailored growth strategies aligned with your goals.',
-                                'Branding': 'Memorable brand design, positioning and systems.',
-                                'Website Design & Development': 'Fast, responsive websites built for growth.',
-                                'Search Engine Optimisation': 'SEO strategies for organic search growth.',
-                                'Social Media Management': 'Engaged social presence and campaigns.',
-                                'Photography': 'Enticing food, space and brand photography.',
-                                'Advertising': 'PPC, search and retargeting campaigns.',
-                                'Email Marketing': 'Data-driven automated campaigns.',
-                                'Google Business Profile': 'Optimize local visibility and reviews.',
-                              };
-                              const desc = descriptions[service.title] || '';
 
                               return (
                                 <Link
@@ -179,15 +191,18 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                                   href={service.href}
                                   className="group flex flex-col transition-all duration-[260ms] ease-out rounded-xl"
                                   style={{
-                                    padding: '12px 20px',
+                                    padding: '10px 20px',
                                     backgroundColor: 'transparent',
                                     borderLeft: '2px solid transparent',
                                   }}
-                                  onClick={() => setDropdownOpen(false)}
+                                  onClick={(e) => {
+                                    setDropdownOpen(false);
+                                    handleLinkClick(e, service.href);
+                                  }}
                                   onMouseEnter={(e) => {
                                     const el = e.currentTarget as HTMLElement;
                                     el.style.backgroundColor = 'rgba(255,255,255,0.03)';
-                                    el.style.paddingLeft = '28px'; // +8px from 20px default
+                                    el.style.paddingLeft = '28px';
                                     if (hasPage) {
                                       el.style.borderLeftColor = '#E42528';
                                     }
@@ -209,30 +224,6 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                                   >
                                     {service.title}
                                   </span>
-
-                                  {/* Description */}
-                                  <span
-                                    className="text-white/40 font-secondary mt-1 block"
-                                    style={{ fontSize: 12, lineHeight: 1.4, maxWidth: '36ch' }}
-                                  >
-                                    {desc}
-                                  </span>
-
-                                  {/* Learn More (if page exists) */}
-                                  {hasPage && (
-                                    <span
-                                      className="inline-flex items-center gap-1.5 font-heading font-semibold uppercase tracking-[0.06em] text-[#E42528] mt-2.5 transition-colors duration-200"
-                                      style={{ fontSize: 11 }}
-                                    >
-                                      Learn More
-                                      <svg
-                                        className="w-3 h-3 transition-transform duration-[180ms] ease-out group-hover:translate-x-1"
-                                        fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
-                                      >
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                      </svg>
-                                    </span>
-                                  )}
                                 </Link>
                               );
                             })}
@@ -245,7 +236,12 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
 
                 return (
                   <li key={item.label} className="nav-item">
-                    <Link href={item.href} className={navLinkClass} style={navLinkStyle}>
+                    <Link
+                      href={item.href}
+                      className={navLinkClass}
+                      style={navLinkStyle}
+                      onClick={(e) => handleLinkClick(e, item.href)}
+                    >
                       {item.label}
                     </Link>
                   </li>
@@ -253,7 +249,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
               })}
               {cta && (
                 <li className="nav-item cta-btn">
-                  <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[34px] py-[18px] font-bold uppercase tracking-[0.05em] text-[12px] h-14">
+                  <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[34px] py-3.5 font-bold uppercase tracking-[0.05em] text-[12px] h-auto">
                     <Link href={cta.href}>{cta.label}</Link>
                   </Button>
                 </li>
@@ -284,18 +280,31 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                 if (item.label === 'Services') {
                   return (
                     <div key="services-mobile">
-                      <button
-                        className="font-heading font-bold text-2xl uppercase text-white hover:text-brand-500 transition-colors flex items-center gap-2 bg-transparent border-none cursor-pointer w-full text-left"
-                        onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                      >
-                        {item.label}
-                        <svg
-                          className={cn("w-4 h-4 transition-transform duration-200", mobileServicesOpen && "rotate-180")}
-                          fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
+                      <div className="flex items-center justify-between w-full">
+                        <Link
+                          href={item.href}
+                          className="font-heading font-bold text-2xl uppercase text-white hover:text-brand-500 transition-colors"
+                          onClick={(e) => {
+                            setIsOpen(false);
+                            setMobileServicesOpen(false);
+                            handleLinkClick(e, item.href);
+                          }}
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </button>
+                          {item.label}
+                        </Link>
+                        <button
+                          className="p-2 text-white hover:text-brand-500 bg-transparent border-none cursor-pointer"
+                          onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                          aria-label="Toggle services menu"
+                        >
+                          <svg
+                            className={cn("w-6 h-6 transition-transform duration-200", mobileServicesOpen && "rotate-180")}
+                            fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                      </div>
                       {mobileServicesOpen && (
                         <div className="mt-3 ml-1 flex flex-col border-l border-white/10 pl-4">
                           {SERVICES.map((service, idx) => (
@@ -304,7 +313,11 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                               href={service.href}
                               className="font-heading font-medium text-white/70 hover:text-white py-2.5 transition-colors"
                               style={{ fontSize: 15 }}
-                              onClick={() => { setIsOpen(false); setMobileServicesOpen(false); }}
+                              onClick={(e) => {
+                                setIsOpen(false);
+                                setMobileServicesOpen(false);
+                                handleLinkClick(e, service.href);
+                              }}
                             >
                               {service.title}
                             </Link>
@@ -319,7 +332,10 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                     key={item.label}
                     href={item.href}
                     className="font-heading font-bold text-2xl uppercase text-white hover:text-brand-500 transition-colors"
-                    onClick={() => setIsOpen(false)}
+                    onClick={(e) => {
+                      setIsOpen(false);
+                      handleLinkClick(e, item.href);
+                    }}
                   >
                     {item.label}
                   </Link>

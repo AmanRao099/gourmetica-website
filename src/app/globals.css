@@ -169,10 +169,12 @@
 }
 
 /* Reset and Base Styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 html,
@@ -187,24 +189,26 @@ body {
 }
 
 /* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-  color: var(--color-black);
-}
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    color: var(--color-black);
+  }
 
-p {
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.65;
-  color: var(--color-text-dark);
+  p {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-text-dark);
+  }
 }
 
 a {
@@ -2219,6 +2223,39 @@ a {
   margin-bottom: 20px;
 }
 
+.services-delivered-section {
+  background-color: var(--color-gray-light);
+  border-top: 1px solid #eaeaea;
+}
+
+.services-delivered-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.service-delivered-card {
+  background-color: var(--color-white);
+  border-radius: 6px;
+  padding: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.service-delivered-card h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+
+.service-delivered-card p {
+  color: #666;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
 .gallery-section {
   background-color: var(--color-gray-light);
   border-top: 1px solid #eaeaea;
@@ -2262,7 +2299,8 @@ a {
   .values-grid,
   .clients-grid,
   .news-grid,
-  .gallery-grid {
+  .gallery-grid,
+  .services-delivered-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
   }
@@ -2284,6 +2322,7 @@ a {
   .clients-grid,
   .news-grid,
   .gallery-grid,
+  .services-delivered-grid,
   .work-grid {
     grid-template-columns: 1fr;
     gap: 20px;

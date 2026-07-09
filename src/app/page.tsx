@@ -78,6 +78,9 @@ export default function Home() {
                   Learn more about our proven process and explore how Gourmetica can help you maximize results by scheduling a short introductory call with us.
                 </p>
               </div>
+              <Link href="/whygourmetica" className="view-all-link" style={{ marginTop: "24px", display: "inline-flex" }}>
+                Why Gourmetica <i className="fa fa-arrow-right" aria-hidden="true"></i>
+              </Link>
             </div>
             <div className="opening-remark-img">
               <img
