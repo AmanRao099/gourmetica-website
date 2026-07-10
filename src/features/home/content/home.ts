@@ -40,7 +40,7 @@ export const homeContent = {
   },
   logoCloud: {
     title: "Trusted by 70+ Businesses",
-    subtitle: "Trusted by leading restaurants across the UK",
+    subtitle: "From independent businesses to growing multi-location brands, we've helped companies build stronger brands, generate more leads and accelerate growth.",
     logos: [
       { src: "/images/clients/antepkitchen.co.uk.jpg", alt: "Antep Kitchen" },
       { src: "/images/clients/beboz-zebra-printer-logo.png", alt: "Beboz" },

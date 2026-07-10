@@ -111,21 +111,22 @@ export function WorkGrid({ cases }: WorkGridProps) {
         </div>
       </PageContainer>
 
-      {/* Desktop / tablet — edge-to-edge photo grid */}
+      {/* Desktop / tablet — edge-to-edge square photo grid */}
       <div className="hidden md:grid md:grid-cols-3">
         {filteredCases.map((study) => (
           <Link
             key={study.slug}
             href={`/results/${study.slug}`}
-            className="relative block overflow-hidden group aspect-[4/3]"
+            className="relative block overflow-hidden group aspect-square bg-black"
           >
             <img
               src={study.image}
               alt={study.title}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-            <span className="absolute left-6 bottom-6 right-6 font-heading font-bold uppercase text-white text-[20px] lg:text-[22px] leading-tight">
+            <span
+              className="absolute inset-0 flex items-end p-9 font-heading font-bold text-white text-[24px] lg:text-[32px] xl:text-[37px] leading-[1] tracking-[0.01em] [text-shadow:0_2px_10px_rgba(0,0,0,0.5)]"
+            >
               {study.title}
             </span>
           </Link>
@@ -136,10 +137,10 @@ export function WorkGrid({ cases }: WorkGridProps) {
       <PageContainer size="standard" className="md:hidden pb-[60px] flex flex-col">
         {filteredCases.map((study) => (
           <div key={study.slug} className="py-8 border-t border-neutral-200 first:border-t-0 first:pt-0">
-            <div className="relative w-full aspect-[4/3] mb-5 overflow-hidden">
+            <div className="relative w-full h-[250px] mb-5 overflow-hidden">
               <img src={study.image} alt={study.title} className="absolute inset-0 w-full h-full object-cover" />
             </div>
-            <h2 className="font-heading font-bold uppercase text-black text-[19px] mb-2">{study.title}</h2>
+            <h2 className="font-heading font-bold text-black text-[25px] leading-[1.1] tracking-[0.01em] mb-2">{study.title}</h2>
             <p className="text-[14px] leading-[1.6] text-neutral-600 mb-3 line-clamp-2">{study.excerpt}</p>
             <Link
               href={`/results/${study.slug}`}
