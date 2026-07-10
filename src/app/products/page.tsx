@@ -382,9 +382,8 @@ export default function Products() {
                   <motion.div
                     key={activeTab}
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3, exit: { duration: 0.1 } }}
+                    animate={{ opacity: 1, transition: { duration: 0.3 } }}
+                    exit={{ opacity: 0, transition: { duration: 0.1 } }}
                   >
                     <Grid columns={1} gap="xl" className="lg:grid-cols-2 items-center">
                       <Box>
