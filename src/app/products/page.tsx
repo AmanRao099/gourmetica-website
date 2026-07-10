@@ -10,24 +10,22 @@ import { Video } from "@/core/components/Video";
 import { Reveal, Stagger, StaggerItem, HoverScale } from "@/core/motion";
 import { cn } from "@/core/utils";
 import { Typewriter } from "./Typewriter";
-import { BrowserMockup } from "./BrowserMockup";
-import { PhoneMockup } from "./PhoneMockup";
 
 const ROTATING_WORDS = ["hospitality", "restaurant", "pub", "cafe", "hotel"];
 
 const MISSION_ITEMS = [
   {
-    image: "/images/banner/OttoKichenMain-min-min.jpg",
+    image: "/product/card1.png",
     title: "Supporting hospitality.",
     description: "TABLY was crafted with a single mission: to simplify digital management for hospitality teams. From intuitive content updates to robust integrations, every feature is built to let you focus on what matters most—your guests.",
   },
   {
-    image: "/images/banner/RustiqMain-min-min.jpg",
+    image: "/product/card2.png",
     title: "We move quickly.",
     description: "In the fast-paced hospitality industry, agility is key. Our team works tirelessly to ship continuous updates across the platform, keeping every website aligned with the latest standard.",
   },
   {
-    image: "/images/banner/PiyazMain-min-min.jpg",
+    image: "/product/card3.png",
     title: "Quality and reliable.",
     description: "Our platform is trusted by hospitality businesses across the UK for reliability and performance. From sleek designs to robust functionality, TABLY keeps your website as dependable as your service.",
   },
@@ -41,8 +39,7 @@ const PRODUCT_SHOWCASE = [
     headingEnd: " for hospitality groups.",
     description: "The all-in-one platform helping hospitality groups create and manage content across brand websites, collections and individual venues—at scale.",
     cta: "Explore Enterprise",
-    mockup: "browser" as const,
-    image: "/images/banner/sevices2.jpg",
+    images: ["/product/mobile1.png"],
   },
   {
     label: "TABLY Generator",
@@ -51,8 +48,7 @@ const PRODUCT_SHOWCASE = [
     headingEnd: " way to get an independent venue website online.",
     description: "Give independent operators a quick, guided way to launch a professional venue website—optimised out of the box for bookings and enquiries.",
     cta: "Explore Website Generator",
-    mockup: "phone" as const,
-    image: "/images/banner/LizzNewBg.jpg",
+    images: ["/product/mobile1.png", "/product/mobile2.png"],
   },
 ];
 
@@ -242,12 +238,12 @@ export default function Products() {
                 muted
                 loop
                 playsInline
-                poster="/images/tably/ChatGPT Image 5 Tem 2026 11_26_37.png"
+                poster="/product/card1.png"
                 className="w-full"
                 onPause={() => setIsPlaying(false)}
                 onPlay={() => setIsPlaying(true)}
               >
-                <source src="/HOME PAGE/VIDEO BANNER/0704.mp4" type="video/mp4" />
+                <source src="/product/video.mp4" type="video/mp4" />
               </Video>
               {!isPlaying && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300 group-hover:bg-black/30">
@@ -264,7 +260,7 @@ export default function Products() {
       </Section>
 
       {/* Mission + Feature List — merged into one section, matching reference layout */}
-      <Section spacing="lg">
+      <Section spacing="sm">
         <Container size="wide">
           <Grid columns={1} gap="xl" className="lg:grid-cols-12 items-start">
             <Box className="lg:col-span-5">
@@ -307,8 +303,8 @@ export default function Products() {
         </Container>
       </Section>
 
-      {/* Product Showcase — browser + phone mockups, mirroring 24social's Enterprise / My Place split */}
-      <Section spacing="xl" className="relative bg-neutral-950 dark text-white overflow-hidden">
+      {/* Product Showcase — mirroring 24social's Enterprise / My Place split */}
+      <Section spacing="sm" className="relative bg-neutral-950 dark text-white overflow-hidden">
         <Blob className="w-[420px] h-[420px] bg-primary top-1/4 -left-32" />
         <Blob className="w-[380px] h-[380px] bg-neutral-500 bottom-0 -right-24" />
 
@@ -316,34 +312,52 @@ export default function Products() {
           <Stack gap="xl">
             {PRODUCT_SHOWCASE.map((product, idx) => (
               <Reveal key={product.label} delay={idx * 0.1}>
-                <Grid
-                  columns={1}
-                  gap="xl"
-                  className={cn(
-                    "lg:grid-cols-2 items-center",
-                    idx % 2 === 1 && "lg:[&>*:first-child]:order-2"
-                  )}
-                >
+                <Grid columns={1} gap="xl" className="lg:grid-cols-2 items-center">
                   <Stack gap="md" align="start">
-                    <span className="text-primary font-heading font-bold text-xs uppercase tracking-wider">{product.label}</span>
+                    <Flex align="center" gap="xs">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-primary" aria-hidden>
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.6" />
+                        <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.6" />
+                      </svg>
+                      <span className="text-primary font-heading font-bold text-xs uppercase tracking-wider">{product.label}</span>
+                    </Flex>
                     <Heading level={3} size="heading-lg" className="leading-tight">
                       {product.heading}<span className="text-primary">{product.highlight}</span>{product.headingEnd}
                     </Heading>
                     <Text size="body" className="text-neutral-400 leading-relaxed">
                       {product.description}
                     </Text>
-                    <Button asChild className="bg-white/5 hover:bg-white/10 border border-white/15 text-white rounded-pill px-[22px] py-[13px] font-bold text-[12px] h-auto mt-2">
-                      <Link href="/getintouch">{product.cta}</Link>
-                    </Button>
+                    <Link href="/getintouch" className="inline-flex items-center gap-2 font-heading font-bold text-sm text-white hover:text-primary transition-colors duration-200 mt-1">
+                      {product.cta} <span aria-hidden>&rarr;</span>
+                    </Link>
                   </Stack>
 
-                  <HoverScale amount={1.02} className="flex justify-center">
-                    {product.mockup === "phone" ? (
-                      <PhoneMockup image={product.image} alt={product.label} />
-                    ) : (
-                      <BrowserMockup image={product.image} alt={product.label} />
-                    )}
-                  </HoverScale>
+                  {product.images.length > 1 ? (
+                    <div className="relative flex justify-center py-10">
+                      <div className="absolute left-6 top-2 w-44 h-44 rounded-full bg-purple-400/20 blur-3xl pointer-events-none" aria-hidden />
+                      <div className="absolute left-16 -top-6 w-32 h-32 rounded-full bg-purple-300/15 blur-2xl pointer-events-none" aria-hidden />
+                      <HoverScale amount={1.02} className="relative w-full max-w-[440px] aspect-[4/3.4]">
+                        <img
+                          src={product.images[1]}
+                          alt=""
+                          className="absolute top-0 right-0 w-[62%] h-auto rotate-[6deg] drop-shadow-2xl"
+                        />
+                        <img
+                          src={product.images[0]}
+                          alt={product.label}
+                          className="absolute bottom-0 left-0 w-[68%] h-auto -rotate-[3deg] drop-shadow-2xl"
+                        />
+                      </HoverScale>
+                    </div>
+                  ) : (
+                    <HoverScale amount={1.02} className="flex justify-center">
+                      <img
+                        src={product.images[0]}
+                        alt={product.label}
+                        className="w-full max-w-[420px] h-auto object-contain"
+                      />
+                    </HoverScale>
+                  )}
                 </Grid>
               </Reveal>
             ))}
@@ -352,7 +366,7 @@ export default function Products() {
       </Section>
 
       {/* Empowering Roles Section */}
-      <Section spacing="xl" className="bg-neutral-950 dark text-white border-t border-white/5">
+      <Section spacing="sm" className="bg-neutral-950 dark text-white border-t border-white/5">
         <Container size="wide">
           <Reveal>
             <Stack gap="xl" align="center">
@@ -413,7 +427,7 @@ export default function Products() {
       </Section>
 
       {/* Testimonials — infinite marquee, matching the reference's looping card track */}
-      <Section spacing="xl" className="bg-neutral-950 dark text-white border-t border-white/5 overflow-hidden">
+      <Section spacing="sm" className="bg-neutral-950 dark text-white border-t border-white/5 overflow-hidden">
         <Container size="wide">
           <Reveal>
             <Stack gap="md" align="center" className="text-center mb-12">
@@ -437,7 +451,7 @@ export default function Products() {
       </Section>
 
       {/* Closing CTA Section — glass card, two-line stacked heading */}
-      <Section spacing="xl" className="bg-neutral-950 dark text-white text-center">
+      <Section spacing="sm" className="bg-neutral-950 dark text-white text-center">
         <Container size="wide">
           <Reveal>
             <Box className="max-w-3xl mx-auto bg-white/[0.03] border border-white/10 rounded-2xl backdrop-blur-sm px-8 py-16">
