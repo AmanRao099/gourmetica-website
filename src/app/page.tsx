@@ -57,7 +57,7 @@ export default function Home() {
       {/* 2. Client Logo Cloud Block */}
       <LogoCloudBlock
         title="Trusted by 70+ Businesses"
-        subtitle="TRUSTED BY LEADING RESTAURANTS ACROSS THE UK"
+        subtitle="From independent businesses to growing multi-location brands, we've helped companies build stronger brands, generate more leads and accelerate growth."
         logos={homeContent.logoCloud.logos}
         variant="marquee"
       />

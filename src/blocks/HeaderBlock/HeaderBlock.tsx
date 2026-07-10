@@ -95,8 +95,8 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
       />
     );
 
-    const navLinkStyle: React.CSSProperties = { fontSize: 15, letterSpacing: '0.08em' };
-    const navLinkClass = "font-heading font-semibold tracking-wider text-white/90 hover:text-white transition-colors duration-200 uppercase";
+    const navLinkStyle: React.CSSProperties = { fontSize: 13.5, letterSpacing: '0.04em' };
+    const navLinkClass = "font-heading font-semibold whitespace-nowrap text-white/90 hover:text-white transition-colors duration-200 uppercase";
 
     return (
       <header
@@ -116,7 +116,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
         {...props}
       >
         <div
-          className="w-full mx-auto max-w-[1440px] flex items-center justify-between"
+          className="w-full mx-auto max-w-[1440px] flex items-center justify-between gap-x-8"
           style={{ paddingLeft: 'var(--page-gutter)', paddingRight: 'var(--page-gutter)' }}
         >
           <Link href="/" className="logo-link shrink-0" onClick={() => setIsOpen(false)}>
@@ -124,8 +124,8 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
           </Link>
 
           {/* ── Desktop Nav ── */}
-          <nav className="hidden lg:flex items-center">
-            <ul className="flex items-center list-none" style={{ gap: 18 }}>
+          <nav className="hidden xl:flex items-center min-w-0">
+            <ul className="flex items-center list-none" style={{ gap: 12 }}>
               {navItems.map((item) => {
                 if (item.label === 'Services') {
                   return (
@@ -159,74 +159,59 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                         </svg>
                       </Link>
 
-                      {/* ── Clean White Dropdown ── */}
+                      {/* ── Compact Dropdown ── */}
                       <div
                         className={cn(
-                          "absolute top-full left-1/2 -translate-x-1/2 pt-4 transition-all duration-[180ms] ease-out",
+                          "absolute top-full left-0 pt-3 transition-all duration-[180ms] ease-out origin-top-left",
                           dropdownOpen
-                            ? "opacity-100 translate-y-0 pointer-events-auto"
-                            : "opacity-0 -translate-y-2 pointer-events-none"
+                            ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+                            : "opacity-0 -translate-y-1.5 scale-[0.98] pointer-events-none"
                         )}
                       >
-                        {/* Dropdown card — dark premium simple stacked */}
+                        {/* Dropdown card — small, dark premium */}
                         <div
-                          className="rounded-2xl overflow-hidden"
+                          className="rounded-xl overflow-hidden"
                           style={{
-                            width: 'min(420px, calc(100vw - 48px))',
+                            width: 'min(248px, calc(100vw - 32px))',
                             backgroundColor: 'rgba(12,12,12,0.97)',
                             backdropFilter: 'blur(24px) saturate(150%)',
                             WebkitBackdropFilter: 'blur(24px) saturate(150%)',
-                            boxShadow: '0 30px 70px rgba(0,0,0,0.45), 0 8px 24px rgba(0,0,0,0.20)',
-                            border: '1px solid rgba(255,255,255,0.06)',
+                            boxShadow: '0 20px 45px rgba(0,0,0,0.4), 0 4px 14px rgba(0,0,0,0.2)',
+                            border: '1px solid rgba(255,255,255,0.07)',
                           }}
                         >
                           {/* Service list */}
-                          <div className="py-4 px-3 flex flex-col gap-1.5">
-                            {SERVICES.map((service, idx) => {
-                              const hasPage = !service.href.startsWith('/#');
-
-                              return (
-                                <Link
-                                  key={idx}
-                                  href={service.href}
-                                  className="group flex flex-col transition-all duration-[260ms] ease-out rounded-xl"
-                                  style={{
-                                    padding: '10px 20px',
-                                    backgroundColor: 'transparent',
-                                    borderLeft: '2px solid transparent',
-                                  }}
-                                  onClick={(e) => {
-                                    setDropdownOpen(false);
-                                    handleLinkClick(e, service.href);
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    const el = e.currentTarget as HTMLElement;
-                                    el.style.backgroundColor = 'rgba(255,255,255,0.03)';
-                                    el.style.paddingLeft = '28px';
-                                    if (hasPage) {
-                                      el.style.borderLeftColor = '#E42528';
-                                    }
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    const el = e.currentTarget as HTMLElement;
-                                    el.style.backgroundColor = 'transparent';
-                                    el.style.paddingLeft = '20px';
-                                    el.style.borderLeftColor = 'transparent';
-                                  }}
+                          <div className="py-1.5 px-1.5 flex flex-col">
+                            {SERVICES.map((service, idx) => (
+                              <Link
+                                key={idx}
+                                href={service.href}
+                                className="group relative flex items-center gap-2 rounded-lg transition-colors duration-150"
+                                style={{ padding: '7px 10px' }}
+                                onClick={(e) => {
+                                  setDropdownOpen(false);
+                                  handleLinkClick(e, service.href);
+                                }}
+                                onMouseEnter={(e) => {
+                                  (e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(255,255,255,0.05)';
+                                }}
+                                onMouseLeave={(e) => {
+                                  (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent';
+                                }}
+                              >
+                                <span
+                                  className="shrink-0 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+                                  style={{ width: 4, height: 4 }}
+                                  aria-hidden
+                                />
+                                <span
+                                  className="font-heading font-semibold text-white/85 group-hover:text-white transition-colors duration-150"
+                                  style={{ fontSize: 12.5, letterSpacing: '0.01em' }}
                                 >
-                                  {/* Title */}
-                                  <span
-                                    className="font-heading font-bold transition-colors duration-150 text-white/95"
-                                    style={{
-                                      fontSize: 15,
-                                      letterSpacing: '0.02em',
-                                    }}
-                                  >
-                                    {service.title}
-                                  </span>
-                                </Link>
-                              );
-                            })}
+                                  {service.title}
+                                </span>
+                              </Link>
+                            ))}
                           </div>
                         </div>
                       </div>
@@ -248,8 +233,8 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                 );
               })}
               {cta && (
-                <li className="nav-item cta-btn">
-                  <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[34px] py-3.5 font-bold uppercase tracking-[0.05em] text-[12px] h-auto">
+                <li className="nav-item cta-btn ml-2">
+                  <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[24px] py-3 font-bold uppercase tracking-[0.04em] text-[12px] h-auto whitespace-nowrap">
                     <Link href={cta.href}>{cta.label}</Link>
                   </Button>
                 </li>
@@ -259,7 +244,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
 
           {/* ── Mobile Toggle ── */}
           <button
-            className="lg:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-50"
+            className="xl:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-50"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -272,7 +257,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
         {/* ── Mobile Menu ── */}
         {isOpen && (
           <Box
-            className="fixed inset-0 bg-neutral-950 z-40 lg:hidden flex flex-col h-screen overflow-y-auto"
+            className="fixed inset-0 bg-neutral-950 z-40 xl:hidden flex flex-col h-screen overflow-y-auto"
             style={{ paddingTop: 96, paddingLeft: 'var(--page-gutter)', paddingRight: 'var(--page-gutter)' }}
           >
             <Flex direction="col" gap="md" as="nav">

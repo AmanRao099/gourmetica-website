@@ -86,25 +86,33 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
             paddingRight: 96,
           }}
         >
-          {/* Editorial Divider */}
+          {/* Intro line */}
           <FadeIn
             delay={trustMotion.divider.delay}
             duration={trustMotion.divider.duration}
             viewport={{ once: true, margin: '-40px' }}
             className="flex justify-center"
           >
-            <div
-              style={{
-                width: 72,
-                height: 1,
-                backgroundColor: '#D6D3D1',
-                opacity: 0.6,
-              }}
-            />
+            {subtitle && (
+              <p
+                className="text-center"
+                style={{
+                  fontFamily: 'var(--font-secondary)',
+                  fontSize: 16,
+                  fontWeight: 400,
+                  lineHeight: 1.6,
+                  color: '#6B6B6B',
+                  maxWidth: 620,
+                  margin: 0,
+                }}
+              >
+                {subtitle}
+              </p>
+            )}
           </FadeIn>
 
-          {/* 28px after divider */}
-          <div style={{ height: 28 }} />
+          {/* 20px before heading */}
+          <div style={{ height: 20 }} />
 
           {/* Heading */}
           <FadeUp
@@ -114,27 +122,43 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
             viewport={{ once: true, margin: '-40px' }}
             className="flex justify-center"
           >
-            {subtitle && (
-              <p
-                className="text-center"
+            {title && (
+              <h2
+                className="text-center font-heading font-bold"
                 style={{
-                  fontFamily: 'var(--font-mont)',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.22em',
-                  color: '#525252',
-                  maxWidth: 720,
+                  fontSize: 'clamp(28px, 4vw, 40px)',
+                  lineHeight: 1.15,
+                  color: 'var(--color-black)',
                   margin: 0,
                 }}
               >
-                {subtitle}
-              </p>
+                {title}
+              </h2>
             )}
           </FadeUp>
 
-          {/* 48px before logo band */}
-          <div style={{ height: 48 }} />
+          {/* 24px before divider */}
+          <div style={{ height: 24 }} />
+
+          {/* Accent Divider */}
+          <FadeIn
+            delay={trustMotion.heading.delay + 0.06}
+            duration={trustMotion.divider.duration}
+            viewport={{ once: true, margin: '-40px' }}
+            className="flex justify-center"
+          >
+            <div
+              style={{
+                width: 56,
+                height: 3,
+                borderRadius: 2,
+                backgroundColor: 'var(--color-primary)',
+              }}
+            />
+          </FadeIn>
+
+          {/* 40px before logo band */}
+          <div style={{ height: 40 }} />
 
           {/* Logo Band with structural borders */}
           <FadeIn

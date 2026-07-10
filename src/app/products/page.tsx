@@ -1,17 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 import { Section, Container, Grid, Box, Stack, Flex } from "@/core/primitives";
 import { Heading, Text } from "@/core/typography";
 import { Button } from "@/core/components";
 import { Video } from "@/core/components/Video";
-import { Reveal } from "@/core/motion";
+import { Reveal, Stagger, StaggerItem, HoverScale } from "@/core/motion";
 import { cn } from "@/core/utils";
+import { Typewriter } from "./Typewriter";
+import { BrowserMockup } from "./BrowserMockup";
+import { PhoneMockup } from "./PhoneMockup";
 
-const ROTATING_WORDS = ["restaurant", "pub", "cafe", "hotel"];
+const ROTATING_WORDS = ["hospitality", "restaurant", "pub", "cafe", "hotel"];
 
-const FEATURE_CARDS = [
+const MISSION_ITEMS = [
   {
     image: "/images/banner/OttoKichenMain-min-min.jpg",
     title: "Supporting hospitality.",
@@ -26,6 +30,29 @@ const FEATURE_CARDS = [
     image: "/images/banner/PiyazMain-min-min.jpg",
     title: "Quality and reliable.",
     description: "Our platform is trusted by hospitality businesses across the UK for reliability and performance. From sleek designs to robust functionality, TABLY keeps your website as dependable as your service.",
+  },
+];
+
+const PRODUCT_SHOWCASE = [
+  {
+    label: "TABLY Enterprise",
+    heading: "Website management ",
+    highlight: "at scale",
+    headingEnd: " for hospitality groups.",
+    description: "The all-in-one platform helping hospitality groups create and manage content across brand websites, collections and individual venues—at scale.",
+    cta: "Explore Enterprise",
+    mockup: "browser" as const,
+    image: "/images/banner/sevices2.jpg",
+  },
+  {
+    label: "TABLY Generator",
+    heading: "The ",
+    highlight: "fastest",
+    headingEnd: " way to get an independent venue website online.",
+    description: "Give independent operators a quick, guided way to launch a professional venue website—optimised out of the box for bookings and enquiries.",
+    cta: "Explore Website Generator",
+    mockup: "phone" as const,
+    image: "/images/banner/LizzNewBg.jpg",
   },
 ];
 
@@ -89,6 +116,11 @@ const TESTIMONIALS = [
     name: "Placeholder Name",
     title: "Placeholder Title, Placeholder Company",
   },
+  {
+    quote: "Placeholder quote — the platform is completely scalable and adding new venues has been effortless as we've grown.",
+    name: "Placeholder Name",
+    title: "Placeholder Title, Placeholder Group",
+  },
 ];
 
 function Blob({ className }: { className: string }) {
@@ -101,18 +133,33 @@ function Blob({ className }: { className: string }) {
   );
 }
 
+function Avatar({ name }: { name: string }) {
+  return (
+    <Box className="w-9 h-9 rounded-full bg-primary/20 text-primary flex items-center justify-center font-heading font-bold text-xs flex-shrink-0">
+      {name.split(" ").map((n) => n[0]).join("")}
+    </Box>
+  );
+}
+
+function TestimonialCard({ t }: { t: (typeof TESTIMONIALS)[number] }) {
+  return (
+    <Stack gap="lg" className="bg-white/[0.03] border border-white/10 rounded-md p-6 h-full justify-between w-[320px] flex-shrink-0">
+      <Text size="body-sm" className="italic text-neutral-300 leading-relaxed">&ldquo;{t.quote}&rdquo;</Text>
+      <Flex align="center" gap="sm">
+        <Avatar name={t.name} />
+        <Stack gap="none">
+          <Text size="body-sm" className="font-bold text-white">{t.name}</Text>
+          <Text size="body-sm" className="text-neutral-500 text-xs">{t.title}</Text>
+        </Stack>
+      </Flex>
+    </Stack>
+  );
+}
+
 export default function Products() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [wordIndex, setWordIndex] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setWordIndex((i) => (i + 1) % ROTATING_WORDS.length);
-    }, 2200);
-    return () => clearInterval(interval);
-  }, []);
 
   const handlePlay = () => {
     videoRef.current?.play();
@@ -123,8 +170,8 @@ export default function Products() {
 
   return (
     <main className="bg-warm-white min-h-screen">
-      {/* Hero Section */}
-      <Section className="relative bg-neutral-950 dark text-white pt-32 pb-24 border-b border-white/5 overflow-hidden" spacing="none">
+      {/* Hero Section — headline, trust logos, and video preview all within one header block */}
+      <Section className="relative bg-neutral-950 dark text-white pt-32 pb-16 border-b border-white/5 overflow-hidden" spacing="none">
         <Blob className="w-[420px] h-[420px] bg-primary -top-24 -left-24" />
         <Blob className="w-[380px] h-[380px] bg-neutral-500 -top-16 -right-16" />
         <Blob className="w-[340px] h-[340px] bg-primary bottom-0 -left-10 translate-y-1/2" />
@@ -142,15 +189,13 @@ export default function Products() {
               </Link>
 
               <Heading level={1} size="display-lg" className="leading-tight">
-                Website Operations Platform
+                The platform for managing
+                <br />
+                <Typewriter words={ROTATING_WORDS} className="text-primary" /> websites.
               </Heading>
 
               <Text size="body-lg" className="text-neutral-400 max-w-2xl">
-                Manage content at scale across{" "}
-                <span className="text-primary font-semibold inline-block min-w-[92px] text-left">
-                  {ROTATING_WORDS[wordIndex]}
-                </span>{" "}
-                venues, brands, domains and more.
+                TABLY empowers hospitality with simple, powerful website management products, designed to enhance your digital presence and streamline your operations.
               </Text>
 
               <Box className="pt-2">
@@ -162,40 +207,32 @@ export default function Products() {
               </Box>
             </Stack>
           </Reveal>
-        </Container>
-      </Section>
 
-      {/* Trust Section */}
-      <Section spacing="sm" className="bg-stone border-b border-neutral-200/40">
-        <Container size="wide">
-          <Reveal>
-            <Stack gap="lg" align="center" className="text-center">
-              <span className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-400">Trusted by the UK&apos;s Leading Hospitality Brands</span>
-              <Flex wrap="wrap" justify="center" align="center" gap="xl" className="mt-4">
+          {/* Trust logos */}
+          <Reveal delay={0.1}>
+            <Stack gap="lg" align="center" className="text-center mt-14">
+              <span className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-500">Trusted by the UK&apos;s Leading Hospitality Brands</span>
+              <Flex wrap="wrap" justify="center" align="center" gap="xl">
                 <Flex align="center" gap="xs" className="opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300">
                   <img src="/images/clients/ivytreeessex.co.uk.png" alt="Ivy Tree Logo" className="h-8 object-contain" />
-                  <span className="font-heading font-bold text-sm text-neutral-800">Ivy Tree</span>
+                  <span className="font-heading font-bold text-sm text-white">Ivy Tree</span>
                 </Flex>
                 <Flex align="center" gap="xs" className="opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300">
                   <img src="/images/clients/logo-2-B5td2iVI.png" alt="Otto Kitchen Logo" className="h-8 object-contain" />
-                  <span className="font-heading font-bold text-sm text-neutral-800">Otto Kitchen</span>
+                  <span className="font-heading font-bold text-sm text-white">Otto Kitchen</span>
                 </Flex>
                 <Flex align="center" gap="xs" className="opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300">
                   <img src="/images/clients/partner-37-C8HQ8M-R.png" alt="Rustiq Logo" className="h-8 object-contain" />
-                  <span className="font-heading font-bold text-sm text-neutral-800">Rustiq</span>
+                  <span className="font-heading font-bold text-sm text-white">Rustiq</span>
                 </Flex>
               </Flex>
             </Stack>
           </Reveal>
-        </Container>
-      </Section>
 
-      {/* Video Section */}
-      <Section spacing="lg" className="bg-neutral-950 dark">
-        <Container size="wide">
-          <Reveal>
+          {/* Hero video preview */}
+          <Reveal delay={0.2}>
             <Box
-              className="relative rounded-lg overflow-hidden cursor-pointer group"
+              className="relative rounded-lg overflow-hidden cursor-pointer group mt-14 max-w-5xl mx-auto"
               onClick={!isPlaying ? handlePlay : undefined}
             >
               <Video
@@ -226,84 +263,96 @@ export default function Products() {
         </Container>
       </Section>
 
-      {/* Mission / Platform Concept Section */}
+      {/* Mission + Feature List — merged into one section, matching reference layout */}
       <Section spacing="lg">
         <Container size="wide">
           <Grid columns={1} gap="xl" className="lg:grid-cols-12 items-start">
             <Box className="lg:col-span-5">
               <Reveal>
                 <Heading level={2} size="heading-xl" className="leading-tight">
-                  Reimagining how <span className="text-primary">hospitality</span> websites are managed.
+                  On a mission to create leading digital products for <span className="text-primary">hospitality</span>.
                 </Heading>
               </Reveal>
             </Box>
 
             <Box className="lg:col-span-7">
               <Reveal delay={0.1}>
-                <Stack gap="lg">
-                  <Text size="body-lg" className="font-semibold text-neutral-800 leading-relaxed">
-                    TABLY is built to simplify how hospitality businesses manage their websites.
-                  </Text>
-                  <Text size="body" className="text-neutral-600 leading-relaxed mb-2">
-                    We believe updating a website should be as easy as updating a social media post. That&apos;s why we&apos;ve created an intuitive platform that gives hospitality teams complete control over their websites, content, and digital operations—without relying on developers.
+                <Stack gap="md">
+                  <Text size="body" className="text-neutral-600 leading-relaxed">
+                    TABLY is revolutionising the way hospitality businesses manage their online presence. We want to empower business teams and independent operators with easy to use, flexible and connectable website management tools, enabling them to focus on expanding their reach and delivering exceptional guest experiences.
                   </Text>
                   <Link href="/aboutus" className="inline-flex items-center gap-2 font-heading font-bold text-sm text-neutral-900 hover:text-primary transition-colors duration-200 w-fit">
                     More About Us <span aria-hidden>&rarr;</span>
                   </Link>
-
-                  <Stack gap="md" className="border-t border-neutral-100 pt-6">
-                    <Flex gap="md" align="start">
-                      <Box className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-heading font-bold text-sm flex-shrink-0 mt-0.5">1</Box>
-                      <Stack gap="none">
-                        <Heading level={4} size="heading-sm" className="mb-1">Launch Your Website in Days</Heading>
-                        <Text size="body-sm" className="text-neutral-600">Get your business online quickly with a professionally designed website—no lengthy development process.</Text>
-                      </Stack>
-                    </Flex>
-
-                    <Flex gap="md" align="start">
-                      <Box className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-heading font-bold text-sm flex-shrink-0 mt-0.5">2</Box>
-                      <Stack gap="none">
-                        <Heading level={4} size="heading-sm" className="mb-1">Update Your Content in Minutes</Heading>
-                        <Text size="body-sm" className="text-neutral-600">Easily edit menus, images, events, and pages without any technical knowledge.</Text>
-                      </Stack>
-                    </Flex>
-
-                    <Flex gap="md" align="start">
-                      <Box className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-heading font-bold text-sm flex-shrink-0 mt-0.5">3</Box>
-                      <Stack gap="none">
-                        <Heading level={4} size="heading-sm" className="mb-1">Designed to Grow Your Business</Heading>
-                        <Text size="body-sm" className="text-neutral-600">SEO-ready and built to convert visitors into customers.</Text>
-                      </Stack>
-                    </Flex>
-                  </Stack>
                 </Stack>
               </Reveal>
             </Box>
           </Grid>
+
+          <Stagger className="mt-16">
+            <Grid columns={1} gap="lg" className="md:grid-cols-3">
+              {MISSION_ITEMS.map((item) => (
+                <StaggerItem key={item.title}>
+                  <Stack gap="sm">
+                    <Box className="aspect-[4/5] rounded-md overflow-hidden bg-neutral-100">
+                      <img src={item.image} alt="" className="w-full h-full object-cover" />
+                    </Box>
+                    <Heading level={3} size="heading-sm" className="mt-2">{item.title}</Heading>
+                    <Text size="body-sm" className="text-neutral-600 leading-relaxed">{item.description}</Text>
+                  </Stack>
+                </StaggerItem>
+              ))}
+            </Grid>
+          </Stagger>
         </Container>
       </Section>
 
-      {/* Feature Cards Section (placeholder copy/images) */}
-      <Section spacing="lg" className="pt-0">
-        <Container size="wide">
-          <Grid columns={1} gap="lg" className="md:grid-cols-3">
-            {FEATURE_CARDS.map((card, idx) => (
-              <Reveal key={card.title} delay={idx * 0.08}>
-                <Stack gap="sm">
-                  <Box className="aspect-[4/5] rounded-md overflow-hidden bg-neutral-100">
-                    <img src={card.image} alt="" className="w-full h-full object-cover" />
-                  </Box>
-                  <Heading level={3} size="heading-sm" className="mt-2">{card.title}</Heading>
-                  <Text size="body-sm" className="text-neutral-600 leading-relaxed">{card.description}</Text>
-                </Stack>
+      {/* Product Showcase — browser + phone mockups, mirroring 24social's Enterprise / My Place split */}
+      <Section spacing="xl" className="relative bg-neutral-950 dark text-white overflow-hidden">
+        <Blob className="w-[420px] h-[420px] bg-primary top-1/4 -left-32" />
+        <Blob className="w-[380px] h-[380px] bg-neutral-500 bottom-0 -right-24" />
+
+        <Container size="wide" className="relative">
+          <Stack gap="xl">
+            {PRODUCT_SHOWCASE.map((product, idx) => (
+              <Reveal key={product.label} delay={idx * 0.1}>
+                <Grid
+                  columns={1}
+                  gap="xl"
+                  className={cn(
+                    "lg:grid-cols-2 items-center",
+                    idx % 2 === 1 && "lg:[&>*:first-child]:order-2"
+                  )}
+                >
+                  <Stack gap="md" align="start">
+                    <span className="text-primary font-heading font-bold text-xs uppercase tracking-wider">{product.label}</span>
+                    <Heading level={3} size="heading-lg" className="leading-tight">
+                      {product.heading}<span className="text-primary">{product.highlight}</span>{product.headingEnd}
+                    </Heading>
+                    <Text size="body" className="text-neutral-400 leading-relaxed">
+                      {product.description}
+                    </Text>
+                    <Button asChild className="bg-white/5 hover:bg-white/10 border border-white/15 text-white rounded-pill px-[22px] py-[13px] font-bold text-[12px] h-auto mt-2">
+                      <Link href="/getintouch">{product.cta}</Link>
+                    </Button>
+                  </Stack>
+
+                  <HoverScale amount={1.02} className="flex justify-center">
+                    {product.mockup === "phone" ? (
+                      <PhoneMockup image={product.image} alt={product.label} />
+                    ) : (
+                      <BrowserMockup image={product.image} alt={product.label} />
+                    )}
+                  </HoverScale>
+                </Grid>
               </Reveal>
             ))}
-          </Grid>
+          </Stack>
         </Container>
       </Section>
 
-      {/* Empowering Roles Section (placeholder copy) */}
-      <Section spacing="xl" className="bg-neutral-950 dark text-white">
+      {/* Empowering Roles Section */}
+      <Section spacing="xl" className="bg-neutral-950 dark text-white border-t border-white/5">
         <Container size="wide">
           <Reveal>
             <Stack gap="xl" align="center">
@@ -328,35 +377,47 @@ export default function Products() {
                 ))}
               </Flex>
 
-              <Grid columns={1} gap="xl" className="lg:grid-cols-2 items-center w-full pt-4">
-                <Box>
-                  <Stack gap="md" align="start">
-                    <span className="text-primary font-heading font-bold text-xs uppercase tracking-wider">{activeRole.eyebrow}</span>
-                    <Heading level={3} size="heading-lg" className="leading-tight">
-                      {activeRole.heading}
-                    </Heading>
-                    <Text size="body" className="text-neutral-400 leading-relaxed">
-                      {activeRole.description}
-                    </Text>
-                    <Button asChild className="bg-white/5 hover:bg-white/10 border border-white/15 text-white rounded-pill px-[22px] py-[13px] font-bold text-[12px] h-auto mt-2">
-                      <Link href="/getintouch">{activeRole.cta}</Link>
-                    </Button>
-                  </Stack>
-                </Box>
-                <Box className="rounded-lg overflow-hidden aspect-video">
-                  <img src={activeRole.image} alt={activeRole.label} className="w-full h-full object-cover" />
-                </Box>
-              </Grid>
+              <Box className="w-full pt-4 overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeTab}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3, exit: { duration: 0.1 } }}
+                  >
+                    <Grid columns={1} gap="xl" className="lg:grid-cols-2 items-center">
+                      <Box>
+                        <Stack gap="md" align="start">
+                          <span className="text-primary font-heading font-bold text-xs uppercase tracking-wider">{activeRole.eyebrow}</span>
+                          <Heading level={3} size="heading-lg" className="leading-tight">
+                            {activeRole.heading}
+                          </Heading>
+                          <Text size="body" className="text-neutral-400 leading-relaxed">
+                            {activeRole.description}
+                          </Text>
+                          <Button asChild className="bg-white/5 hover:bg-white/10 border border-white/15 text-white rounded-pill px-[22px] py-[13px] font-bold text-[12px] h-auto mt-2">
+                            <Link href="/getintouch">{activeRole.cta}</Link>
+                          </Button>
+                        </Stack>
+                      </Box>
+                      <Box className="rounded-lg overflow-hidden aspect-video">
+                        <img src={activeRole.image} alt={activeRole.label} className="w-full h-full object-cover" />
+                      </Box>
+                    </Grid>
+                  </motion.div>
+                </AnimatePresence>
+              </Box>
             </Stack>
           </Reveal>
         </Container>
       </Section>
 
-      {/* Testimonials Section (placeholder quotes) */}
-      <Section spacing="xl" className="bg-neutral-950 dark text-white border-t border-white/5">
+      {/* Testimonials — infinite marquee, matching the reference's looping card track */}
+      <Section spacing="xl" className="bg-neutral-950 dark text-white border-t border-white/5 overflow-hidden">
         <Container size="wide">
           <Reveal>
-            <Stack gap="md" align="center" className="text-center mb-4">
+            <Stack gap="md" align="center" className="text-center mb-12">
               <Heading level={2} size="heading-xl">
                 Feedback from industry <span className="text-primary">leaders</span>.
               </Heading>
@@ -365,47 +426,40 @@ export default function Products() {
               </Text>
             </Stack>
           </Reveal>
-
-          <Grid columns={1} gap="md" className="md:grid-cols-2 lg:grid-cols-4 mt-8">
-            {TESTIMONIALS.map((t, idx) => (
-              <Reveal key={idx} delay={idx * 0.06}>
-                <Stack gap="lg" className="bg-white/[0.03] border border-white/10 rounded-md p-6 h-full justify-between">
-                  <Text size="body-sm" className="italic text-neutral-300 leading-relaxed">&ldquo;{t.quote}&rdquo;</Text>
-                  <Flex align="center" gap="sm">
-                    <Box className="w-9 h-9 rounded-full bg-primary/20 text-primary flex items-center justify-center font-heading font-bold text-xs flex-shrink-0">
-                      {t.name.split(" ").map((n) => n[0]).join("")}
-                    </Box>
-                    <Stack gap="none">
-                      <Text size="body-sm" className="font-bold text-white">{t.name}</Text>
-                      <Text size="body-sm" className="text-neutral-500 text-xs">{t.title}</Text>
-                    </Stack>
-                  </Flex>
-                </Stack>
-              </Reveal>
-            ))}
-          </Grid>
         </Container>
+
+        <div className="testimonial-marquee">
+          <div className="testimonial-marquee-track">
+            {[...TESTIMONIALS, ...TESTIMONIALS].map((t, idx) => (
+              <TestimonialCard key={idx} t={t} />
+            ))}
+          </div>
+        </div>
       </Section>
 
-      {/* Closing CTA Section */}
+      {/* Closing CTA Section — glass card, two-line stacked heading */}
       <Section spacing="xl" className="bg-neutral-950 dark text-white text-center">
         <Container size="wide">
           <Reveal>
-            <Stack gap="lg" align="center" className="max-w-3xl mx-auto">
-              <Heading level={2} size="heading-xl">
-                Book a <span className="text-primary">discovery call</span> for a no-sales chat.
-              </Heading>
-              <Text size="body-lg" className="text-neutral-400">
-                Our discovery call gives us the opportunity to understand your current business goals and pain points before selling you anything.
-              </Text>
-              <Box className="pt-4">
-                <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto">
-                  <Link href="/getintouch">
-                    Book a Discovery Call
-                  </Link>
-                </Button>
-              </Box>
-            </Stack>
+            <Box className="max-w-3xl mx-auto bg-white/[0.03] border border-white/10 rounded-2xl backdrop-blur-sm px-8 py-16">
+              <Stack gap="lg" align="center">
+                <Heading level={2} size="heading-xl">
+                  Book a <span className="text-primary">discovery call</span>
+                  <br />
+                  for a no-sales chat.
+                </Heading>
+                <Text size="body-lg" className="text-neutral-400">
+                  Our discovery call gives us the opportunity to understand your current business goals and pain points before selling you anything.
+                </Text>
+                <Box className="pt-2">
+                  <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto">
+                    <Link href="/getintouch">
+                      Book a Discovery Call
+                    </Link>
+                  </Button>
+                </Box>
+              </Stack>
+            </Box>
           </Reveal>
         </Container>
       </Section>
@@ -416,6 +470,29 @@ export default function Products() {
           Built by Gourmetica.
         </Text>
       </Box>
+
+      <style jsx>{`
+        .testimonial-marquee {
+          width: 100%;
+          overflow: hidden;
+        }
+
+        .testimonial-marquee-track {
+          display: flex;
+          width: max-content;
+          gap: 24px;
+          animation: testimonialScroll 45s linear infinite;
+        }
+
+        @keyframes testimonialScroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+      `}</style>
     </main>
   );
 }
