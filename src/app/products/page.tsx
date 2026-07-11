@@ -253,8 +253,10 @@ export default function Products() {
       </Section>
 
       {/* Video — scroll-driven full-bleed expansion. Lives OUTSIDE the hero
-          Section: its overflow-hidden ancestor would disable position:sticky. */}
-      <div className="bg-neutral-950 dark">
+          Section: its overflow-hidden ancestor would disable position:sticky.
+          Spacing via padding (not child margins), which can't collapse and
+          expose the page background between the dark blocks. */}
+      <div className="bg-neutral-950 dark pt-6">
         <ScrollExpandVideo />
       </div>
 
