@@ -126,6 +126,19 @@
   }
 }
 
+/* Shared client-logo treatment (ClientLogoChip): natural colors, muted
+   grayscale at rest, brand color when the surrounding .group is hovered. */
+.client-logo-img {
+  filter: grayscale(1);
+  opacity: 0.85;
+  transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .client-logo-img {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
 /* Global Fonts and Branding CSS (MUST be at the very top) */
 
 /* ── Responsive Page Gutter ──
