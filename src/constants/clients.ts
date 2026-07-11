@@ -2,7 +2,7 @@ import type { Client } from "@/types";
 
 export const CLIENTS: Client[] = [
   { name: "Ivy Tree", logo: "ivytreeessex.co.uk.png", url: "https://www.ivytreeessex.co.uk/" },
-  { name: "GBD", logo: "gbddoner.com.png", url: "https://www.greatbritishdoner.com/" },
+  { name: "GBD", logo: "greatbritishdoner.com.png", url: "https://www.greatbritishdoner.com/" },
   { name: "Biitest", logo: "easyfishoil-BcWQELwb.png", url: "https://biitest.com/" },
   { name: "Leila", logo: "leilabrasserie.co.uk.png", url: "https://leilabrasserie.co.uk/" },
   { name: "Carnivoor", logo: "carnivoorkitchen.com.png", url: "https://www.carnivoorkitchen.com/" },
@@ -14,7 +14,9 @@ export const CLIENTS: Client[] = [
   { name: "Masa", logo: "masarestaurant.com.tr-en.png", url: "https://www.masarestaurant.com.tr/en" },
   { name: "Pide Co", logo: "pide-co.com.png", url: "https://pide-co.com/" },
   { name: "Beboz", logo: "beboz-zebra-printer-logo.png", url: "https://www.beboz.com/" },
-  { name: "Sensei 4", logo: "partner-11-CAy4UNtl.png", url: "#" },
+  // Client-confirmed logo (was wrongly assigned the template's "workflex" file).
+  // Note: the logo artwork itself reads "Sensei⁴" — display name per client instruction.
+  { name: "Sensei", logo: "sensei.png", url: "#" },
   { name: "Solo Kitchen", logo: "thesolo.co.uk.png", url: "https://www.thesolo.co.uk/" },
   { name: "The Shire grill", logo: "theshiregrill.co.uk.jpg", url: "https://theshiregrill.co.uk/" },
   { name: "Phoenix", logo: "phoenix-solutions-logo1.png", url: "#" },
@@ -34,7 +36,9 @@ export const CLIENTS: Client[] = [
   { name: "Payiz", logo: "partner-40-DkbGD1kn.png", url: "https://payizrestaurant.co.uk/" },
   { name: "Otto Kitchen", logo: "logo-2-B5td2iVI.png", url: "https://otto-kitchen.co.uk/" },
   { name: "Leonidas", logo: "contacts-business-CZyHw53k.png", url: "https://leonidas-lezzetleri.com.tr/" },
-  { name: "Cutty Sark", logo: "insider-new-svMIpSGw.png", url: "#" },
+  // No real logo supplied yet (previous file was the template's "Insider" logo);
+  // empty logo renders the name-only fallback tile. URL also pending client input.
+  { name: "Cutty Sark", logo: "", url: "#" },
   { name: "Iznik", logo: "melis-BkKAxZuZ.png", url: "https://iznik.co.uk/" },
   { name: "No5 Dining & Lounge", logo: "robinfood-qTdRwVHK.png", url: "https://no5dining.co.uk/" },
   { name: "Mangal Meze", logo: "sporzy-BpffarPA.png", url: "https://www.mangalmeze.com/" }

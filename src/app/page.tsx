@@ -13,7 +13,7 @@ const sliderSlides = [
     title: "Advertising",
     tag: "Case Study",
     excerpt: "Our advertising team welds their Growth Marketing background together with the fresh dynamics of digital technologies. From Google Ads to display ads, we have the answers for every kind of question to advertise your restaurant.",
-    image: "/images/banner/NO5Main-min-min.jpg",
+    image: "/images/banner/No5Main-min-min.jpg",
     link: "/results/no5",
     partners: [
       { src: "/HOME PAGE/product/badge-google-partner.png", alt: "Google Partner" },
@@ -474,6 +474,13 @@ export default function Home() {
         }
 
         /* Responsive */
+        @media (max-width: 767px) {
+          .section-header-row {
+            flex-wrap: wrap;
+            gap: 12px;
+          }
+        }
+
         @media (max-width: 991px) {
           .opening-remark-grid {
             grid-template-columns: 1fr;

@@ -194,8 +194,8 @@ export default function Products() {
                 TABLY empowers hospitality with simple, powerful website management products, designed to enhance your digital presence and streamline your operations.
               </Text>
 
-              <Box className="pt-2">
-                <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto">
+              <Box className="pt-2 w-full sm:w-auto">
+                <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto min-h-[44px] w-full sm:w-auto">
                   <Link href="/getintouch">
                     Book a Discovery Call
                   </Link>
@@ -204,24 +204,33 @@ export default function Products() {
             </Stack>
           </Reveal>
 
-          {/* Trust logos */}
+          {/* Trust logos — stacked and centered on mobile, single row from sm up */}
           <Reveal delay={0.1}>
             <Stack gap="lg" align="center" className="text-center mt-14">
-              <span className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-500">Trusted by the UK&apos;s Leading Hospitality Brands</span>
-              <Flex wrap="wrap" justify="center" align="center" gap="xl">
-                <Flex align="center" gap="xs" className="opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300">
-                  <img src="/images/clients/ivytreeessex.co.uk.png" alt="Ivy Tree Logo" className="h-8 object-contain" />
-                  <span className="font-heading font-bold text-sm text-white">Ivy Tree</span>
-                </Flex>
-                <Flex align="center" gap="xs" className="opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300">
-                  <img src="/images/clients/logo-2-B5td2iVI.png" alt="Otto Kitchen Logo" className="h-8 object-contain" />
-                  <span className="font-heading font-bold text-sm text-white">Otto Kitchen</span>
-                </Flex>
-                <Flex align="center" gap="xs" className="opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300">
-                  <img src="/images/clients/partner-37-C8HQ8M-R.png" alt="Rustiq Logo" className="h-8 object-contain" />
-                  <span className="font-heading font-bold text-sm text-white">Rustiq</span>
-                </Flex>
-              </Flex>
+              <span className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-500 px-5">Trusted by the UK&apos;s Leading Hospitality Brands</span>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 w-full px-5">
+                {[
+                  { href: "https://www.ivytreeessex.co.uk/", src: "/images/clients/ivytreeessex.co.uk.png", name: "Ivy Tree" },
+                  { href: "https://otto-kitchen.co.uk/", src: "/images/clients/logo-2-B5td2iVI.png", name: "Otto Kitchen" },
+                  { href: "https://rustiqrestaurant.co.uk/", src: "/images/clients/partner-37-C8HQ8M-R.png", name: "Rustiq" },
+                ].map((brand) => (
+                  <a
+                    key={brand.name}
+                    href={brand.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col items-center gap-1 min-h-[44px] justify-center opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300"
+                  >
+                    <Flex align="center" gap="xs">
+                      <img src={brand.src} alt={`${brand.name} Logo`} className="h-8 object-contain" />
+                      <span className="font-heading font-bold text-sm text-white">{brand.name}</span>
+                    </Flex>
+                    <span className="hidden sm:block text-[10px] font-heading font-bold uppercase tracking-wider text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-200" aria-hidden>
+                      Visit Website ↗
+                    </span>
+                  </a>
+                ))}
+              </div>
             </Stack>
           </Reveal>
 
@@ -374,13 +383,14 @@ export default function Products() {
                 Empowering roles across <span className="text-primary">Hospitality</span>.
               </Heading>
 
-              <Flex wrap="wrap" justify="center" gap="lg" className="border-b border-white/10 w-full pb-0">
+              {/* Horizontally scrollable on mobile so 4 tabs never wrap into a cramped grid */}
+              <div className="role-tabs-row flex gap-6 md:gap-8 md:flex-wrap md:justify-center overflow-x-auto md:overflow-visible border-b border-white/10 w-full pb-0">
                 {ROLE_TABS.map((tab, idx) => (
                   <button
                     key={tab.label}
                     onClick={() => setActiveTab(idx)}
                     className={cn(
-                      "font-heading font-semibold text-sm pb-4 border-b-2 transition-colors duration-200",
+                      "font-heading font-semibold text-sm pb-4 pt-2 border-b-2 transition-colors duration-200 shrink-0 whitespace-nowrap min-h-[44px]",
                       activeTab === idx
                         ? "text-white border-primary"
                         : "text-neutral-500 border-transparent hover:text-neutral-300"
@@ -389,7 +399,7 @@ export default function Products() {
                     {tab.label}
                   </button>
                 ))}
-              </Flex>
+              </div>
 
               <Box className="w-full pt-4 overflow-hidden">
                 <AnimatePresence mode="wait">
@@ -454,7 +464,7 @@ export default function Products() {
       <Section spacing="sm" className="bg-neutral-950 dark text-white text-center">
         <Container size="wide">
           <Reveal>
-            <Box className="max-w-3xl mx-auto bg-white/[0.03] border border-white/10 rounded-2xl backdrop-blur-sm px-8 py-16">
+            <Box className="max-w-3xl mx-auto bg-white/[0.03] border border-white/10 rounded-2xl backdrop-blur-sm px-5 sm:px-8 py-12 sm:py-16">
               <Stack gap="lg" align="center">
                 <Heading level={2} size="heading-xl">
                   Book a <span className="text-primary">discovery call</span>
@@ -464,8 +474,8 @@ export default function Products() {
                 <Text size="body-lg" className="text-neutral-400">
                   Our discovery call gives us the opportunity to understand your current business goals and pain points before selling you anything.
                 </Text>
-                <Box className="pt-2">
-                  <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto">
+                <Box className="pt-2 w-full sm:w-auto">
+                  <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto min-h-[44px] w-full sm:w-auto">
                     <Link href="/getintouch">
                       Book a Discovery Call
                     </Link>
@@ -477,14 +487,24 @@ export default function Products() {
         </Container>
       </Section>
 
-      {/* Footer attribution note — sits between the page and the global site footer */}
-      <Box className="bg-neutral-950 dark text-center py-6 border-t border-white/5">
-        <Text size="body-sm" className="text-neutral-500 font-heading uppercase tracking-wider">
+      {/* Footer attribution note — sits between the page and the global site footer.
+          Text defaults to align="left", so it must be centered explicitly. */}
+      <Box className="bg-neutral-950 dark text-center py-6 px-5 border-t border-white/5">
+        <Text size="body-sm" align="center" className="text-neutral-500 font-heading uppercase tracking-wider mx-auto">
           Built by Gourmetica.
         </Text>
       </Box>
 
       <style jsx>{`
+        .role-tabs-row {
+          scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .role-tabs-row::-webkit-scrollbar {
+          display: none;
+        }
+
         .testimonial-marquee {
           width: 100%;
           overflow: hidden;

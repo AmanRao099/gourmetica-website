@@ -45,7 +45,7 @@ export const homeContent = {
       { src: "/images/clients/antepkitchen.co.uk.jpg", alt: "Antep Kitchen" },
       { src: "/images/clients/beboz-zebra-printer-logo.png", alt: "Beboz" },
       { src: "/images/clients/carnivoorkitchen.com.png", alt: "Carnivoor Kitchen" },
-      { src: "/images/clients/gbddoner.com.png", alt: "GBD Doner" },
+      { src: "/images/clients/greatbritishdoner.com.png", alt: "Great British Doner" },
       { src: "/images/clients/gustoricco.com.png", alt: "Gusto Ricco" },
       { src: "/images/clients/ivytreeessex.co.uk.png", alt: "Ivy Tree" },
       { src: "/images/clients/leilabrasserie.co.uk.png", alt: "Leila Brasserie" },
@@ -61,7 +61,7 @@ export const homeContent = {
       { src: "/images/clients/zone-essex.png", alt: "Zone Essex" },
       { src: "/images/clients/anatolian--.png", alt: "Anatolian Turkish Kitchen" },
       { src: "/images/clients/renaflame-logos-(2).png", alt: "Renaflame" },
-      { src: "/images/clients/screen-shot-2026-07-04-at-12.18.17.png", alt: "Cutty Sark" }
+      { src: "/images/clients/sensei.png", alt: "Sensei" }
     ]
   },
   openingRemark: {

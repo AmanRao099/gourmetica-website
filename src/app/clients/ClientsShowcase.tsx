@@ -1,28 +1,99 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CLIENTS } from "@/constants/clients";
 import { Box, Grid, Flex } from "@/core/primitives";
 import { Reveal, Stagger } from "@/core/motion";
 
+/**
+ * Decides which chip a logo will actually read on. Light artwork (white or
+ * pale-gray marks made for dark sites) needs a dark chip; dark artwork gets a
+ * white chip. For opaque files the background (sampled from the corners) is
+ * excluded so a white canvas doesn't masquerade as light artwork.
+ */
+function useLogoTone(src: string): "light" | "dark" {
+  const [tone, setTone] = useState<"light" | "dark">("dark");
+
+  useEffect(() => {
+    let active = true;
+    const img = new Image();
+    // NB: img.decode() is deliberately avoided — with ~37 logos mounting at once
+    // Chromium rejects part of the decode queue and the tone silently stays at
+    // the default. onload + drawImage has no such limit.
+    img.onload = () => {
+      if (!active) return;
+      try {
+        const size = 48;
+        const canvas = document.createElement("canvas");
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        ctx.drawImage(img, 0, 0, size, size);
+        const d = ctx.getImageData(0, 0, size, size).data;
+
+        const total = size * size;
+        let visible = 0;
+        let lumaSum = 0;
+        for (let i = 0; i < d.length; i += 4) {
+          if (d[i + 3]! > 25) {
+            visible++;
+            lumaSum += 0.2126 * d[i]! + 0.7152 * d[i + 1]! + 0.0722 * d[i + 2]!;
+          }
+        }
+        // Opaque files bring their own background — a dark chip would just frame
+        // a light rectangle, so they always stay on the white chip.
+        if (visible / total > 0.98 || visible === 0) return;
+        if (lumaSum / visible > 175) setTone("light");
+      } catch {
+        /* keep the safe default */
+      }
+    };
+    img.src = src;
+    return () => {
+      active = false;
+    };
+  }, [src]);
+
+  return tone;
+}
+
+function ClientLogoChip({ logo, name }: { logo: string; name: string }) {
+  const tone = useLogoTone(`/images/clients/${logo}`);
+  return (
+    <Flex
+      align="center"
+      justify="center"
+      className={`flex-1 w-full min-h-0 mb-4 rounded-lg p-4 transition-all duration-300 ${
+        tone === "light" ? "bg-[#26262b] border border-white/10" : "bg-white"
+      }`}
+    >
+      <img
+        src={`/images/clients/${logo}`}
+        alt={`${name} Logo`}
+        className="client-logo-img max-h-full max-w-[82%] object-contain group-hover:scale-105"
+      />
+    </Flex>
+  );
+}
+
 export default function ClientsShowcase() {
   return (
     <Box className="w-full bg-black py-8">
-      {/* Self-contained logo filters style block */}
+      {/* Logos render in natural colors on a white chip inside the dark card.
+          The old brightness(0)/invert(1) white-out required transparent PNGs and
+          flattened every opaque-background file into a gray box — this treatment
+          has no such failure mode. Muted grayscale by default, brand color on hover. */}
       <style>{`
-        .client-logo-png {
-          filter: brightness(0) invert(1) opacity(0.65);
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        .client-logo-img {
+          filter: grayscale(1);
+          opacity: 0.85;
+          transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .group:hover .client-logo-png {
-          filter: brightness(0) invert(1) opacity(1);
-        }
-        .client-logo-jpg {
-          filter: invert(1) contrast(140%) brightness(0.8) opacity(0.65);
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .group:hover .client-logo-jpg {
-          filter: invert(1) contrast(140%) brightness(1.1) opacity(1);
+        .group:hover .client-logo-img {
+          filter: grayscale(0);
+          opacity: 1;
         }
       `}</style>
 
@@ -42,23 +113,26 @@ export default function ClientsShowcase() {
       <Stagger>
         <Grid columns={2} gap="sm" className="md:grid-cols-3 lg:grid-cols-4" style={{ gap: "20px" }}>
           {CLIENTS.map((client, index) => {
-            const isJpg = client.logo.endsWith('.jpg') || client.logo.endsWith('.jpeg');
             return (
               <Reveal key={index} delay={(index % 8) * 0.03}>
                 <a
                   href={client.url === "#" ? undefined : client.url}
                   target={client.url === "#" ? undefined : "_blank"}
                   rel="noopener noreferrer"
-                  className="group flex flex-col justify-between items-center aspect-[4/3] bg-[#161618] p-6 transition-all duration-300 hover:bg-[#1c1c1f] hover:scale-[1.03] relative overflow-hidden rounded-xl cursor-pointer"
+                  className="group flex flex-col justify-between items-center aspect-[4/3] bg-[#161618] p-5 transition-all duration-300 hover:bg-[#1c1c1f] hover:scale-[1.03] relative overflow-hidden rounded-xl cursor-pointer"
                 >
-                  {/* Logo Box */}
-                  <Flex align="center" justify="center" className="flex-1 w-full h-full min-h-0 transition-all duration-300">
-                    <img
-                      src={`/images/clients/${client.logo}`}
-                      alt={`${client.name} Logo`}
-                      className={`max-h-[55%] max-w-[70%] object-contain transition-all duration-300 group-hover:scale-105 ${isJpg ? 'client-logo-jpg' : 'client-logo-png'}`}
-                    />
-                  </Flex>
+                  {/* Logo chip — tone-aware surface (white for dark artwork, dark
+                      for white artwork) so any file reads. Clients without a
+                      supplied logo yet get a name-only tile. */}
+                  {client.logo ? (
+                    <ClientLogoChip logo={client.logo} name={client.name} />
+                  ) : (
+                    <Flex align="center" justify="center" className="flex-1 w-full min-h-0 mb-4 rounded-lg border border-white/10">
+                      <span className="font-heading font-bold text-lg uppercase tracking-wider text-white/40 text-center px-2 transition-all duration-300 group-hover:text-white/60">
+                        {client.name}
+                      </span>
+                    </Flex>
+                  )}
 
                   {/* Bottom row: Name & Label */}
                   <Flex align="center" justify="center" className="border-t border-neutral-900/40 w-full pt-3 relative h-5 shrink-0">
