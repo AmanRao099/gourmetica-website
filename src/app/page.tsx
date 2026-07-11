@@ -79,7 +79,7 @@ export default function Home() {
                 </p>
               </div>
               <Link href="/whygourmetica" className="view-all-link" style={{ marginTop: "24px", display: "inline-flex" }}>
-                Why Gourmetica <i className="fa fa-arrow-right" aria-hidden="true"></i>
+                Why Gourmetica <i className="not-italic" aria-hidden="true">→</i>
               </Link>
             </div>
             <div className="opening-remark-img">
@@ -104,7 +104,7 @@ export default function Home() {
           <div className="section-header-row">
             <h2>Featured Results</h2>
             <Link href="/results" className="view-all-link">
-              View All Client Stories <i className="fa fa-arrow-right" aria-hidden="true"></i>
+              View All Client Stories <i className="not-italic" aria-hidden="true">→</i>
             </Link>
           </div>
 

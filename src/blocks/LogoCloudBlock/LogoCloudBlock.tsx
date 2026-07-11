@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { cn } from '@/core/utils';
 import { FadeIn, FadeUp, trustMotion } from '@/core/motion';
+import { ClientLogoChip } from '@/core/components/ClientLogoChip';
 import { LogoCloudBlockProps } from './LogoCloudBlock.types';
 
 export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockProps>(
@@ -19,36 +20,18 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
   ) => {
     const [isPaused, setIsPaused] = React.useState(false);
 
+    /* Same rendering foundation as the /clients grid and the /products trust
+       bar: natural-color artwork in a fixed-size tone-aware chip — no white-out
+       filter, so opaque-background files can never flatten into gray boxes. */
     const renderLogo = (logo: { src: string; alt: string; href?: string }, index: number) => {
-      const img = (
-        <div
-          className="flex items-center justify-center shrink-0"
-          style={{ height: 76, minWidth: 120, maxWidth: 190 }}
-        >
-          <img
-            src={logo.src}
-            alt={logo.alt}
-            style={{
-              maxHeight: 48,
-              maxWidth: '100%',
-              width: 'auto',
-              objectFit: 'contain',
-              opacity: 0.8,
-              filter: 'grayscale(100%)',
-              transition: 'all 300ms ease-out',
-              cursor: 'pointer',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '1';
-              e.currentTarget.style.transform = 'scale(1.06)';
-              e.currentTarget.style.filter = 'grayscale(0%)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '0.8';
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.filter = 'grayscale(100%)';
-            }}
-            loading="lazy"
+      const filename = logo.src.split('/').pop() ?? logo.src;
+      const chip = (
+        <div className="group shrink-0" title={logo.alt}>
+          <ClientLogoChip
+            logo={filename}
+            name={logo.alt}
+            className="w-40 h-20 rounded-lg p-3 border border-neutral-200 shadow-sm"
+            imgClassName="group-hover:scale-105"
           />
         </div>
       );
@@ -56,11 +39,11 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
       if (logo.href) {
         return (
           <a key={index} href={logo.href} target="_blank" rel="noopener noreferrer" className="block focus-visible:outline-none">
-            {img}
+            {chip}
           </a>
         );
       }
-      return <React.Fragment key={index}>{img}</React.Fragment>;
+      return <React.Fragment key={index}>{chip}</React.Fragment>;
     };
 
     return (

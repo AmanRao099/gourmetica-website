@@ -64,8 +64,8 @@ export interface ClientLogoChipProps {
 
 /**
  * Shared client-logo tile: natural-color artwork on a tone-aware surface.
- * Pair with the global `.client-logo-img` styles (grayscale at rest, brand
- * color on `.group` hover).
+ * Pair with the global `.client-logo-img` styles (full natural color; the
+ * transform transition supports the `.group`-hover scale effect).
  */
 export function ClientLogoChip({ logo, name, className, imgClassName }: ClientLogoChipProps) {
   const tone = useLogoTone(`/images/clients/${logo}`);
