@@ -17,9 +17,21 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
     },
     ref
   ) => {
-    const [isPaused, setIsPaused] = React.useState(false);
+    /**
+     * The band is black, so each logo has to be treated by how its artwork is authored:
+     *  - JPG has no transparency; invert alone turns its white backing black (invisible) and its dark mark white.
+     *  - PNG line art on transparency knocks out to a clean white silhouette.
+     *  - Badge artwork with a filled background would collapse into a solid disc, so it stays as authored.
+     */
+    const logoFilter = (logo: { src: string; keepOriginalColour?: boolean }, opacity: number) => {
+      if (logo.keepOriginalColour) return `opacity(${opacity})`;
+      const isJpg = /\.jpe?g$/i.test(logo.src);
+      return isJpg
+        ? `invert(1) contrast(140%) brightness(0.8) opacity(${opacity})`
+        : `brightness(0) invert(1) opacity(${opacity})`;
+    };
 
-    const renderLogo = (logo: { src: string; alt: string; href?: string }, index: number) => {
+    const renderLogo = (logo: { src: string; alt: string; href?: string; keepOriginalColour?: boolean }, index: number) => {
       const img = (
         <div
           className="flex items-center justify-center shrink-0 px-8"
@@ -31,20 +43,7 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
             style={{
               maxHeight: 32,
               width: 'auto',
-              opacity: 0.35,
-              filter: 'grayscale(100%)',
-              transition: 'all 300ms ease-out',
-              cursor: 'pointer',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '1';
-              e.currentTarget.style.transform = 'scale(1.05)';
-              e.currentTarget.style.filter = 'grayscale(0%)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '0.35';
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.filter = 'grayscale(100%)';
+              filter: logoFilter(logo, 0.55),
             }}
             loading="lazy"
           />
@@ -65,15 +64,15 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
       <section
         ref={ref}
         className={cn('w-full overflow-hidden', className)}
-        style={{ backgroundColor: '#FAFAF9' }}
+        style={{ backgroundColor: '#000000' }}
         aria-label="Trusted partners"
         {...props}
       >
-        {/* ── Gradient Transition from Hero ── */}
+        {/* ── Transition from the hero (#09090b) into the black band ── */}
         <div
           style={{
             height: 80,
-            background: 'linear-gradient(to bottom, rgba(9,9,11,0.10) 0%, rgba(250,250,249,0.45) 30%, rgba(250,250,249,0.80) 65%, #FAFAF9 100%)',
+            background: 'linear-gradient(to bottom, #09090b 0%, #000000 100%)',
           }}
         />
 
@@ -101,7 +100,7 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
                   fontSize: 16,
                   fontWeight: 400,
                   lineHeight: 1.6,
-                  color: '#6B6B6B',
+                  color: 'rgba(255,255,255,0.62)',
                   maxWidth: 620,
                   margin: 0,
                 }}
@@ -128,7 +127,7 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
                 style={{
                   fontSize: 'clamp(28px, 4vw, 40px)',
                   lineHeight: 1.15,
-                  color: 'var(--color-black)',
+                  color: 'var(--color-white)',
                   margin: 0,
                 }}
               >
@@ -169,23 +168,15 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
             <div
               className="overflow-hidden"
               style={{
-                borderTop: '1px solid rgba(0,0,0,0.08)',
-                borderBottom: '1px solid rgba(0,0,0,0.08)',
+                borderTop: '1px solid rgba(255,255,255,0.10)',
+                borderBottom: '1px solid rgba(255,255,255,0.10)',
                 paddingTop: 36,
                 paddingBottom: 36,
               }}
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
             >
               <div
-                className={cn(
-                  "flex w-max items-center",
-                  !isPaused && "animate-marquee"
-                )}
-                style={{
-                  gap: 24,
-                  animationPlayState: isPaused ? 'paused' : 'running',
-                }}
+                className="flex w-max items-center animate-marquee"
+                style={{ gap: 24 }}
               >
                 {[...logos, ...logos, ...logos].map((logo, index) => renderLogo(logo, index))}
               </div>

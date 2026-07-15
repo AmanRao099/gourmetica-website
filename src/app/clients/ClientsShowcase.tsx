@@ -24,6 +24,15 @@ export default function ClientsShowcase() {
         .group:hover .client-logo-jpg {
           filter: invert(1) contrast(140%) brightness(1.1) opacity(1);
         }
+        /* Badge logos whose artwork has a filled background: inverting them
+           collapses the badge into a solid disc, so show them as authored. */
+        .client-logo-original {
+          filter: opacity(0.8);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .group:hover .client-logo-original {
+          filter: opacity(1);
+        }
       `}</style>
 
       {/* Giant Title Header */}
@@ -43,6 +52,11 @@ export default function ClientsShowcase() {
         <Grid columns={2} gap="sm" className="md:grid-cols-3 lg:grid-cols-4" style={{ gap: "20px" }}>
           {CLIENTS.map((client, index) => {
             const isJpg = client.logo.endsWith('.jpg') || client.logo.endsWith('.jpeg');
+            const logoFilterClass = client.keepOriginalColour
+              ? 'client-logo-original'
+              : isJpg
+                ? 'client-logo-jpg'
+                : 'client-logo-png';
             return (
               <Reveal key={index} delay={(index % 8) * 0.03}>
                 <a
@@ -56,7 +70,7 @@ export default function ClientsShowcase() {
                     <img
                       src={`/images/clients/${client.logo}`}
                       alt={`${client.name} Logo`}
-                      className={`max-h-[55%] max-w-[70%] object-contain transition-all duration-300 group-hover:scale-105 ${isJpg ? 'client-logo-jpg' : 'client-logo-png'}`}
+                      className={`max-h-[55%] max-w-[70%] object-contain transition-all duration-300 group-hover:scale-105 ${logoFilterClass}`}
                     />
                   </Flex>
 

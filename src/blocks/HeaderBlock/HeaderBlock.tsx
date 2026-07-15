@@ -95,23 +95,31 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
       />
     );
 
-    const navLinkStyle: React.CSSProperties = { fontSize: 13.5, letterSpacing: '0.04em' };
-    const navLinkClass = "font-heading font-semibold whitespace-nowrap text-white/90 hover:text-white transition-colors duration-200 uppercase";
+    // Matches gourmetica.co.uk: Eina 03, 12px/16px, weight 500, 2px tracking, uppercase.
+    const navLinkStyle: React.CSSProperties = {
+      fontFamily: 'var(--font-mont)',
+      fontSize: 12,
+      fontWeight: 500,
+      lineHeight: '16px',
+      letterSpacing: '2px',
+      padding: '15px 22px 13px',
+    };
+    // Colours live in globals.css: the unlayered `a { color: inherit }` there outranks
+    // Tailwind's layered text-* utilities, so they cannot be set with classes here.
+    const navLinkClass = "nav-link whitespace-nowrap transition-colors duration-200 uppercase";
 
     return (
       <header
         ref={ref}
         className={cn(
-          'fixed top-0 left-0 w-full z-[1000] flex items-center transition-all duration-300 border-b',
+          'site-header fixed top-0 left-0 w-full z-[1000] flex items-center transition-all duration-300 border-b',
           isScrolled
-            ? 'h-[64px] md:h-[72px] lg:h-[88px] border-white/5 shadow-[0_8px_40px_rgba(0,0,0,0.28)]'
+            ? 'is-scrolled h-[64px] md:h-[72px] lg:h-[88px] border-white/5 shadow-[0_8px_40px_rgba(0,0,0,0.28)]'
             : 'h-[72px] md:h-[80px] lg:h-[104px] border-transparent',
           className
         )}
         style={{
-          backgroundColor: isScrolled ? "rgba(10, 10, 10, 0.72)" : "transparent",
-          backdropFilter: isScrolled ? "blur(18px) saturate(160%)" : "none",
-          WebkitBackdropFilter: isScrolled ? "blur(18px) saturate(160%)" : "none",
+          backgroundColor: isScrolled ? "#e42528" : "transparent",
         }}
         {...props}
       >
@@ -220,7 +228,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                 }
 
                 return (
-                  <li key={item.label} className="nav-item">
+                  <li key={item.label}>
                     <Link
                       href={item.href}
                       className={navLinkClass}
@@ -233,8 +241,8 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                 );
               })}
               {cta && (
-                <li className="nav-item cta-btn ml-2">
-                  <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[24px] py-3 font-bold uppercase tracking-[0.04em] text-[12px] h-auto whitespace-nowrap">
+                <li className="ml-2">
+                  <Button asChild className="cta-link rounded-none px-[24px] py-3 font-bold uppercase tracking-[0.04em] text-[12px] h-auto whitespace-nowrap">
                     <Link href={cta.href}>{cta.label}</Link>
                   </Button>
                 </li>
@@ -268,7 +276,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                       <div className="flex items-center justify-between w-full">
                         <Link
                           href={item.href}
-                          className="font-heading font-bold text-2xl uppercase text-white hover:text-brand-500 transition-colors"
+                          className="mobile-nav-link font-heading font-bold text-2xl uppercase transition-colors"
                           onClick={(e) => {
                             setIsOpen(false);
                             setMobileServicesOpen(false);
@@ -296,7 +304,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                             <Link
                               key={idx}
                               href={service.href}
-                              className="font-heading font-medium text-white/70 hover:text-white py-2.5 transition-colors"
+                              className="mobile-nav-sublink font-heading font-medium py-2.5 transition-colors"
                               style={{ fontSize: 15 }}
                               onClick={(e) => {
                                 setIsOpen(false);
@@ -316,7 +324,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="font-heading font-bold text-2xl uppercase text-white hover:text-brand-500 transition-colors"
+                    className="mobile-nav-link font-heading font-bold text-2xl uppercase transition-colors"
                     onClick={(e) => {
                       setIsOpen(false);
                       handleLinkClick(e, item.href);
@@ -327,7 +335,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                 );
               })}
               {cta && (
-                <Button asChild className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto w-full mt-4">
+                <Button asChild className="mobile-cta-link rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto w-full mt-4">
                   <Link href={cta.href} onClick={() => setIsOpen(false)}>{cta.label}</Link>
                 </Button>
               )}

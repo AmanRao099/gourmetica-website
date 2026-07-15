@@ -214,11 +214,11 @@ export default function Products() {
                   <span className="font-heading font-bold text-sm text-white">Ivy Tree</span>
                 </Flex>
                 <Flex align="center" gap="xs" className="opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300">
-                  <img src="/images/clients/logo-2-B5td2iVI.png" alt="Otto Kitchen Logo" className="h-8 object-contain" />
+                  <img src="/images/clients/otto.png" alt="Otto Kitchen Logo" className="h-8 object-contain" />
                   <span className="font-heading font-bold text-sm text-white">Otto Kitchen</span>
                 </Flex>
                 <Flex align="center" gap="xs" className="opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300">
-                  <img src="/images/clients/partner-37-C8HQ8M-R.png" alt="Rustiq Logo" className="h-8 object-contain" />
+                  <img src="/images/clients/rustiq.png" alt="Rustiq Logo" className="h-8 object-contain" />
                   <span className="font-heading font-bold text-sm text-white">Rustiq</span>
                 </Flex>
               </Flex>
