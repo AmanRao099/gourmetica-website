@@ -12,6 +12,6 @@ describe('Radio component', () => {
     );
     const btns = container.querySelectorAll('button');
     expect(btns.length).toBe(2);
-    expect(btns[0].getAttribute('role')).toBe('radio');
+    expect(btns[0]?.getAttribute('role')).toBe('radio');
   });
 });

@@ -1,27 +1,3 @@
-import type { LucideIcon } from 'lucide-react';
-
-export interface ServiceHero {
-  title: string;
-  subtitle: string;
-  banner: string;
-  alt: string;
-}
-
-export interface ServiceFeature {
-  icon?: LucideIcon;
-  title: string;
-  description: string;
-}
-
-export interface ServiceCTA {
-  title: string;
-  description: string;
-  primaryLabel: string;
-  primaryHref: string;
-  secondaryLabel?: string;
-  secondaryHref?: string;
-}
-
 export interface ServiceSEO {
   title: string;
   description: string;
@@ -29,14 +5,8 @@ export interface ServiceSEO {
   ogImage?: string;
 }
 
-export interface ServiceContent {
+/** Per-service metadata used for route generation and <head> tags. Body content lives in the bespoke page components under `../pages`. */
+export interface ServiceSEOEntry {
   slug: string;
-  hero: ServiceHero;
-  intro: {
-    heading?: string;
-    paragraphs: string[];
-  };
-  features: ServiceFeature[];
-  cta: ServiceCTA;
   seo: ServiceSEO;
 }

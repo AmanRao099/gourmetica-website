@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { cn } from '@/core/utils';
 import { FadeIn, FadeUp, trustMotion } from '@/core/motion';
+import { ClientLogoChip } from '@/core/components/ClientLogoChip';
 import { LogoCloudBlockProps } from './LogoCloudBlock.types';
 
 export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockProps>(
@@ -19,34 +20,18 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
   ) => {
     const [isPaused, setIsPaused] = React.useState(false);
 
+    /* Same rendering foundation as the /clients grid and the /products trust
+       bar: natural-color artwork in a fixed-size tone-aware chip — no white-out
+       filter, so opaque-background files can never flatten into gray boxes. */
     const renderLogo = (logo: { src: string; alt: string; href?: string }, index: number) => {
-      const img = (
-        <div
-          className="flex items-center justify-center shrink-0 px-8"
-          style={{ height: 56 }}
-        >
-          <img
-            src={logo.src}
-            alt={logo.alt}
-            style={{
-              maxHeight: 32,
-              width: 'auto',
-              opacity: 0.35,
-              filter: 'grayscale(100%)',
-              transition: 'all 300ms ease-out',
-              cursor: 'pointer',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '1';
-              e.currentTarget.style.transform = 'scale(1.05)';
-              e.currentTarget.style.filter = 'grayscale(0%)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '0.35';
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.filter = 'grayscale(100%)';
-            }}
-            loading="lazy"
+      const filename = logo.src.split('/').pop() ?? logo.src;
+      const chip = (
+        <div className="group shrink-0" title={logo.alt}>
+          <ClientLogoChip
+            logo={filename}
+            name={logo.alt}
+            className="w-40 h-20 rounded-lg p-3 border border-neutral-200 shadow-sm"
+            imgClassName="group-hover:scale-105"
           />
         </div>
       );
@@ -54,11 +39,11 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
       if (logo.href) {
         return (
           <a key={index} href={logo.href} target="_blank" rel="noopener noreferrer" className="block focus-visible:outline-none">
-            {img}
+            {chip}
           </a>
         );
       }
-      return <React.Fragment key={index}>{img}</React.Fragment>;
+      return <React.Fragment key={index}>{chip}</React.Fragment>;
     };
 
     return (
@@ -82,29 +67,37 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
           className="w-full mx-auto"
           style={{
             maxWidth: 1320,
-            paddingLeft: 96,
-            paddingRight: 96,
+            paddingLeft: 'var(--page-gutter)',
+            paddingRight: 'var(--page-gutter)',
           }}
         >
-          {/* Editorial Divider */}
+          {/* Intro line */}
           <FadeIn
             delay={trustMotion.divider.delay}
             duration={trustMotion.divider.duration}
             viewport={{ once: true, margin: '-40px' }}
             className="flex justify-center"
           >
-            <div
-              style={{
-                width: 72,
-                height: 1,
-                backgroundColor: '#D6D3D1',
-                opacity: 0.6,
-              }}
-            />
+            {subtitle && (
+              <p
+                className="text-center"
+                style={{
+                  fontFamily: 'var(--font-secondary)',
+                  fontSize: 16,
+                  fontWeight: 400,
+                  lineHeight: 1.6,
+                  color: '#6B6B6B',
+                  maxWidth: 620,
+                  margin: 0,
+                }}
+              >
+                {subtitle}
+              </p>
+            )}
           </FadeIn>
 
-          {/* 28px after divider */}
-          <div style={{ height: 28 }} />
+          {/* 20px before heading */}
+          <div style={{ height: 20 }} />
 
           {/* Heading */}
           <FadeUp
@@ -114,27 +107,43 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
             viewport={{ once: true, margin: '-40px' }}
             className="flex justify-center"
           >
-            {subtitle && (
-              <p
-                className="text-center"
+            {title && (
+              <h2
+                className="text-center font-heading font-bold"
                 style={{
-                  fontFamily: 'var(--font-mont)',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.22em',
-                  color: '#525252',
-                  maxWidth: 720,
+                  fontSize: 'clamp(28px, 4vw, 40px)',
+                  lineHeight: 1.15,
+                  color: 'var(--color-black)',
                   margin: 0,
                 }}
               >
-                {subtitle}
-              </p>
+                {title}
+              </h2>
             )}
           </FadeUp>
 
-          {/* 48px before logo band */}
-          <div style={{ height: 48 }} />
+          {/* 24px before divider */}
+          <div style={{ height: 24 }} />
+
+          {/* Accent Divider */}
+          <FadeIn
+            delay={trustMotion.heading.delay + 0.06}
+            duration={trustMotion.divider.duration}
+            viewport={{ once: true, margin: '-40px' }}
+            className="flex justify-center"
+          >
+            <div
+              style={{
+                width: 56,
+                height: 3,
+                borderRadius: 2,
+                backgroundColor: 'var(--color-primary)',
+              }}
+            />
+          </FadeIn>
+
+          {/* 40px before logo band */}
+          <div style={{ height: 40 }} />
 
           {/* Logo Band with structural borders */}
           <FadeIn
@@ -147,23 +156,30 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
               style={{
                 borderTop: '1px solid rgba(0,0,0,0.08)',
                 borderBottom: '1px solid rgba(0,0,0,0.08)',
-                paddingTop: 36,
-                paddingBottom: 36,
+                paddingTop: 44,
+                paddingBottom: 44,
+                /* Fade the strip edges so logos never appear hard-cropped */
+                maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
               }}
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
+              {/* Exactly two copies: the -50% marquee keyframe then loops seamlessly
+                  (three copies made the loop point jump by half a copy). */}
               <div
                 className={cn(
                   "flex w-max items-center",
                   !isPaused && "animate-marquee"
                 )}
                 style={{
-                  gap: 24,
+                  gap: 56,
+                  paddingRight: 56, // equal to the gap so the -50% loop seam is invisible
+                  animationDuration: '55s',
                   animationPlayState: isPaused ? 'paused' : 'running',
                 }}
               >
-                {[...logos, ...logos, ...logos].map((logo, index) => renderLogo(logo, index))}
+                {[...logos, ...logos].map((logo, index) => renderLogo(logo, index))}
               </div>
             </div>
           </FadeIn>
