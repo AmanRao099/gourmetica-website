@@ -24,6 +24,15 @@ const SERVICE_SLUGS: Record<string, string> = {
   'Advertising': 'advertising',
 };
 
+/* ─── Inline style constants (mirrors original gourmetica.co.uk exactly) ─── */
+const FONT_HEADING = '"Eina 03", Montserrat, sans-serif';
+const FONT_BODY = 'Raleway, sans-serif';
+const FONT_SERIF = 'TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif';
+const COLOR_WHITE = '#ffffff';
+const COLOR_BRAND = '#e62656';
+const BORDER_DEFAULT = 'rgba(255,255,255,0.1)';
+const COUNT_DEFAULT = 'rgba(255,255,255,0.3)';
+
 export function HomeServicesSection() {
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
 
@@ -31,177 +40,327 @@ export function HomeServicesSection() {
     setActiveAccordion(activeAccordion === index ? null : index);
   };
 
-  const renderAccordionItem = (service: typeof SERVICES[0], globalIndex: number) => {
+  const leftServices = SERVICES.slice(0, Math.ceil(SERVICES.length / 2));
+  const rightServices = SERVICES.slice(Math.ceil(SERVICES.length / 2));
+
+  const renderAccordionItem = (
+    service: typeof SERVICES[0],
+    globalIndex: number,
+    isFirstInColumn: boolean,
+  ) => {
     const isActive = activeAccordion === globalIndex;
-    const num = String(globalIndex + 1).padStart(2, '0');
+    const num = globalIndex + 1;
     const hasPage = SERVICES_WITH_PAGES.includes(service.title);
     const slug = SERVICE_SLUGS[service.title] || '';
-    const hasSubItems = service.subItems && service.subItems.length > 0;
 
     return (
       <div
         key={globalIndex}
-        className="border-b transition-all duration-[260ms] ease-out relative group"
         style={{
-          borderColor: 'rgba(255,255,255,0.08)',
-          minHeight: '160px',
-          paddingTop: '42px',
-          paddingBottom: '42px',
+          display: 'block',
+          position: 'relative',
+          marginTop: isFirstInColumn ? 0 : '28px',
         }}
       >
-        {/* Subtle row hover background */}
-        <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-[260ms] pointer-events-none" />
-
-        <div className="flex items-center justify-between relative w-full gap-6 px-4 md:px-6">
-          {/* Main Layout containing Number, Title, Description always visible */}
-          <div className="flex-1 flex flex-col md:flex-row md:items-start gap-6 md:gap-12">
-            {/* 01 Number */}
-            <span
-              className="font-heading font-medium text-neutral-500 select-none block transition-colors duration-200 group-hover:text-neutral-400"
-              style={{ fontSize: '18px', width: '28px', marginTop: '6px' }}
-            >
-              {num}
-            </span>
-
-            {/* Content block: Title + Description + Optional Subitems (expandable) */}
-            <div className="flex-1 flex flex-col gap-3">
-              <h3
-                className="font-heading font-semibold text-white/90 tracking-[-0.02em] cursor-pointer select-none group-hover:text-white transition-colors duration-200"
-                style={{ fontSize: '34px' }}
-                onClick={() => toggleAccordion(globalIndex)}
-              >
-                {service.title}
-              </h3>
-
-              {/* Description is ALWAYS visible */}
-              <p
-                className="text-white/60 font-secondary leading-[1.7] transition-opacity duration-200 group-hover:text-white/85"
-                style={{ fontSize: '18px', maxWidth: '42ch' }}
-              >
-                {service.desc}
-              </p>
-
-              {/* Expandable Area for Sub-features */}
-              {hasSubItems && (
-                <AnimatePresence initial={false}>
-                  {isActive && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0, y: 24 }}
-                      animate={{
-                        height: 'auto',
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                          height: { duration: motionTokens.standard.duration, ease: motionTokens.standard.ease },
-                          opacity: { duration: motionTokens.standard.duration, ease: motionTokens.standard.ease },
-                          y: { duration: motionTokens.standard.duration, ease: motionTokens.standard.ease },
-                        }
-                      }}
-                      exit={{
-                        height: 0,
-                        opacity: 0,
-                        y: 24,
-                        transition: {
-                          height: { duration: motionTokens.standard.duration, ease: motionTokens.standard.ease },
-                          opacity: { duration: motionTokens.standard.duration, ease: motionTokens.standard.ease },
-                          y: { duration: motionTokens.standard.duration, ease: motionTokens.standard.ease },
-                        }
-                      }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pt-6 pb-2">
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-l-2 border-[#E42528] pl-6">
-                          {service.subItems?.map((item, itemIdx) => (
-                            <li
-                              key={itemIdx}
-                              className="text-white/50 text-sm uppercase tracking-wider font-heading font-semibold"
-                            >
-                              • {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              )}
-
-              {/* Learn More link - always visible at the bottom if page exists, with 24px spacing */}
-              {hasPage && (
-                <div className="mt-6">
-                  <Link
-                    href={`/services/${slug}`}
-                    className="inline-flex items-center gap-2 font-heading font-semibold uppercase tracking-[0.12em] text-[#E42528] hover:text-white transition-all duration-200"
-                    style={{ fontSize: '13px' }}
-                  >
-                    Learn More
-                    <svg
-                      className="w-4 h-4 transition-transform duration-[180ms] ease-out group-hover:translate-x-1.5"
-                      fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </Link>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Plus Toggle (+) rotating 45deg to x — vertically centered & static position */}
-          <div className="flex items-center justify-center self-center h-full">
-            <button
-              className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 group-hover:border-[#E42528]/40 hover:bg-white/5 transition-all outline-none"
+        {/* Panel Heading */}
+        <div>
+          <h4
+            style={{
+              fontFamily: FONT_HEADING,
+              fontSize: '22px',
+              fontWeight: 600,
+              letterSpacing: '0.05em',
+              lineHeight: 1,
+              margin: 0,
+              color: COLOR_WHITE,
+            }}
+          >
+            <a
               onClick={() => toggleAccordion(globalIndex)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleAccordion(globalIndex); }}
               aria-expanded={isActive}
-              aria-label={`Toggle ${service.title}`}
+              style={{
+                fontFamily: FONT_HEADING,
+                padding: '22px 31px 22px 19px',
+                color: 'inherit',
+                display: 'block',
+                position: 'relative',
+                cursor: 'pointer',
+                borderBottom: `1px solid ${BORDER_DEFAULT}`,
+                transition: 'color 0.2s ease-in-out, border-color 0.2s ease-in-out',
+                textDecoration: 'none',
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget;
+                el.style.borderBottomColor = COLOR_BRAND;
+                el.style.color = COLOR_BRAND;
+                el.querySelectorAll<HTMLElement>('[data-plus-line]').forEach(
+                  (l) => (l.style.borderColor = COLOR_BRAND),
+                );
+                const count = el.querySelector<HTMLElement>('[data-count]');
+                if (count) count.style.color = COLOR_BRAND;
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget;
+                el.style.borderBottomColor = BORDER_DEFAULT;
+                el.style.color = COLOR_WHITE;
+                el.querySelectorAll<HTMLElement>('[data-plus-line]').forEach(
+                  (l) => (l.style.borderColor = COLOR_WHITE),
+                );
+                const count = el.querySelector<HTMLElement>('[data-count]');
+                if (count) count.style.color = COUNT_DEFAULT;
+              }}
             >
-              <motion.svg
-                className="w-4 h-4 text-white"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                viewBox="0 0 24 24"
-                animate={{ rotate: isActive ? 45 : 0 }}
-                transition={{
-                  duration: motionTokens.standard.duration,
-                  ease: motionTokens.standard.ease,
+              {/* Title text */}
+              <span>{service.title}</span>
+
+              {/* Plus (+) / Close (×) icon — CSS-only cross built from two border-lines */}
+              <i
+                style={{
+                  display: 'inline-block',
+                  verticalAlign: 'middle',
+                  height: '12px',
+                  width: '12px',
+                  position: 'absolute',
+                  top: '50%',
+                  transform: `translateY(-50%)${isActive ? ' rotate(45deg)' : ''}`,
+                  right: '10px',
+                  transition: 'transform 0.3s ease-in-out',
                 }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-              </motion.svg>
-            </button>
-          </div>
+                {/* Horizontal bar */}
+                <span
+                  data-plus-line=""
+                  style={{
+                    display: 'block',
+                    position: 'absolute',
+                    boxSizing: 'border-box',
+                    left: 0,
+                    right: 0,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    borderStyle: 'solid',
+                    borderWidth: '2px 0 0 0',
+                    borderColor: COLOR_WHITE,
+                    transition: 'border-color 0.2s ease-in-out',
+                  }}
+                />
+                {/* Vertical bar (hidden when open → the rotated cross shows ×) */}
+                {!isActive && (
+                  <span
+                    data-plus-line=""
+                    style={{
+                      display: 'block',
+                      position: 'absolute',
+                      boxSizing: 'border-box',
+                      left: '50%',
+                      bottom: 0,
+                      top: 0,
+                      transform: 'translateX(-50%)',
+                      borderStyle: 'solid',
+                      borderWidth: '0 0 0 2px',
+                      borderColor: COLOR_WHITE,
+                      transition: 'border-color 0.2s ease-in-out',
+                    }}
+                  />
+                )}
+              </i>
+
+              {/* Count number (positioned left of the title text) */}
+              <span
+                data-count=""
+                style={{
+                  bottom: '-3px',
+                  color: COUNT_DEFAULT,
+                  display: 'block',
+                  fontFamily: FONT_SERIF,
+                  fontSize: '13px',
+                  fontWeight: 400,
+                  letterSpacing: '0.03em',
+                  lineHeight: 1,
+                  paddingRight: '10px',
+                  position: 'absolute',
+                  right: '100%',
+                  whiteSpace: 'nowrap',
+                  transition: 'color 0.2s ease-in-out',
+                }}
+              >
+                {num}
+              </span>
+            </a>
+          </h4>
         </div>
+
+        {/* Panel Body — animated expand / collapse */}
+        <AnimatePresence initial={false}>
+          {isActive && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{
+                height: 'auto',
+                opacity: 1,
+                transition: {
+                  height: {
+                    duration: motionTokens.standard.duration,
+                    ease: motionTokens.standard.ease,
+                  },
+                  opacity: {
+                    duration: motionTokens.standard.duration,
+                    ease: motionTokens.standard.ease,
+                    delay: 0.05,
+                  },
+                },
+              }}
+              exit={{
+                height: 0,
+                opacity: 0,
+                transition: {
+                  height: {
+                    duration: motionTokens.standard.duration,
+                    ease: motionTokens.standard.ease,
+                  },
+                  opacity: {
+                    duration: motionTokens.standard.duration * 0.6,
+                    ease: motionTokens.standard.ease,
+                  },
+                },
+              }}
+              style={{ overflow: 'hidden' }}
+            >
+              <div style={{ padding: '35px 0 38px 19px', color: COLOR_WHITE }}>
+                <p
+                  style={{
+                    fontFamily: FONT_BODY,
+                    fontSize: '16px',
+                    fontWeight: 400,
+                    letterSpacing: '0.03em',
+                    lineHeight: 1.7,
+                    margin: 0,
+                  }}
+                >
+                  {service.desc}
+                </p>
+
+                {hasPage && (
+                  <p style={{ margin: '27px 0 0' }}>
+                    <Link
+                      href={`/services/${slug}`}
+                      style={{
+                        fontFamily: FONT_BODY,
+                        color: COLOR_WHITE,
+                        textDecoration: 'none',
+                        fontSize: '16px',
+                        fontWeight: 400,
+                        letterSpacing: '0.03em',
+                        lineHeight: 1.7,
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.textDecoration = 'underline';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.textDecoration = 'none';
+                      }}
+                    >
+                      Learn more
+                    </Link>
+                  </p>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   };
 
   return (
-    <section className="our-expertise py-[120px] md:py-[140px] bg-neutral-950" id="services">
-      <div className="mx-auto w-full max-w-[1320px] px-8 lg:px-20">
-        {/* Section Title Header */}
-        <div className="marketing-services-header flex items-center gap-4 mb-16">
-          <div className="marketing-services-logo">
-            <img src="/images/logo/PNG.4.png" alt="Gourmetica Logo" className="h-8 w-auto" />
-          </div>
-          <div className="marketing-services-title flex items-center gap-2 text-white">
-            <span className="arrow text-[#E42528]">→</span>
-            <span className="title-text font-heading font-bold tracking-[0.2em] uppercase text-sm" style={{ fontSize: '13px' }}>
-              MARKETING SERVICES
-            </span>
-          </div>
-        </div>
+    <section
+      className="our-expertise"
+      id="services"
+      style={{
+        backgroundColor: '#000000',
+        paddingTop: '125px',
+      }}
+    >
+      {/* ── Section Heading ── */}
+      <div
+        style={{
+          color: COLOR_WHITE,
+          fontSize: '14px',
+          fontFamily: FONT_HEADING,
+          fontWeight: 600,
+          letterSpacing: '0.15em',
+          lineHeight: 1,
+          margin: '0 auto',
+          maxWidth: '1140px',
+          padding: '0 50px',
+          textTransform: 'uppercase',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        {/* Logo */}
+        <img
+          src="/images/logo/PNG.4.png"
+          alt="Gourmetica Logo"
+          style={{ height: '32px', width: 'auto', marginRight: '16px', display: 'block' }}
+        />
 
-        {/* 2-Column Accordion Layout (Left: 1-5, Right: 6-9) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-20 gap-y-0 items-start">
-          {/* Left Column (Items 1-5) */}
-          <div className="flex flex-col">
-            {SERVICES.slice(0, 5).map((service, idx) => renderAccordionItem(service, idx))}
+        {/* Arrow SVG (exact match from original site) */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="31"
+          height="8"
+          fill="none"
+          style={{ display: 'inline-block', marginRight: '30px', verticalAlign: 'middle', flexShrink: 0 }}
+        >
+          <path
+            fill="rgba(255,255,255,0.2)"
+            d="M30.354 4.354a.5.5 0 0 0 0-.708L27.172.464a.5.5 0 1 0-.707.708L29.293 4l-2.828 2.828a.5.5 0 1 0 .707.708l3.182-3.182ZM0 4.5h30v-1H0v1Z"
+          />
+        </svg>
+
+        {/* Title text */}
+        <span>Marketing Services</span>
+      </div>
+
+      {/* ── Content Container ── */}
+      <div style={{ margin: '0 auto', maxWidth: '1140px' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            padding: '103px 0 147px',
+          }}
+        >
+          {/* Left Column */}
+          <div
+            style={{
+              margin: 0,
+              padding: '0 50px',
+              width: '50%',
+              boxSizing: 'border-box',
+            }}
+          >
+            {leftServices.map((service, idx) =>
+              renderAccordionItem(service, idx, idx === 0),
+            )}
           </div>
 
-          {/* Right Column (Items 6-9) */}
-          <div className="flex flex-col">
-            {SERVICES.slice(5, 9).map((service, idx) => renderAccordionItem(service, idx + 5))}
+          {/* Right Column */}
+          <div
+            style={{
+              margin: 0,
+              padding: '0 50px',
+              width: '50%',
+              boxSizing: 'border-box',
+            }}
+          >
+            {rightServices.map((service, idx) =>
+              renderAccordionItem(service, idx + leftServices.length, idx === 0),
+            )}
           </div>
         </div>
       </div>
