@@ -53,6 +53,9 @@ function ScrollExpandVideo() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [animated, setAnimated] = useState(false);
   const reducedMotion = useReducedMotion();
+  // Tracks whether the user has started playback, so scroll-in only resumes a
+  // video they actually played — it never auto-starts one on its own.
+  const wantsPlayRef = useRef(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
@@ -76,9 +79,37 @@ function ScrollExpandVideo() {
   const borderRadius = useTransform(smoothProgress, [0, 0.55], ["16px", "0px"]);
 
   const handlePlay = () => {
+    if (videoRef.current) {
+      // Click is a user gesture, so browsers allow audio: unmute before play.
+      videoRef.current.muted = false;
+    }
+    wantsPlayRef.current = true;
     videoRef.current?.play();
     setIsPlaying(true);
   };
+
+  // Pause the video when it scrolls out of view; resume it when back on screen
+  // (only if the user had started it). Re-attaches when the layout branch
+  // switches between the animated pin and the static fallback.
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        if (entry.isIntersecting) {
+          if (wantsPlayRef.current && el.paused) {
+            el.play().catch(() => {});
+          }
+        } else if (!el.paused) {
+          el.pause();
+        }
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [animated]);
 
   const videoEl = (
     <>
@@ -86,7 +117,6 @@ function ScrollExpandVideo() {
         ref={videoRef}
         aspectRatio="auto"
         radius="none"
-        muted
         loop
         playsInline
         poster="/product/card1.png"
