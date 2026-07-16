@@ -569,7 +569,7 @@ a {
 }
 
 .footer-bottom-col.info-col .signature-text {
-  color: var(--color-white);
+  color: var(--color-primary);
   font-family: var(--font-heading);
   font-size: 13px;
   font-weight: 600;

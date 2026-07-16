@@ -329,7 +329,7 @@ export default function Products() {
       {/* Footer attribution note — sits between the page and the global site footer.
           Text defaults to align="left", so it must be centered explicitly. */}
       <Box className="bg-neutral-950 dark text-center py-6 px-5 border-t border-white/5">
-        <Text size="body-sm" align="center" className="text-neutral-500 font-heading uppercase tracking-wider mx-auto">
+        <Text size="body-sm" align="center" className="text-primary font-heading uppercase tracking-wider mx-auto">
           Built by Gourmetica.
         </Text>
       </Box>
