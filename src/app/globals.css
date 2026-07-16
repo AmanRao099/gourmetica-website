@@ -377,6 +377,21 @@ a {
   background-color: #bd1a1d;
 }
 
+/* Scrolled (scroll-up state): the bar itself is brand red, so red-on-red would
+   vanish. Flip the CTA to white and link hover to white while scrolled. */
+.site-header.is-scrolled .nav-link:hover {
+  color: var(--color-white);
+}
+
+.site-header.is-scrolled .cta-link {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+}
+
+.site-header.is-scrolled .cta-link:hover {
+  background-color: rgba(255, 255, 255, 0.88);
+}
+
 /* Mobile menu overlay (same reason: colours cannot be set with Tailwind classes here). */
 .site-header .mobile-nav-link {
   color: var(--color-white);
