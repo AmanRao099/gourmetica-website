@@ -118,9 +118,13 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
     // Tailwind's layered text-* utilities, so they cannot be set with classes here.
     const navLinkClass = "nav-link whitespace-nowrap transition-colors duration-200 uppercase";
 
-    const isRedHeader = isScrolled && direction === 'up';
+    /* Scrolling down: bar goes fully transparent and only the logo (on its red
+       block) stays visible. Scrolling up (or landing mid-page): solid red bar
+       with everything shown. */
+    const isHidden = isScrolled && direction === 'down';
+    const isRedHeader = isScrolled && !isHidden;
     const headerBgColor = isScrolled
-      ? (direction === 'up' ? "#e42528" : "transparent")
+      ? (isRedHeader ? "#e42528" : "transparent")
       : (hasDarkHeader ? "#0a0a0a" : "transparent");
 
     return (
@@ -138,8 +142,6 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
         )}
         style={{
           backgroundColor: headerBgColor,
-          backdropFilter: isScrolled && !isRedHeader ? "blur(20px)" : "none",
-          WebkitBackdropFilter: isScrolled && !isRedHeader ? "blur(20px)" : "none",
         }}
         {...props}
       >
@@ -151,7 +153,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
             href="/"
             className="logo-link shrink-0 transition-all duration-300"
             style={{
-              backgroundColor: isRedHeader ? "#e42528" : "transparent",
+              backgroundColor: isScrolled ? "#e42528" : "transparent",
               padding: isScrolled ? "8px 16px" : "8px 0",
             }}
             onClick={() => setIsOpen(false)}
@@ -160,7 +162,12 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
           </Link>
 
           {/* ── Desktop Nav ── */}
-          <nav className="hidden xl:flex items-center min-w-0">
+          <nav
+            className={cn(
+              'hidden xl:flex items-center min-w-0 transition-opacity duration-300',
+              isHidden && 'opacity-0 pointer-events-none'
+            )}
+          >
             <ul className="flex items-center list-none" style={{ gap: 12 }}>
               {navItems.map((item) => {
                 if (item.label === 'Services') {
@@ -280,7 +287,10 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
 
           {/* ── Mobile Toggle ── */}
           <button
-            className="xl:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-50"
+            className={cn(
+              'xl:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-50 transition-opacity duration-300',
+              isHidden && !isOpen && 'opacity-0 pointer-events-none'
+            )}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
