@@ -11,14 +11,14 @@ export default function ClientsShowcase() {
       {/* Self-contained logo filters style block */}
       <style>{`
         .client-logo-png {
-          filter: brightness(0) invert(1) opacity(0.65);
+          filter: brightness(0) invert(1) opacity(0.92);
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .group:hover .client-logo-png {
           filter: brightness(0) invert(1) opacity(1);
         }
         .client-logo-jpg {
-          filter: invert(1) contrast(140%) brightness(0.8) opacity(0.65);
+          filter: invert(1) contrast(140%) brightness(0.8) opacity(0.92);
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .group:hover .client-logo-jpg {
@@ -27,7 +27,7 @@ export default function ClientsShowcase() {
         /* Badge logos whose artwork has a filled background: inverting them
            collapses the badge into a solid disc, so show them as authored. */
         .client-logo-original {
-          filter: opacity(0.8);
+          filter: opacity(0.95);
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .group:hover .client-logo-original {
@@ -70,7 +70,7 @@ export default function ClientsShowcase() {
                     <img
                       src={`/images/clients/${client.logo}`}
                       alt={`${client.name} Logo`}
-                      className={`max-h-[55%] max-w-[70%] object-contain transition-all duration-300 group-hover:scale-105 ${logoFilterClass}`}
+                      className={`max-h-[75%] max-w-[85%] object-contain transition-all duration-300 group-hover:scale-105 ${logoFilterClass}`}
                     />
                   </Flex>
 
