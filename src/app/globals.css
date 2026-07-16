@@ -101,6 +101,14 @@
   }
 }
 
+/* Shared client-logo treatment (ClientLogoChip). Full natural color at full
+   opacity: the earlier grayscale(1)+opacity(.85) rest state pushed thin, pale
+   marks (Phoenix, Mysa, Zone, Anatolian) below legibility on white chips —
+   they rendered but read as blank boxes. Hover keeps the subtle scale. */
+.client-logo-img {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 /* Global Fonts and Branding CSS (MUST be at the very top) */
 
 /* ── Responsive Page Gutter ──
@@ -180,8 +188,13 @@
 html,
 body {
   width: 100%;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
+  /* clip (not hidden): same horizontal clipping, but doesn't create a scroll
+     container — overflow-x: hidden on body disables position: sticky
+     descendants (needed for the /products scroll-pinned video). */
+  overflow-x: clip;
+  /* No global scroll-behavior: smooth — it animates every wheel tick, which
+     makes scroll-linked effects (the /products video pin) feel laggy. Anchor
+     jumps that want smoothness use scrollIntoView({ behavior: "smooth" }). */
   background-color: var(--color-white);
   color: var(--color-text-dark);
   font-family: var(--font-body);
@@ -3557,7 +3570,10 @@ footer.footer-custom .footer-middle {
     display: flex;
     flex-flow: row wrap;
     align-items: flex-end;
-    justify-content: space-between;
+    /* Core Partners was removed from this row; space-between left the lone
+       "Connect With Us" block stranded at the far left with an empty right
+       half. Center the remaining content instead. */
+    justify-content: center;
     margin-top: 59px;
     padding-top: 117px;
   }
@@ -3638,7 +3654,9 @@ footer.footer-custom .footer-middle .footer-partners span svg {
 }
 
 footer.footer-custom .footer-middle .connect {
-  text-align: right;
+  /* Was right-aligned when it sat opposite the Core Partners block;
+     centered now that it is the row's only content. */
+  text-align: center;
   margin-top: 0;
 }
 

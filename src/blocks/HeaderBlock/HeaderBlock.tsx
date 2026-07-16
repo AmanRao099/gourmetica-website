@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Box, Flex } from '@/core/primitives';
 import { Button } from '@/core/components';
 import { cn } from '@/core/utils';
@@ -39,12 +40,21 @@ const defaultNavItems: NavItem[] = [
 ];
 const defaultCta: NavItem = { label: 'Get In Touch', href: '/getintouch' };
 
+/* Routes whose page tops are light: the unscrolled header is transparent with
+   white links, which vanishes on them. These get the same solid dark backdrop
+   the bar visually sits on on /clients (white links over black). */
+const DARK_HEADER_ROUTES = ['/news', '/faqs', '/aboutus'];
+
 /* ───────────────────────────────────────────
    Component
    ─────────────────────────────────────────── */
 export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
   ({ logo, navItems = defaultNavItems, cta = defaultCta, className, ...props }, ref) => {
     const { isScrolled } = useScrollHeader(20);
+    const pathname = usePathname();
+    const hasDarkHeader = DARK_HEADER_ROUTES.some(
+      (route) => pathname === route || pathname.startsWith(`${route}/`)
+    );
     const [isOpen, setIsOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
@@ -119,7 +129,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
           className
         )}
         style={{
-          backgroundColor: isScrolled ? "#e42528" : "transparent",
+          backgroundColor: isScrolled ? "#e42528" : hasDarkHeader ? "#0a0a0a" : "transparent",
         }}
         {...props}
       >

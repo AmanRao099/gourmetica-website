@@ -230,6 +230,8 @@ export function HomeServicesSection() {
               style={{ overflow: 'hidden' }}
             >
               <div style={{ padding: '35px 0 38px 19px', color: COLOR_WHITE }}>
+                {/* The base-layer `p { color: … }` rule beats inherited color,
+                    so the paragraph must set white explicitly. */}
                 <p
                   style={{
                     fontFamily: FONT_BODY,
@@ -238,6 +240,7 @@ export function HomeServicesSection() {
                     letterSpacing: '0.03em',
                     lineHeight: 1.7,
                     margin: 0,
+                    color: COLOR_WHITE,
                   }}
                 >
                   {service.desc}
