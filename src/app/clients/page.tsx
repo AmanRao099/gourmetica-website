@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Container } from "@/core/primitives";
+import { Container, Box } from "@/core/primitives";
+import { Text } from "@/core/typography";
 import ClientsShowcase from "./ClientsShowcase";
 
 export const metadata: Metadata = {
@@ -9,10 +10,15 @@ export const metadata: Metadata = {
 
 export default function ClientsPage() {
   return (
-    <main className="bg-black min-h-screen pb-24" style={{ backgroundColor: "#000000", paddingTop: "8rem", paddingBottom: "6rem" }}>
-      <Container size="wide">
+    <main className="bg-black min-h-screen" style={{ backgroundColor: "#000000", paddingTop: "8rem" }}>
+      <Container size="wide" className="pb-24">
         <ClientsShowcase />
       </Container>
+      <Box className="bg-neutral-950 dark text-center py-6 px-5 border-t border-white/5">
+        <Text size="body-sm" align="center" className="text-primary dark:text-primary font-heading uppercase tracking-wider mx-auto">
+          Built by Gourmetica.
+        </Text>
+      </Box>
     </main>
   );
 }
