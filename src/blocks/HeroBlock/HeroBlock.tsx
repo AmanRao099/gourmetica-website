@@ -5,7 +5,6 @@ import { useState, useEffect, useRef } from 'react';
 import { cn } from '@/core/utils';
 import { motion } from 'framer-motion';
 import { FadeIn, FadeUp, heroMotion } from '@/core/motion';
-import { typography } from '@/core/tokens/typography';
 import { HeroBlockProps } from './HeroBlock.types';
 
 /**
@@ -73,41 +72,6 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
         )
       })
       : null;
-
-    const primaryStyle: React.CSSProperties = {
-      fontSize: typography.hero.primary.fontSize,
-      fontWeight: typography.hero.primary.fontWeight as any,
-      lineHeight: typography.hero.primary.lineHeight,
-      letterSpacing: typography.hero.primary.letterSpacing,
-      fontFamily: "var(--font-mont)",
-      color: "#E42528",
-      textShadow: "0 2px 18px rgba(0,0,0,.28)",
-      display: "block",
-    };
-
-    const secondaryStyle: React.CSSProperties = {
-      fontSize: typography.hero.secondary.fontSize,
-      fontWeight: typography.hero.secondary.fontWeight as any,
-      fontStyle: typography.hero.secondary.fontStyle as any,
-      lineHeight: typography.hero.secondary.lineHeight,
-      letterSpacing: typography.hero.secondary.letterSpacing,
-      fontFamily: "var(--font-mont)",
-      opacity: 0.85,
-      color: "#ffffff",
-      textShadow: "0 2px 18px rgba(0,0,0,.28)",
-      display: "block",
-    };
-
-    const accentStyle: React.CSSProperties = {
-      fontSize: typography.hero.accent.fontSize,
-      fontWeight: typography.hero.accent.fontWeight as any,
-      lineHeight: typography.hero.accent.lineHeight,
-      letterSpacing: typography.hero.accent.letterSpacing,
-      fontFamily: "var(--font-mont)",
-      color: "#E42528",
-      textShadow: "0 2px 18px rgba(0,0,0,.28)",
-      display: "block",
-    };
 
     const boldWhiteStyle: React.CSSProperties = {
       fontSize: "clamp(3.2rem, 5vw, 5.25rem)",
