@@ -37,7 +37,6 @@ export default function Home() {
     <main className="home-page-wrapper">
       {/* 1. Hero Block */}
       <HeroBlock
-        title="Growth Marketing That Delivers Results"
         media={
           <video>
             <source src="/HOME PAGE/VIDEO BANNER/0704.mp4" type="video/mp4" />

@@ -40,7 +40,7 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
 
     useEffect(() => {
       // Force play on mount for browsers that block autoplay
-      if (videoRef.current) {
+      if (videoRef.current && typeof videoRef.current.play === 'function') {
         videoRef.current.play().catch(() => { });
       }
 
@@ -105,6 +105,29 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
       letterSpacing: typography.hero.accent.letterSpacing,
       fontFamily: "var(--font-mont)",
       color: "#E42528",
+      textShadow: "0 2px 18px rgba(0,0,0,.28)",
+      display: "block",
+    };
+
+    const boldWhiteStyle: React.CSSProperties = {
+      fontSize: "clamp(3.2rem, 5vw, 5.25rem)",
+      fontWeight: "800",
+      lineHeight: "0.95",
+      letterSpacing: "-0.03em",
+      fontFamily: "var(--font-mont)",
+      color: "#ffffff",
+      textShadow: "0 2px 18px rgba(0,0,0,.28)",
+      display: "block",
+    };
+
+    const regularWhiteStyle: React.CSSProperties = {
+      fontSize: "clamp(1.5rem, 2.2vw, 2.25rem)",
+      fontWeight: "400",
+      lineHeight: "1.3",
+      letterSpacing: "-0.01em",
+      fontFamily: "var(--font-mont)",
+      color: "#ffffff",
+      opacity: 0.9,
       textShadow: "0 2px 18px rgba(0,0,0,.28)",
       display: "block",
     };
@@ -178,16 +201,50 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
           className="relative z-30 w-full max-w-[1440px] mx-auto"
           style={{ paddingLeft: GUTTER.desktop, paddingRight: GUTTER.desktop }}
         >
-          <div className="w-full text-left" style={{ maxWidth: 580 }}>
-            <FadeUp delay={heroMotion.delay.heading1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading1} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 34 }}>
-              <span style={primaryStyle}>Growth Marketing</span>
-            </FadeUp>
-            <FadeUp delay={heroMotion.delay.heading2} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading2} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 30 }}>
-              <span style={secondaryStyle}>That Delivers</span>
-            </FadeUp>
-            <FadeUp delay={heroMotion.delay.heading3} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading3} viewport={{ once: true, margin: "200px" }}>
-              <span style={accentStyle}>Results</span>
-            </FadeUp>
+          <div
+            className={cn("w-full", alignment === 'center' ? "text-center mx-auto" : "text-left")}
+            style={{ maxWidth: alignment === 'center' ? 'none' : 640 }}
+          >
+            {title ? (
+              <>
+                {subtitle && (
+                  <FadeUp delay={heroMotion.delay.heading1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading1} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 12 }}>
+                    <span style={regularWhiteStyle}>{subtitle}</span>
+                  </FadeUp>
+                )}
+                <FadeUp delay={heroMotion.delay.heading2} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading2} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 20 }}>
+                  <h1 style={boldWhiteStyle}>{title}</h1>
+                </FadeUp>
+                {description && (
+                  <FadeUp delay={heroMotion.delay.heading3} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading3} viewport={{ once: true, margin: "200px" }}>
+                    <p style={regularWhiteStyle}>{description}</p>
+                  </FadeUp>
+                )}
+                {actions && (
+                  <FadeUp delay={heroMotion.delay.heading3 + 0.1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading3} viewport={{ once: true, margin: "200px" }}>
+                    <div className="mt-8">{actions}</div>
+                  </FadeUp>
+                )}
+              </>
+            ) : (
+              <>
+                <FadeUp delay={heroMotion.delay.heading1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading1} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 12 }}>
+                  <span style={boldWhiteStyle}>Growth</span>
+                </FadeUp>
+                <FadeUp delay={heroMotion.delay.heading1 + 0.1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading1} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 12 }}>
+                  <span style={boldWhiteStyle}>Marketing</span>
+                </FadeUp>
+                <FadeUp delay={heroMotion.delay.heading2} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading2} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 12 }}>
+                  <span style={boldWhiteStyle}>That</span>
+                </FadeUp>
+                <FadeUp delay={heroMotion.delay.heading2 + 0.15} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading2} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 32 }}>
+                  <span style={boldWhiteStyle}>Delivers</span>
+                </FadeUp>
+                <FadeUp delay={heroMotion.delay.heading3} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading3} viewport={{ once: true, margin: "200px" }}>
+                  <span style={regularWhiteStyle}>For Ambitious Brands.</span>
+                </FadeUp>
+              </>
+            )}
           </div>
         </div>
       </section>

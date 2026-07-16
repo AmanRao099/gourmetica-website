@@ -2,7 +2,7 @@ import * as React from 'react';
 
 export interface HeroBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** The main large headline of the hero. */
-  title: React.ReactNode;
+  title?: React.ReactNode;
   /** A small eyebrow or subtitle above the main title. */
   subtitle?: string;
   /** A paragraph description below the title. */
