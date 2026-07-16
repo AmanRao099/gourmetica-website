@@ -26,7 +26,7 @@ export const CLIENTS: Client[] = [
   { name: "42 Holborn", logo: "42holborn.png", url: "https://42holborn.com/" },
   { name: "Alkis", logo: "alkisrestaurant-co-uk-bw.png", url: "https://www.alkisrestaurant.co.uk/", keepOriginalColour: true },
   { name: "Brudis", logo: "brudis.png", url: "#" },
-  { name: "Brekky & Brunch", logo: "partner-30-sqXkfzjN.png", url: "#" },
+  { name: "Brekky & Brunch", logo: "brekky.png", url: "#" },
   { name: "Liman", logo: "liman.png", url: "https://www.liman.co.uk/" },
   { name: "Swiss Sent", logo: "swiss sent.png", url: "#", keepOriginalColour: true },
   { name: "Rustiq", logo: "rustiq.png", url: "https://rustiqrestaurant.co.uk/" },
