@@ -60,7 +60,6 @@ export const homeContent = {
       { src: "/images/clients/mysarestaurant.co.uk.png", alt: "Mysa Hoddesdon" },
       { src: "/images/clients/zone-essex.png", alt: "Zone Essex" },
       { src: "/images/clients/anatolian--.png", alt: "Anatolian Turkish Kitchen" },
-      { src: "/images/clients/renaflame-logos-(2).png", alt: "Renaflame", keepOriginalColour: true },
       { src: "/images/clients/cutty shark.png", alt: "Cutty Sark" }
     ]
   },

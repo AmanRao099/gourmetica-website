@@ -13,7 +13,7 @@ const sliderSlides = [
     title: "Advertising",
     tag: "Case Study",
     excerpt: "Our advertising team welds their Growth Marketing background together with the fresh dynamics of digital technologies. From Google Ads to display ads, we have the answers for every kind of question to advertise your restaurant.",
-    image: "/images/banner/NO5Main-min-min.jpg",
+    image: "/images/banner/No5Main-min-min.jpg",
     link: "/results/no5"
   },
   {
