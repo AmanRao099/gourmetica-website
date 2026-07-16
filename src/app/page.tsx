@@ -27,7 +27,7 @@ const sliderSlides = [
     title: "Digital Strategy",
     tag: "Case Study",
     excerpt: "Rest assured, your brand's digital success is our top priority. Let our expert team be your guiding light on the journey towards digital excellence. With Gourmetica by your side, you can trust that your digital presence is in the hands of skilled professionals.",
-    image: "/images/banner/PiyazMain-min-min.jpg",
+    image: "/images/results/swiss-scent-ref/_GN_3635.jpg",
     link: "/results/leonidas"
   }
 ];
