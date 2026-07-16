@@ -35,15 +35,15 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
       const img = (
         <div
           className="flex items-center justify-center shrink-0 px-12"
-          style={{ height: 96 }}
+          style={{ height: 120 }}
         >
           <img
             src={logo.src}
             alt={logo.alt}
             style={{
-              maxHeight: 56,
+              maxHeight: 80,
               width: 'auto',
-              filter: logoFilter(logo, 0.92),
+              filter: logoFilter(logo, 1.0),
             }}
             loading="lazy"
           />
@@ -170,15 +170,15 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
               style={{
                 borderTop: '1px solid rgba(255,255,255,0.10)',
                 borderBottom: '1px solid rgba(255,255,255,0.10)',
-                paddingTop: 48,
-                paddingBottom: 48,
+                paddingTop: 64,
+                paddingBottom: 64,
               }}
             >
               <div
                 className="flex w-max items-center animate-marquee"
-                style={{ gap: 64 }}
+                style={{ gap: 80 }}
               >
-                {[...logos, ...logos, ...logos].map((logo, index) => renderLogo(logo, index))}
+                {[...logos, ...logos].map((logo, index) => renderLogo(logo, index))}
               </div>
             </div>
           </FadeIn>
