@@ -124,7 +124,7 @@ export const ALL_CASE_STUDIES: ExtendedCaseStudy[] = [
     slug: "great-british-doner",
     title: "Great British Doner",
     category: "Multi-Location & Franchise",
-    image: "/images/results/GBD/ChatGPT Image 22 May 2026 15_22_25 (2).png",
+    image: "/images/results/GBD/download.jpg",
     excerpt: "Supporting franchise expansion and local location acquisition for Great British Doner through custom web development and social campaigns."
   }
 ];
