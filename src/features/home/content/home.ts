@@ -45,7 +45,7 @@ export const homeContent = {
       { src: "/images/clients/antepkitchen.co.uk.jpg", alt: "Antep Kitchen" },
       { src: "/images/clients/beboz-zebra-printer-logo.png", alt: "Beboz" },
       { src: "/images/clients/carnivoorkitchen.com.png", alt: "Carnivoor Kitchen" },
-      { src: "/images/clients/gbddoner.com.png", alt: "GBD Doner" },
+      { src: "/images/clients/gbd.png", alt: "GBD Doner" },
       { src: "/images/clients/gustoricco.com.png", alt: "Gusto Ricco", keepOriginalColour: true },
       { src: "/images/clients/ivytreeessex.co.uk.png", alt: "Ivy Tree" },
       { src: "/images/clients/leilabrasserie.co.uk.png", alt: "Leila Brasserie" },

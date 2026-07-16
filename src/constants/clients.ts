@@ -2,8 +2,8 @@ import type { Client } from "@/types";
 
 export const CLIENTS: Client[] = [
   { name: "Ivy Tree", logo: "ivytreeessex.co.uk.png", url: "https://www.ivytreeessex.co.uk/" },
-  { name: "GBD", logo: "gbddoner.com.png", url: "https://www.greatbritishdoner.com/" },
-  { name: "Biitest", logo: "easyfishoil-BcWQELwb.png", url: "https://biitest.com/" },
+  { name: "GBD", logo: "gbd.png", url: "https://www.greatbritishdoner.com/" },
+  { name: "Biitest", logo: "biitest.png", url: "https://biitest.com/" },
   { name: "Leila", logo: "leilabrasserie.co.uk.png", url: "https://leilabrasserie.co.uk/" },
   { name: "Carnivoor", logo: "carnivoorkitchen.com.png", url: "https://www.carnivoorkitchen.com/" },
   { name: "Direct Pizza", logo: "thedirectpizzaco.co.uk.jpg", url: "https://thedirectpizzaco.co.uk/index.php?page=home" },
