@@ -34,16 +34,16 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
     const renderLogo = (logo: { src: string; alt: string; href?: string; keepOriginalColour?: boolean }, index: number) => {
       const img = (
         <div
-          className="flex items-center justify-center shrink-0 px-8"
-          style={{ height: 56 }}
+          className="flex items-center justify-center shrink-0 px-12"
+          style={{ height: 96 }}
         >
           <img
             src={logo.src}
             alt={logo.alt}
             style={{
-              maxHeight: 32,
+              maxHeight: 56,
               width: 'auto',
-              filter: logoFilter(logo, 0.55),
+              filter: logoFilter(logo, 0.92),
             }}
             loading="lazy"
           />
@@ -170,13 +170,13 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
               style={{
                 borderTop: '1px solid rgba(255,255,255,0.10)',
                 borderBottom: '1px solid rgba(255,255,255,0.10)',
-                paddingTop: 36,
-                paddingBottom: 36,
+                paddingTop: 48,
+                paddingBottom: 48,
               }}
             >
               <div
                 className="flex w-max items-center animate-marquee"
-                style={{ gap: 24 }}
+                style={{ gap: 64 }}
               >
                 {[...logos, ...logos, ...logos].map((logo, index) => renderLogo(logo, index))}
               </div>
