@@ -50,7 +50,7 @@ const DARK_HEADER_ROUTES = ['/news', '/faqs', '/aboutus'];
    ─────────────────────────────────────────── */
 export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
   ({ logo, navItems = defaultNavItems, cta = defaultCta, className, ...props }, ref) => {
-    const { isScrolled } = useScrollHeader(20);
+    const { isScrolled, direction } = useScrollHeader(20);
     const pathname = usePathname();
     const hasDarkHeader = DARK_HEADER_ROUTES.some(
       (route) => pathname === route || pathname.startsWith(`${route}/`)
@@ -118,24 +118,28 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
     // Tailwind's layered text-* utilities, so they cannot be set with classes here.
     const navLinkClass = "nav-link whitespace-nowrap transition-colors duration-200 uppercase";
 
+    const isRedHeader = isScrolled && direction === 'up';
+    const headerBgColor = isScrolled
+      ? (direction === 'up' ? "#e42528" : "transparent")
+      : (hasDarkHeader ? "#0a0a0a" : "transparent");
+
     return (
       <header
         ref={ref}
         className={cn(
           'site-header fixed top-0 left-0 w-full z-[1000] flex items-center transition-all duration-300 border-b',
           isScrolled
-            ? 'is-scrolled h-[64px] md:h-[72px] lg:h-[88px] border-white/5'
-            : 'h-[72px] md:h-[80px] lg:h-[104px] border-transparent',
+            ? 'is-scrolled h-[64px] md:h-[72px] lg:h-[88px]'
+            : 'h-[72px] md:h-[80px] lg:h-[104px]',
+          isRedHeader
+            ? 'border-white/5 shadow-[0_8px_40px_rgba(0,0,0,0.28)]'
+            : 'border-transparent shadow-none',
           className
         )}
         style={{
-          backgroundColor: isScrolled
-            ? "rgba(10, 10, 10, 0.6)"
-            : hasDarkHeader
-              ? "#0a0a0a"
-              : "transparent",
-          backdropFilter: isScrolled ? "blur(20px)" : "none",
-          WebkitBackdropFilter: isScrolled ? "blur(20px)" : "none",
+          backgroundColor: headerBgColor,
+          backdropFilter: isScrolled && !isRedHeader ? "blur(20px)" : "none",
+          WebkitBackdropFilter: isScrolled && !isRedHeader ? "blur(20px)" : "none",
         }}
         {...props}
       >
@@ -147,7 +151,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
             href="/"
             className="logo-link shrink-0 transition-all duration-300"
             style={{
-              backgroundColor: isScrolled ? "#e42528" : "transparent",
+              backgroundColor: isRedHeader ? "#e42528" : "transparent",
               padding: isScrolled ? "8px 16px" : "8px 0",
             }}
             onClick={() => setIsOpen(false)}
