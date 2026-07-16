@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { PageContainer } from '@/core/primitives';
 import { ServiceLayout } from '../layouts/ServiceLayout';
 import { ServiceImageHero } from '../components/ServiceImageHero';
@@ -54,17 +53,8 @@ export function AdvertisingPage() {
             maxWidth={620}
           />
         </PageContainer>
-        <PageContainer size="standard" className="pb-[60px] md:pb-[90px]">
+        <PageContainer size="standard" className="pb-[100px] md:pb-[140px]">
           <ServiceFeatureListGrid features={FEATURES} />
-        </PageContainer>
-        <PageContainer size="standard" className="pb-[100px] md:pb-[140px] text-center">
-          <p className="text-[15px] md:text-[16px] text-black">
-            Learn more about our{' '}
-            <Link href="/#services" className="text-[#e8503a] font-semibold hover:underline">
-              Restaurant Marketing
-            </Link>{' '}
-            services.
-          </p>
         </PageContainer>
       </SplitBackgroundBlock>
     </ServiceLayout>
