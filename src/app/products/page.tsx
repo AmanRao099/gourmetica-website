@@ -201,6 +201,11 @@ export default function Products() {
           <Reveal>
             <Grid columns={1} gap="xl" className="lg:grid-cols-2 items-center">
               <Stack gap="lg" align="start" className="text-left">
+                <img
+                  src="/images/tably/tably.png"
+                  alt="Tably"
+                  className="h-20 w-auto ml-6"
+                />
                 <Heading level={1} size="display-lg" className="leading-tight">
                   Website Operations Platform
                 </Heading>
