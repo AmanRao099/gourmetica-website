@@ -3,10 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
-import { Section, Container, Grid, Box, Stack, Flex } from "@/core/primitives";
+import { Section, Container, Grid, Box, Stack } from "@/core/primitives";
 import { Heading, Text } from "@/core/typography";
 import { Button } from "@/core/components";
-import { ClientLogoChip } from "@/core/components/ClientLogoChip";
 import { Video } from "@/core/components/Video";
 import { Reveal, Stagger, StaggerItem, HoverScale } from "@/core/motion";
 import { cn } from "@/core/utils";
@@ -213,6 +212,8 @@ export default function Products() {
               <span className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-500 px-5">
                 Trusted by the UK&apos;s Leading Hospitality Brands
               </span>
+              {/* Logos shown as-is: transparent PNGs, no chip/card and no colour
+                  filter, so the artwork blends straight into the dark section. */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 w-full px-5">
                 {trustClients.map((client) => {
                   const hasUrl = Boolean(client.url && client.url !== "#");
@@ -225,20 +226,11 @@ export default function Products() {
                       rel={hasUrl ? "noopener noreferrer" : undefined}
                       className="group flex flex-col items-center gap-2"
                     >
-                      {client.logo ? (
-                        <ClientLogoChip
-                          logo={client.logo}
-                          name={client.name}
-                          className="w-44 h-20 rounded-lg p-3"
-                          imgClassName="group-hover:scale-105"
-                        />
-                      ) : (
-                        <Flex align="center" justify="center" className="w-44 h-20 rounded-lg border border-white/10">
-                          <span className="font-heading font-bold text-sm uppercase tracking-wider text-white/50 text-center px-2 transition-colors duration-300 group-hover:text-white/70">
-                            {client.name}
-                          </span>
-                        </Flex>
-                      )}
+                      <img
+                        src={`/images/clients/${client.logo}`}
+                        alt={`${client.name} Logo`}
+                        className="w-60 h-32 object-contain transition-transform duration-300 group-hover:scale-105"
+                      />
                       <span className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-500 group-hover:text-white transition-colors duration-200">
                         {client.name}
                       </span>
