@@ -2,7 +2,6 @@ import { PageContainer } from '@/core/primitives';
 import { ServiceLayout } from '../layouts/ServiceLayout';
 import { ServiceImageHero } from '../components/ServiceImageHero';
 import { SplitBackgroundBlock } from '@/blocks';
-import { ServiceBodyImage } from '../components/ServiceBodyImage';
 import { ServiceBodyText } from '../components/ServiceBodyText';
 import { ServiceFeatureListGrid } from '../components/ServiceFeatureListGrid';
 
@@ -40,13 +39,6 @@ export function BrandingPage() {
         subtitle="Be the best choice for your customers - every time. A memorable logo and consistent branding are keys to getting inside customers' minds and staying there."
       />
       <SplitBackgroundBlock>
-        <PageContainer size="standard" className="pb-[60px] md:pb-[80px]">
-          <ServiceBodyImage
-            src="/images/services-ref/branding/UpdatedVersion.jpg"
-            alt="Gourmetica branded packaging"
-            maxWidth={1320}
-          />
-        </PageContainer>
         <PageContainer size="standard" className="pb-[60px] md:pb-[80px]">
           <ServiceBodyText paragraphs={PARAGRAPHS} />
         </PageContainer>

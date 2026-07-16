@@ -377,21 +377,6 @@ a {
   background-color: #bd1a1d;
 }
 
-/* Scrolled: the bar itself is brand red, so red-on-red would vanish.
-   Matches gourmetica.co.uk, which flips these to white in the .header-show state. */
-.site-header.is-scrolled .nav-link:hover {
-  color: var(--color-white);
-}
-
-.site-header.is-scrolled .cta-link {
-  background-color: var(--color-white);
-  color: var(--color-primary);
-}
-
-.site-header.is-scrolled .cta-link:hover {
-  background-color: rgba(255, 255, 255, 0.88);
-}
-
 /* Mobile menu overlay (same reason: colours cannot be set with Tailwind classes here). */
 .site-header .mobile-nav-link {
   color: var(--color-white);

@@ -124,12 +124,18 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
         className={cn(
           'site-header fixed top-0 left-0 w-full z-[1000] flex items-center transition-all duration-300 border-b',
           isScrolled
-            ? 'is-scrolled h-[64px] md:h-[72px] lg:h-[88px] border-white/5 shadow-[0_8px_40px_rgba(0,0,0,0.28)]'
+            ? 'is-scrolled h-[64px] md:h-[72px] lg:h-[88px] border-white/5'
             : 'h-[72px] md:h-[80px] lg:h-[104px] border-transparent',
           className
         )}
         style={{
-          backgroundColor: isScrolled ? "#e42528" : hasDarkHeader ? "#0a0a0a" : "transparent",
+          backgroundColor: isScrolled
+            ? "rgba(10, 10, 10, 0.6)"
+            : hasDarkHeader
+              ? "#0a0a0a"
+              : "transparent",
+          backdropFilter: isScrolled ? "blur(20px)" : "none",
+          WebkitBackdropFilter: isScrolled ? "blur(20px)" : "none",
         }}
         {...props}
       >
@@ -137,7 +143,15 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
           className="w-full mx-auto max-w-[1440px] flex items-center justify-between gap-x-8"
           style={{ paddingLeft: 'var(--page-gutter)', paddingRight: 'var(--page-gutter)' }}
         >
-          <Link href="/" className="logo-link shrink-0" onClick={() => setIsOpen(false)}>
+          <Link
+            href="/"
+            className="logo-link shrink-0 transition-all duration-300"
+            style={{
+              backgroundColor: isScrolled ? "#e42528" : "transparent",
+              padding: isScrolled ? "8px 16px" : "8px 0",
+            }}
+            onClick={() => setIsOpen(false)}
+          >
             {resolvedLogo}
           </Link>
 

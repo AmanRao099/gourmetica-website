@@ -108,7 +108,7 @@ export const ALL_CASE_STUDIES: ExtendedCaseStudy[] = [
   },
   {
     slug: "biitest",
-    title: "BiiTest Diagnostics",
+    title: "BiiTest",
     category: "Healthcare",
     image: "/images/results/BIITEST/IMG_8829.JPG",
     excerpt: "Healthcare digital growth strategy for innovative diagnostic testing products, scaling traffic, and setting e-commerce marketing systems."
@@ -239,7 +239,7 @@ export const CASE_STUDY_DETAILS: Record<string, CaseStudyDetail> = {
     ]
   },
   biitest: {
-    title: "BiiTest DIAGNOSTICS",
+    title: "BiiTest",
     banner: "/images/results/BIITEST/IMG_8829.JPG",
     scope: ["Healthcare Growth Strategy", "E-Commerce Strategy", "Social Media Content", "Google Ads Management", "Meta Advertising", "Reporting"],
     websiteUrl: "https://biitest.com/",
