@@ -249,8 +249,9 @@ export default function TablyPage() {
                 Trusted by the UK&apos;s Leading Hospitality Brands
               </span>
               {/* Logos shown as-is: transparent PNGs, no chip/card and no colour
-                  filter, so the artwork blends straight into the dark section. */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 w-full px-5">
+                  filter, so the artwork blends straight into the dark section.
+                  Always one row — on phones the three logos share the width. */}
+              <div className="flex flex-row items-center justify-center gap-3 sm:gap-8 w-full px-4 sm:px-5">
                 {trustClients.map((client) => {
                   const hasUrl = Boolean(client.url && client.url !== "#");
                   const CardTag = hasUrl ? "a" : "div";
@@ -260,14 +261,14 @@ export default function TablyPage() {
                       href={hasUrl ? client.url : undefined}
                       target={hasUrl ? "_blank" : undefined}
                       rel={hasUrl ? "noopener noreferrer" : undefined}
-                      className="group flex flex-col items-center gap-2"
+                      className="group flex flex-1 sm:flex-none min-w-0 flex-col items-center gap-2"
                     >
                       <img
                         src={`/images/clients/${client.logo}`}
                         alt={`${client.name} Logo`}
-                        className="w-60 h-32 object-contain transition-transform duration-300 group-hover:scale-105"
+                        className="w-full max-w-[160px] h-20 sm:w-60 sm:max-w-none sm:h-32 object-contain transition-transform duration-300 group-hover:scale-105"
                       />
-                      <span className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-500 group-hover:text-white transition-colors duration-200">
+                      <span className="font-heading font-bold text-[10px] sm:text-xs uppercase tracking-wider text-neutral-500 group-hover:text-white transition-colors duration-200 text-center">
                         {client.name}
                       </span>
                     </CardTag>

@@ -17,7 +17,7 @@ export const CLIENTS: Client[] = [
   { name: "Sensei 4", logo: "sensei4.png", url: "#" },
   { name: "Solo Kitchen", logo: "solokitchen.png", url: "https://www.thesolo.co.uk/" },
   { name: "The Shire grill", logo: "theshiregrill.co.uk.jpg", url: "https://theshiregrill.co.uk/" },
-  { name: "Phoenix", logo: "PHOENIX_AUGUST_POST-removebg-preview.png", url: "https://phoenixcf.co.uk/", keepOriginalColour: true },
+  { name: "Phoenix", logo: "PHOENIX_AUGUST_POST-removebg-preview.png", url: "https://phoenixcf.co.uk/" },
   /* "SOLUTIONS" is set in black type — the default white-silhouette filter is
      what keeps it visible on the dark client cards, so no keepOriginalColour. */
   { name: "Phoenix Solutions", logo: "phoenix_solutions_logo1-2-removebg-preview.png", url: "#" },
@@ -32,9 +32,11 @@ export const CLIENTS: Client[] = [
   { name: "Liman", logo: "liman.png", url: "https://www.liman.co.uk/" },
   { name: "Swiss Sent", logo: "swiss sent.png", url: "#", keepOriginalColour: true },
   { name: "Rustiq", logo: "rustiq.png", url: "https://rustiqrestaurant.co.uk/" },
+  /* Payiz artwork is pre-baked white-on-dark-disc in the asset itself — the
+     CSS invert filter would turn its filled badge into a solid white blob. */
   { name: "Payiz", logo: "payizrestaurant.co.uk-removebg-preview.png", url: "https://payizrestaurant.co.uk/", keepOriginalColour: true },
-  { name: "Enginar", logo: "enginarrestaurant.co.uk-removebg-preview.png", url: "https://enginarrestaurant.co.uk/", keepOriginalColour: true },
-  { name: "Express Pizzeria", logo: "expresspizza.com.tr-removebg-preview.png", url: "https://expresspizza.com.tr/", keepOriginalColour: true },
+  { name: "Enginar", logo: "enginarrestaurant.co.uk-removebg-preview.png", url: "https://enginarrestaurant.co.uk/" },
+  { name: "Express Pizzeria", logo: "expresspizza.com.tr-removebg-preview.png", url: "https://expresspizza.com.tr/" },
   { name: "Otto Kitchen", logo: "otto.png", url: "https://otto-kitchen.co.uk/" },
   { name: "Leonidas", logo: "leonidas.png", url: "https://leonidas-lezzetleri.com.tr/" },
   { name: "Cutty Sark", logo: "cutty shark.png", url: "#" },

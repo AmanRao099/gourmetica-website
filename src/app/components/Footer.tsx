@@ -85,7 +85,6 @@ export default function Footer() {
           {/* Center: Copyright & Signature */}
           <div className="footer-bottom-col info-col">
             <p className="copyright-text">Copyright © 2024 Gourmetica All rights reserved.</p>
-            <p className="signature-text">Built by Gourmetica.</p>
             <p className="business-text">
               Gourmetica is a brand of Ozkaya Engineering and Consultancy Ltd,<br />
               Ozkaya Engineering and Consultancy Ltd (t/a Gourmetica) - Registered in England No. 13509943

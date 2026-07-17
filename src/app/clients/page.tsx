@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Container, Box } from "@/core/primitives";
-import { Text } from "@/core/typography";
+import { Container } from "@/core/primitives";
 import ClientsShowcase from "./ClientsShowcase";
 
 export const metadata: Metadata = {
@@ -14,11 +13,6 @@ export default function ClientsPage() {
       <Container size="wide" className="pb-24">
         <ClientsShowcase />
       </Container>
-      <Box className="bg-neutral-950 dark text-center py-6 px-5 border-t border-white/5">
-        <Text size="body-sm" align="center" className="text-primary dark:text-primary font-heading uppercase tracking-wider mx-auto">
-          Built by Gourmetica.
-        </Text>
-      </Box>
     </main>
   );
 }

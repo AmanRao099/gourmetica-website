@@ -3690,7 +3690,8 @@ footer.footer-custom .site-info {
   grid-area: footerInfo;
   margin-top: 99px;
   text-align: center;
-  color: #a2a2a2;
+  /* Client request: copyright/company text in white */
+  color: #ffffff;
   display: flex;
   flex-flow: row wrap;
   font-family: "Eina 03", sans-serif;
@@ -3709,6 +3710,10 @@ footer.footer-custom .site-info {
 footer.footer-custom .site-info p {
   margin: 0;
   flex-basis: 100%;
+  /* Must be set on the <p> itself: the base-layer `p { color: … }` rule is a
+     direct match and would otherwise override the white inherited from
+     .site-info, leaving the copyright text near-invisible on black. */
+  color: #ffffff;
 }
 
 footer.footer-custom .site-info p a {
