@@ -479,6 +479,17 @@ export default function Home() {
           .opening-remark-content h2 {
             font-size: 32px;
           }
+
+          .section-header-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 32px;
+          }
+
+          .section-header-row h2 {
+            font-size: 28px;
+          }
           
           .card-content {
             padding: 30px;

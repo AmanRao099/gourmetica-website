@@ -239,7 +239,8 @@ a {
 }
 
 .section-padding {
-  padding: 100px 0;
+  /* Fluid: 56px on phones → 100px on desktop */
+  padding: clamp(56px, 6vw + 32px, 100px) 0;
 }
 
 .text-center {
@@ -875,7 +876,7 @@ a {
 
 .slide-content-inner h2 {
   color: var(--color-white);
-  font-size: 80px;
+  font-size: clamp(38px, 6vw + 16px, 80px);
   line-height: 1.05;
   margin-bottom: 25px;
   max-width: 750px;
@@ -883,7 +884,7 @@ a {
 
 .slide-content-inner p {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 24px;
+  font-size: clamp(17px, 1vw + 13px, 24px);
   font-family: var(--font-secondary);
   font-weight: 500;
   max-width: 600px;
@@ -1364,7 +1365,8 @@ a {
   border: 1px solid #ddd;
   border-radius: 4px;
   font-family: var(--font-body);
-  font-size: 15px;
+  /* 16px minimum — anything smaller makes iOS Safari zoom in on focus */
+  font-size: 16px;
   background-color: #fafafa;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
@@ -2910,8 +2912,9 @@ a {
 /* Marketing Services Accordion (Expertise) Section */
 .our-expertise {
   background-color: #000000 !important;
-  padding-top: 125px;
-  padding-bottom: 125px;
+  /* Fluid: 64px on phones → 125px on desktop */
+  padding-top: clamp(64px, 8vw + 32px, 125px);
+  padding-bottom: clamp(64px, 8vw + 32px, 125px);
 }
 
 .our-expertise .section-heading {
@@ -3727,4 +3730,260 @@ footer.footer-custom .site-info p a:hover {
 
 footer.footer-custom .site-info>span {
   width: 100%;
+}
+/* ==========================================================================
+   MOBILE UX & PERFORMANCE LAYER
+   Phone-first polish: fluid type, dynamic-viewport heights, safe areas,
+   touch ergonomics, motion preferences. Appended last so equal-specificity
+   rules here win over the base declarations above.
+   ========================================================================== */
+
+/* Keep text from being inflated on orientation change (iOS/Android) */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Remove the gray tap flash and the 300ms double-tap delay on touch */
+a,
+button,
+[role="button"],
+input,
+select,
+textarea,
+label,
+summary {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Visible focus for keyboard/switch users without hover-style outlines on tap */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* Media never overflows its container */
+img,
+video {
+  max-width: 100%;
+}
+
+/* The real mobile header is 72px, not the 96px desktop constant. Every hero
+   pads its top by this variable, so it must track the actual bar height. */
+@media (max-width: 767px) {
+  :root {
+    --header-height: 72px;
+  }
+}
+
+/* Notched phones in landscape: keep the shared gutter clear of the sensor
+   housing (needs viewport-fit=cover, set in the layout's viewport export). */
+@media (max-width: 767px) {
+  :root {
+    --page-gutter: max(24px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+  }
+}
+
+/* ── Dynamic-viewport heights ──
+   Classic vh ignores the collapsing mobile URL bar, causing jumpy heroes and
+   content hidden behind browser chrome. svh = height with chrome visible. */
+@supports (height: 1svh) {
+  .hero-slider-section {
+    height: 90svh;
+  }
+
+  .about-hero,
+  .faq-hero,
+  .contact-hero,
+  .clients-hero,
+  .news-hero {
+    height: 45svh;
+  }
+
+  .article-hero,
+  .work-hero {
+    height: 50svh;
+  }
+
+  .products-hero,
+  .work-hero-detail {
+    height: 55svh;
+  }
+
+  .case-clone-hero {
+    height: 100svh;
+  }
+
+  .gbd-clone .case-clone-hero {
+    height: 62svh;
+  }
+}
+
+/* ── Fluid headline scale ──
+   Replaces hard px sizes that only had a single 34px break at 767px, so the
+   768–1200px range no longer shows desktop-sized type in tablet space. */
+.about-hero-content h1,
+.faq-hero-content h1,
+.contact-hero-content h1,
+.products-hero-content h1,
+.clients-hero-content h1,
+.news-hero-content h1,
+.work-hero-content h1 {
+  font-size: clamp(34px, 2.5vw + 24px, 54px);
+}
+
+.article-hero-content h1 {
+  font-size: clamp(28px, 2vw + 20px, 42px);
+}
+
+.work-hero-detail h1 {
+  font-size: clamp(32px, 2.2vw + 22px, 48px);
+}
+
+.about-cta h2,
+.smartest-way h2 {
+  font-size: clamp(30px, 2.5vw + 20px, 42px);
+}
+
+.opening-remark-txt--heading {
+  font-size: clamp(30px, 5vw + 12px, 48px);
+}
+
+/* ── Phone-specific layout & ergonomics ── */
+@media (max-width: 767px) {
+
+  /* Justified text produces rivers of whitespace in narrow columns */
+  .about-right p,
+  .value-card p,
+  .faq-answer-inner p,
+  .article-paragraphs p,
+  .detail-block p,
+  .case-clone-row-content p,
+  .case-clone-results-list,
+  .case-clone-results-list li,
+  .case-clone-results-list li p {
+    text-align: left;
+  }
+
+  /* Tighten oversized editorial margins for one-column reading */
+  .opening-remark-txt {
+    margin-bottom: 64px;
+  }
+
+  .opening-remark-txt--heading {
+    margin-bottom: 32px;
+  }
+
+  /* 44px minimum touch targets (Apple HIG / Material) */
+  .footer-socials a,
+  .social-links-row a {
+    width: 44px;
+    height: 44px;
+  }
+
+  .faq-question-btn {
+    padding: 20px 22px;
+    min-height: 56px;
+  }
+
+  .faq-answer-inner {
+    padding: 0 22px 24px;
+  }
+
+  /* Slider bullets: keep the 12px dot but expand the invisible hit area */
+  .slider-bullet {
+    position: relative;
+  }
+
+  .slider-bullet::after {
+    content: '';
+    position: absolute;
+    inset: -14px;
+  }
+
+  /* Footer: two nav columns instead of three cramped ones, calmer spacing,
+     and clearance for the iOS home indicator */
+  footer.footer-custom {
+    padding-top: 72px;
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+
+  footer.footer-custom .custom-footer-menu>ul>li {
+    flex-basis: 50%;
+    margin-bottom: 44px;
+  }
+
+  footer.footer-custom .footer-logo {
+    margin-bottom: 48px;
+  }
+
+  footer.footer-custom .footer-middle {
+    padding-top: 48px;
+  }
+
+  footer.footer-custom .footer-middle .footer-partners {
+    margin-bottom: 48px;
+  }
+
+  footer.footer-custom .footer-middle .connect {
+    margin-bottom: 56px;
+  }
+
+  /* Full-bleed hero slider text block keeps a comfortable line length */
+  .slide-content-inner {
+    padding: 0 var(--page-gutter);
+  }
+
+  /* ── Featured Results (case study cards) ──
+     The photo wrapper sized itself with percentages against a parent whose
+     height comes from min-height only, so it resolved to 0 and the photo
+     vanished, leaving a 350px void. Pixel heights sidestep that entirely.
+     The desktop 675px container minimum and 88px card gap are also
+     meaningless in a stacked one-column flow. */
+  .casestudy-section {
+    padding: 56px 0;
+  }
+
+  .casestudy-card--container {
+    min-height: 0;
+    margin-bottom: 48px;
+  }
+
+  .casestudy-card--main,
+  .casestudy-card--main-img {
+    height: 350px;
+    min-height: 0;
+  }
+
+  /* ── Footer ──
+     The email address is wider than a half-width column and was overlapping
+     the Navigation links: give Contact its own full row and let any long
+     token wrap instead of colliding with the neighbouring column. */
+  footer.footer-custom .custom-footer-menu>ul>li:first-child {
+    flex-basis: 100%;
+  }
+
+  footer.footer-custom .custom-footer-menu a {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* ── Motion preferences ──
+   Honor "Reduce Motion": kill decorative animation, keep content visible. */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .marquee-track,
+  .animate-marquee {
+    animation: none !important;
+  }
 }

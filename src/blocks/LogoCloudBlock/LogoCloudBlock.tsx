@@ -79,8 +79,8 @@ export const LogoCloudBlock = React.forwardRef<HTMLDivElement, LogoCloudBlockPro
           className="w-full mx-auto"
           style={{
             maxWidth: 1320,
-            paddingLeft: 96,
-            paddingRight: 96,
+            paddingLeft: 'var(--page-gutter)',
+            paddingRight: 'var(--page-gutter)',
           }}
         >
           {/* Intro line */}

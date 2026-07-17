@@ -70,7 +70,9 @@ export function HomeServicesSection() {
               fontSize: '22px',
               fontWeight: 600,
               letterSpacing: '0.05em',
-              lineHeight: 1,
+              /* 1.25 keeps wrapped two-line titles (common on phones) from
+                 touching; visually identical for single-line desktop titles. */
+              lineHeight: 1.25,
               margin: 0,
               color: COLOR_WHITE,
             }}
@@ -284,11 +286,11 @@ export function HomeServicesSection() {
       id="services"
       style={{
         backgroundColor: '#000000',
-        paddingTop: '125px',
       }}
     >
       {/* ── Section Heading ── */}
       <div
+        className="px-6 md:px-[50px]"
         style={{
           color: COLOR_WHITE,
           fontSize: '14px',
@@ -298,7 +300,6 @@ export function HomeServicesSection() {
           lineHeight: 1,
           margin: '0 auto',
           maxWidth: '1140px',
-          padding: '0 50px',
           textTransform: 'uppercase',
           display: 'flex',
           alignItems: 'center',
@@ -331,36 +332,16 @@ export function HomeServicesSection() {
 
       {/* ── Content Container ── */}
       <div style={{ margin: '0 auto', maxWidth: '1140px' }}>
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            padding: '103px 0 147px',
-          }}
-        >
-          {/* Left Column */}
-          <div
-            style={{
-              margin: 0,
-              padding: '0 50px',
-              width: '50%',
-              boxSizing: 'border-box',
-            }}
-          >
+        <div className="flex flex-wrap pt-14 pb-20 md:pt-[103px] md:pb-[147px]">
+          {/* Left Column — full width on phones, half from md up */}
+          <div className="m-0 box-border w-full px-6 md:w-1/2 md:px-[50px]">
             {leftServices.map((service, idx) =>
               renderAccordionItem(service, idx, idx === 0),
             )}
           </div>
 
-          {/* Right Column */}
-          <div
-            style={{
-              margin: 0,
-              padding: '0 50px',
-              width: '50%',
-              boxSizing: 'border-box',
-            }}
-          >
+          {/* Right Column — first item keeps column spacing when stacked */}
+          <div className="m-0 box-border w-full px-6 pt-7 md:w-1/2 md:px-[50px] md:pt-0">
             {rightServices.map((service, idx) =>
               renderAccordionItem(service, idx + leftServices.length, idx === 0),
             )}

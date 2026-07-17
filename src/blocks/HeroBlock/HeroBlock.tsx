@@ -7,16 +7,8 @@ import { motion } from 'framer-motion';
 import { FadeIn, FadeUp, heroMotion } from '@/core/motion';
 import { HeroBlockProps } from './HeroBlock.types';
 
-/**
- * Shared gutter value used by both Header and Hero.
- * Mobile: 40px | Tablet: 64px | Desktop: 80px
- * Applied via inline style to avoid any Tailwind class conflicts.
- */
-const GUTTER = {
-  mobile: 40,
-  tablet: 64,
-  desktop: 120,
-};
+/** Inset of the decorative luxury border frame from the section edges. */
+const FRAME_INSET = 20;
 
 export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
   (
@@ -56,7 +48,7 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
     const renderedVideo = React.isValidElement(media)
       ? React.cloneElement(media as React.ReactElement<any>, {
         ref: videoRef,
-        preload: "auto",
+        preload: "metadata",
         autoPlay: true,
         loop: true,
         muted: true,
@@ -74,7 +66,7 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
       : null;
 
     const boldWhiteStyle: React.CSSProperties = {
-      fontSize: "clamp(3.2rem, 5vw, 5.25rem)",
+      fontSize: "clamp(2.5rem, 4.5vw + 1.5rem, 5.25rem)",
       fontWeight: "800",
       lineHeight: "0.95",
       letterSpacing: "-0.03em",
@@ -85,7 +77,7 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
     };
 
     const regularWhiteStyle: React.CSSProperties = {
-      fontSize: "clamp(1.5rem, 2.2vw, 2.25rem)",
+      fontSize: "clamp(1.25rem, 1.4vw + 0.9rem, 2.25rem)",
       fontWeight: "400",
       lineHeight: "1.3",
       letterSpacing: "-0.01em",
@@ -152,18 +144,18 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
         <div
           className="absolute z-40 pointer-events-none"
           style={{
-            top: GUTTER.mobile / 2,
-            left: GUTTER.mobile / 2,
-            right: GUTTER.mobile / 2,
-            bottom: GUTTER.mobile / 2,
+            top: FRAME_INSET,
+            left: FRAME_INSET,
+            right: FRAME_INSET,
+            bottom: FRAME_INSET,
             border: "1px solid rgba(255,255,255,0.10)",
           }}
         />
 
-        {/* ── ContentLayer ── uses inline paddingLeft to guarantee alignment */}
+        {/* ── ContentLayer ── shares the responsive page gutter with the Header */}
         <div
           className="relative z-30 w-full max-w-[1440px] mx-auto"
-          style={{ paddingLeft: GUTTER.desktop, paddingRight: GUTTER.desktop }}
+          style={{ paddingLeft: 'var(--page-gutter)', paddingRight: 'var(--page-gutter)' }}
         >
           <div
             className={cn("w-full", alignment === 'center' ? "text-center mx-auto" : "text-left")}

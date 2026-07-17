@@ -72,6 +72,21 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
       return () => document.removeEventListener('mousedown', handler);
     }, []);
 
+    // Mobile menu: lock page scroll behind the overlay and close on Escape
+    useEffect(() => {
+      if (!isOpen) return;
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      const onKey = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') setIsOpen(false);
+      };
+      document.addEventListener('keydown', onKey);
+      return () => {
+        document.body.style.overflow = prevOverflow;
+        document.removeEventListener('keydown', onKey);
+      };
+    }, [isOpen]);
+
     const enter = useCallback(() => {
       if (closeTimer.current) clearTimeout(closeTimer.current);
       setDropdownOpen(true);
@@ -138,6 +153,11 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
           isRedHeader
             ? 'border-white/5 shadow-[0_8px_40px_rgba(0,0,0,0.28)]'
             : 'border-transparent shadow-none',
+          /* Scrolling down: slide the whole bar (logo included) out of the way
+             so nothing floats over page content. Never while the mobile menu is
+             open — the transform would create a containing block and drag the
+             fixed overlay off-screen. */
+          isHidden && !isOpen && '-translate-y-full',
           className
         )}
         style={{
@@ -285,14 +305,15 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
             </ul>
           </nav>
 
-          {/* ── Mobile Toggle ── */}
+          {/* ── Mobile Toggle ── 44px hit area per touch-target guidelines */}
           <button
             className={cn(
-              'xl:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-50 transition-opacity duration-300',
+              'xl:hidden flex flex-col justify-center items-center w-11 h-11 -mr-1.5 space-y-1.5 focus:outline-none z-50 transition-opacity duration-300',
               isHidden && !isOpen && 'opacity-0 pointer-events-none'
             )}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
+            aria-expanded={isOpen}
           >
             <span className={cn('block w-6 h-0.5 bg-white transition-transform duration-300', isOpen && 'rotate-45 translate-y-2')} />
             <span className={cn('block w-6 h-0.5 bg-white transition-opacity duration-300', isOpen && 'opacity-0')} />
@@ -300,11 +321,19 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
           </button>
         </div>
 
-        {/* ── Mobile Menu ── */}
+        {/* ── Mobile Menu ── dvh tracks the browser chrome; safe-area keeps the
+            CTA clear of the iOS home indicator; overscroll-contain stops the
+            scroll from chaining to the page behind. */}
         {isOpen && (
           <Box
-            className="fixed inset-0 bg-neutral-950 z-40 xl:hidden flex flex-col h-screen overflow-y-auto"
-            style={{ paddingTop: 96, paddingLeft: 'var(--page-gutter)', paddingRight: 'var(--page-gutter)' }}
+            className="fixed inset-0 bg-neutral-950 z-40 xl:hidden flex flex-col overflow-y-auto overscroll-contain"
+            style={{
+              height: '100dvh',
+              paddingTop: 96,
+              paddingLeft: 'var(--page-gutter)',
+              paddingRight: 'var(--page-gutter)',
+              paddingBottom: 'calc(32px + env(safe-area-inset-bottom))',
+            }}
           >
             <Flex direction="col" gap="md" as="nav">
               {navItems.map((item) => {
@@ -314,7 +343,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                       <div className="flex items-center justify-between w-full">
                         <Link
                           href={item.href}
-                          className="mobile-nav-link font-heading font-bold text-2xl uppercase transition-colors"
+                          className="mobile-nav-link font-heading font-bold text-2xl uppercase transition-colors py-2"
                           onClick={(e) => {
                             setIsOpen(false);
                             setMobileServicesOpen(false);
@@ -362,7 +391,7 @@ export const HeaderBlock = React.forwardRef<HTMLDivElement, HeaderBlockProps>(
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="mobile-nav-link font-heading font-bold text-2xl uppercase transition-colors"
+                    className="mobile-nav-link font-heading font-bold text-2xl uppercase transition-colors py-2"
                     onClick={(e) => {
                       setIsOpen(false);
                       handleLinkClick(e, item.href);
