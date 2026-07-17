@@ -6,10 +6,30 @@ import { Heading, Text } from "@/core/typography";
 import { Button } from "@/core/components";
 import { Reveal } from "@/core/motion";
 
+const CONTACT_EMAIL = "info@gourmetica.co.uk";
+
 export default function GetInTouch() {
+  /* No form backend exists: submitting opens the visitor's email client with a
+     pre-filled message to Gourmetica containing every field they entered. */
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Discovery call form submitted");
+    const form = e.currentTarget;
+    const val = (id: string) =>
+      (form.querySelector<HTMLInputElement | HTMLTextAreaElement>(`#${id}`)?.value ?? "").trim();
+
+    const fullName = `${val("first_name")} ${val("last_name")}`.trim();
+    const subject = `Discovery Call Request — ${fullName}`;
+    const body = [
+      `Name: ${fullName}`,
+      `Email: ${val("email")}`,
+      `Phone: ${val("phone")}`,
+      `Website / Company: ${val("website") || "-"}`,
+      "",
+      "How can we help:",
+      val("message"),
+    ].join("\n");
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   return (

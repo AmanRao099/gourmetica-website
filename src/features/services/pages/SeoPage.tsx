@@ -40,7 +40,7 @@ export function SeoPage() {
   return (
     <ServiceLayout>
       <ServiceImageHero
-        src="/SERVICES BANNER/SEO.png"
+        src="/SERVICES BANNER/SEO.jpg"
         alt="Analysing search performance data on a laptop"
         title="Search Engine Optimisation (SEO)"
         subtitle="Great businesses deserve to be found."

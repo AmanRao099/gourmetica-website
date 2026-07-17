@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Open+Sans:wght@400;500;600&family=Raleway:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+/* Google Fonts load via a parallel <link> in layout.tsx — a CSS @import here
+   would serialize behind this stylesheet and block first paint. */
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -190,10 +191,10 @@ body {
   width: 100%;
   /* clip (not hidden): same horizontal clipping, but doesn't create a scroll
      container — overflow-x: hidden on body disables position: sticky
-     descendants (needed for the /products scroll-pinned video). */
+     descendants (needed for the /tably scroll-pinned video). */
   overflow-x: clip;
   /* No global scroll-behavior: smooth — it animates every wheel tick, which
-     makes scroll-linked effects (the /products video pin) feel laggy. Anchor
+     makes scroll-linked effects (the /tably video pin) feel laggy. Anchor
      jumps that want smoothness use scrollIntoView({ behavior: "smooth" }). */
   background-color: var(--color-white);
   color: var(--color-text-dark);
@@ -925,7 +926,7 @@ a {
   height: 45vh;
   min-height: 350px;
   background-color: var(--color-black);
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85)), url('/images/banner/ChatGPT Image 4 Tem 2026 16_54_25.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85)), url('/images/services/ChatGPT Image 4 Tem 2026 16_54_25.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -1074,7 +1075,7 @@ a {
   height: 45vh;
   min-height: 350px;
   background-color: var(--color-black);
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85)), url('/images/banner/ChatGPT Image 4 Tem 2026 16_54_25.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85)), url('/images/services/ChatGPT Image 4 Tem 2026 16_54_25.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -1192,7 +1193,7 @@ a {
   height: 45vh;
   min-height: 350px;
   background-color: var(--color-black);
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85)), url('/images/banner/ChatGPT Image 4 Tem 2026 16_54_25.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85)), url('/images/services/ChatGPT Image 4 Tem 2026 16_54_25.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -1389,7 +1390,7 @@ a {
   height: 55vh;
   min-height: 400px;
   background-color: var(--color-black);
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85)), url('/images/banner/ChatGPT Image 4 Tem 2026 16_54_25.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85)), url('/images/services/ChatGPT Image 4 Tem 2026 16_54_25.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -1583,7 +1584,7 @@ a {
   height: 45vh;
   min-height: 350px;
   background-color: var(--color-black);
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85)), url('/images/banner/ChatGPT Image 4 Tem 2026 16_54_25.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85)), url('/images/services/ChatGPT Image 4 Tem 2026 16_54_25.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -1706,7 +1707,7 @@ a {
   height: 45vh;
   min-height: 350px;
   background-color: var(--color-black);
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85)), url('/images/banner/ChatGPT Image 4 Tem 2026 16_54_25.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.85)), url('/images/services/ChatGPT Image 4 Tem 2026 16_54_25.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -1841,7 +1842,7 @@ a {
   height: 50vh;
   min-height: 380px;
   background-color: var(--color-black);
-  background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.9)), url('/images/banner/ChatGPT Image 4 Tem 2026 16_54_25.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.9)), url('/images/services/ChatGPT Image 4 Tem 2026 16_54_25.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -2016,7 +2017,7 @@ a {
   height: 50vh;
   min-height: 380px;
   background-color: var(--color-black);
-  background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.9)), url('/images/banner/ChatGPT Image 4 Tem 2026 16_54_25.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.9)), url('/images/services/ChatGPT Image 4 Tem 2026 16_54_25.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -2202,13 +2203,6 @@ a {
 
 .gbd-clone {
   --case-accent-bg: #8b1e1e;
-}
-
-/* The GBD banner is a 2:1 website mockup, not a portrait photo. At the default
-   100vh a `cover` background crops its sides and cuts off the headline, so the
-   hero is shortened here to match the artwork's proportions. */
-.gbd-clone .case-clone-hero {
-  height: 62vh;
 }
 
 .case-clone-row-content a {
@@ -3814,10 +3808,6 @@ video {
   .case-clone-hero {
     height: 100svh;
   }
-
-  .gbd-clone .case-clone-hero {
-    height: 62svh;
-  }
 }
 
 /* ── Fluid headline scale ──
@@ -3967,6 +3957,55 @@ video {
   footer.footer-custom .custom-footer-menu a {
     overflow-wrap: anywhere;
   }
+}
+
+/* ── Hero entrance (CSS, not JS) ──
+   The hero headline is the page's LCP element. A JS-driven entrance keeps it
+   at opacity 0 until the bundle downloads and hydrates — seconds of render
+   delay on mobile. This CSS animation is visually identical but starts
+   painting with the initial HTML. */
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(var(--hero-y, 16px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-fade-up {
+  opacity: 0;
+  animation: hero-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Headline variant: movement only, never transparent. The H1 is the LCP
+   element — starting it at opacity 0 pushes LCP out by the entire animation
+   delay, so it must be paintable from the first frame. */
+@keyframes hero-rise {
+  from {
+    transform: translateY(var(--hero-y, 16px));
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.hero-rise {
+  animation: hero-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* ── Rendering performance ──
+   Below-fold heavyweight sections skip layout/paint until scrolled near;
+   contain-intrinsic-size reserves approximate space so the scrollbar stays
+   stable. (Not applied to #services — it's a scroll-anchor target.) */
+.casestudy-section,
+footer.footer-custom {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }
 
 /* ── Motion preferences ──

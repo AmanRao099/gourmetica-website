@@ -21,14 +21,14 @@ const sliderSlides = [
     tag: "Case Study",
     excerpt: "Neatly designed website architectures, captivating landing pages, chic and simple designs. Our website designs will hand you the keys to ultimate success, higher conversion rates, increased sales, and impressed visitors by applying your marketing strategies into a web design.",
     image: "/images/results/LEONIDAS/IMG_8786.jpg",
-    link: "/results/swiss-scent"
+    link: "/results/leonidas"
   },
   {
-    title: "Digital Strategy",
+    title: "Performance Marketing",
     tag: "Case Study",
     excerpt: "Rest assured, your brand's digital success is our top priority. Let our expert team be your guiding light on the journey towards digital excellence. With Gourmetica by your side, you can trust that your digital presence is in the hands of skilled professionals.",
     image: "/images/results/swiss-scent-ref/_GN_3635.jpg",
-    link: "/results/leonidas"
+    link: "/results/swiss-scent"
   }
 ];
 
@@ -74,7 +74,7 @@ export default function Home() {
             </div>
             <div className="opening-remark-img">
               <img
-                src="/HOME PAGE/Photo Banner/ChatGPT Image 4 Tem 2026 11_15_58.png"
+                src="/HOME PAGE/Photo Banner/ChatGPT Image 4 Tem 2026 11_15_58.jpg"
                 alt="Strategy Banner"
                 loading="lazy"
                 width={1672}
@@ -106,7 +106,7 @@ export default function Home() {
               >
                 <div className="casestudy-card--main">
                   <div className="casestudy-card--main-img">
-                    <img src={study.image} alt={study.title} />
+                    <img src={study.image} alt={study.title} loading="lazy" decoding="async" />
                   </div>
                   <div className="casestudy-card--main-text">
                     <Link className="read-case-study" href={study.link}>

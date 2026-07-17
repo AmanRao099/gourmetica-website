@@ -31,7 +31,7 @@ const SERVICES = getServiceNavItems();
    ─────────────────────────────────────────── */
 const defaultNavItems: NavItem[] = [
   { label: 'Services', href: '/#services' },
-  { label: 'Products', href: '/products' },
+  { label: 'Products', href: '/tably' },
   { label: 'Work', href: '/results' },
   { label: 'About Us', href: '/aboutus' },
   { label: 'Clients', href: '/clients' },

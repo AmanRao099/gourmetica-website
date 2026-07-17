@@ -70,6 +70,8 @@ export default function ClientsShowcase() {
                     <img
                       src={`/images/clients/${client.logo}`}
                       alt={`${client.name} Logo`}
+                      loading="lazy"
+                      decoding="async"
                       className={`max-h-[75%] max-w-[85%] object-contain transition-all duration-300 group-hover:scale-105 ${logoFilterClass}`}
                     />
                   </Flex>

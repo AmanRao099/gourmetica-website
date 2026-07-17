@@ -18,7 +18,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     title: "SWISS SCENT",
     excerpt: "Swiss Scent B2B platform needed a scalable digital system capable of managing fragrances, inventory, B2B account orders, and operations.",
-    image: "/images/services/ChatGPT Image 4 Tem 2026 16_58_47.png",
+    image: "/images/services/ChatGPT Image 4 Tem 2026 16_58_47.jpg",
     link: "/results/swiss-scent"
   },
   {
@@ -278,7 +278,7 @@ export const CASE_STUDY_DETAILS: Record<string, CaseStudyDetail> = {
       { label: "SME Reach", val: "15k+ business owners" }
     ],
     gallery: [
-      "/images/results/PHOENIX/6.png",
+      "/images/results/PHOENIX/6.jpg",
       "/images/results/PHOENIX/7.png"
     ],
     servicesDelivered: [
@@ -291,7 +291,7 @@ export const CASE_STUDY_DETAILS: Record<string, CaseStudyDetail> = {
   },
   "great-british-doner": {
     title: "GREAT BRITISH DONER",
-    banner: "/images/results/GBD/8.jpg",
+    banner: "/images/banner/gbd-banner.jpeg",
     scope: ["Responsive Website Design", "Multi-Location Navigation Map", "Social Media Management", "Google Ads Setup", "Meta Ads Management", "Content Creation"],
     websiteUrl: "https://gbddoner.com/",
     overview: "Great British Doner is a fast-growing multi-location restaurant brand redefining modern street food across the UK. As the business continued to expand, the brand required a scalable digital presence capable of supporting customer acquisition, franchise growth and consistent brand communication across multiple locations.\n\nGourmetica partnered with Great British Doner to design and develop a modern, high-performance website while delivering an integrated digital marketing strategy. Through ongoing social media management, Google Ads and Meta advertising, we continue to strengthen the brand's online visibility, drive customer acquisition and support its long-term expansion strategy.",
@@ -303,7 +303,7 @@ export const CASE_STUDY_DETAILS: Record<string, CaseStudyDetail> = {
       { label: "Foot Traffic Growth", val: "+45% per venue" }
     ],
     gallery: [
-      "/images/results/GBD/ChatGPT Image 24 May 2026 23_05_39 (1).png",
+      "/images/results/GBD/ChatGPT Image 24 May 2026 23_05_39 (1).jpg",
       "/images/results/GBD/_DSF8945 kopya.jpg"
     ],
     servicesDelivered: [

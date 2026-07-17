@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Script from "next/script";
 import { HeaderBlock, FooterBlock } from "@/blocks";
+import DeferredStyles from "./components/DeferredStyles";
 
 const montFont = localFont({
   src: [
@@ -70,23 +71,22 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* FontAwesome Link */}
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
+        {/* Google Fonts + FontAwesome load post-hydration via <DeferredStyles />.
+            The headline font (Eina) is self-hosted through next/font, so first
+            paint keeps the brand type; body text swaps in when the CSS lands. */}
       </head>
       {/* suppressHydrationWarning: browser extensions (e.g. Grammarly) inject
           attributes onto <body> before React hydrates, producing a false
           hydration-mismatch warning. Only this element's attributes are
           exempted — child markup is still fully checked. */}
       <body className={montFont.className} suppressHydrationWarning>
-        {/* Google tag (gtag.js) */}
-        <Script 
+        {/* Google tag (gtag.js) — lazyOnload keeps analytics off the critical
+            path so it never competes with hydration */}
+        <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XRCVNK07NE"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -95,6 +95,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           `}
         </Script>
         
+        <DeferredStyles />
         <HeaderBlock />
         {children}
         <FooterBlock />

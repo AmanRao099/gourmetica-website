@@ -4,8 +4,15 @@ import * as React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { cn } from '@/core/utils';
 import { motion } from 'framer-motion';
-import { FadeIn, FadeUp, heroMotion } from '@/core/motion';
+import { heroMotion } from '@/core/motion';
 import { HeroBlockProps } from './HeroBlock.types';
+
+/* CSS-driven entrance (see .hero-fade-up in globals.css): the hero headline is
+   the LCP element, so its animation must not wait for JS hydration. */
+const fadeUp = (delay: number, y = 0): React.CSSProperties => ({
+  animationDelay: `${delay}s`,
+  ['--hero-y' as string]: `${y}px`,
+});
 
 /** Inset of the decorative luxury border frame from the section edges. */
 const FRAME_INSET = 20;
@@ -27,12 +34,21 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
     ref
   ) => {
     const [shouldZoom, setShouldZoom] = useState(false);
+    /* The video is deferred off the critical path: a 60KB poster frame paints
+       immediately (it is the LCP element), and the multi-MB video only mounts
+       once the browser is idle after load. */
+    const [showVideo, setShowVideo] = useState(false);
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
     useEffect(() => {
-      // Force play on mount for browsers that block autoplay
-      if (videoRef.current && typeof videoRef.current.play === 'function') {
-        videoRef.current.play().catch(() => { });
+      const start = () => {
+        const idle = (window as any).requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 200));
+        idle(() => setShowVideo(true));
+      };
+      if (document.readyState === 'complete') {
+        start();
+      } else {
+        window.addEventListener('load', start, { once: true });
       }
 
       const zoomTimer = setTimeout(() => {
@@ -40,9 +56,17 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
       }, 1200);
 
       return () => {
+        window.removeEventListener('load', start);
         clearTimeout(zoomTimer);
       };
     }, []);
+
+    useEffect(() => {
+      // Force play on mount for browsers that block autoplay
+      if (showVideo && videoRef.current && typeof videoRef.current.play === 'function') {
+        videoRef.current.play().catch(() => { });
+      }
+    }, [showVideo]);
 
     // Clone the video element with proper attributes
     const renderedVideo = React.isValidElement(media)
@@ -59,7 +83,8 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
           ...((media.props as any).style || {})
         },
         className: cn(
-          "w-full h-full object-cover",
+          // absolute: must stack above the absolutely-positioned poster frame
+          "absolute inset-0 w-full h-full object-cover",
           (media.props as any).className
         )
       })
@@ -97,7 +122,7 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
         )}
         {...props}
       >
-        {/* ── BackgroundLayer ── video only, no fallback image */}
+        {/* ── BackgroundLayer ── instant poster frame, video swaps in when idle */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <motion.div
             className="w-full h-full"
@@ -105,21 +130,28 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
             animate={shouldZoom ? { scale: 1.00 } : { scale: 1.06 }}
             transition={{ duration: heroMotion.duration.zoom, ease: "linear" }}
           >
-            {renderedVideo}
+            <img
+              src="/HOME PAGE/VIDEO BANNER/hero-poster.jpg"
+              alt=""
+              aria-hidden
+              fetchPriority="high"
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{
+                objectPosition: "65% center",
+                filter: "brightness(0.68) contrast(0.95) saturate(0.82) grayscale(0.05)",
+              }}
+            />
+            {showVideo && renderedVideo}
           </motion.div>
 
           {/* Left-to-right dark gradient overlay */}
-          <FadeIn
-            delay={heroMotion.delay.overlay}
-            duration={heroMotion.duration.fade}
-            viewport={{ once: true, margin: "200px" }}
-            className="absolute inset-0 z-10"
+          <div
+            className="hero-fade-up absolute inset-0 z-10"
             style={{
+              ...fadeUp(heroMotion.delay.overlay),
               background: "linear-gradient(90deg, rgba(9,9,11,.92) 0%, rgba(9,9,11,.82) 20%, rgba(9,9,11,.64) 40%, rgba(9,9,11,.36) 60%, rgba(9,9,11,.12) 80%, rgba(9,9,11,.00) 100%)"
             }}
-          >
-            <div className="w-full h-full" />
-          </FadeIn>
+          />
 
           {/* Radial vignette */}
           <div
@@ -164,41 +196,41 @@ export const HeroBlock = React.forwardRef<HTMLDivElement, HeroBlockProps>(
             {title ? (
               <>
                 {subtitle && (
-                  <FadeUp delay={heroMotion.delay.heading1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading1} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 12 }}>
+                  <div className="hero-fade-up" style={{ ...fadeUp(heroMotion.delay.heading1, heroMotion.yOffset.heading1), marginBottom: 12 }}>
                     <span style={regularWhiteStyle}>{subtitle}</span>
-                  </FadeUp>
+                  </div>
                 )}
-                <FadeUp delay={heroMotion.delay.heading2} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading2} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 20 }}>
+                <div className="hero-rise" style={{ ...fadeUp(heroMotion.delay.heading2, heroMotion.yOffset.heading2), marginBottom: 20 }}>
                   <h1 style={boldWhiteStyle}>{title}</h1>
-                </FadeUp>
+                </div>
                 {description && (
-                  <FadeUp delay={heroMotion.delay.heading3} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading3} viewport={{ once: true, margin: "200px" }}>
+                  <div className="hero-fade-up" style={fadeUp(heroMotion.delay.heading3, heroMotion.yOffset.heading3)}>
                     <p style={regularWhiteStyle}>{description}</p>
-                  </FadeUp>
+                  </div>
                 )}
                 {actions && (
-                  <FadeUp delay={heroMotion.delay.heading3 + 0.1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading3} viewport={{ once: true, margin: "200px" }}>
+                  <div className="hero-fade-up" style={fadeUp(heroMotion.delay.heading3 + 0.1, heroMotion.yOffset.heading3)}>
                     <div className="mt-8">{actions}</div>
-                  </FadeUp>
+                  </div>
                 )}
               </>
             ) : (
               <>
-                <FadeUp delay={heroMotion.delay.heading1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading1} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 12 }}>
+                <div className="hero-rise" style={{ ...fadeUp(heroMotion.delay.heading1, heroMotion.yOffset.heading1), marginBottom: 12 }}>
                   <span style={boldWhiteStyle}>Growth</span>
-                </FadeUp>
-                <FadeUp delay={heroMotion.delay.heading1 + 0.1} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading1} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 12 }}>
+                </div>
+                <div className="hero-rise" style={{ ...fadeUp(heroMotion.delay.heading1 + 0.1, heroMotion.yOffset.heading1), marginBottom: 12 }}>
                   <span style={boldWhiteStyle}>Marketing</span>
-                </FadeUp>
-                <FadeUp delay={heroMotion.delay.heading2} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading2} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 12 }}>
+                </div>
+                <div className="hero-rise" style={{ ...fadeUp(heroMotion.delay.heading2, heroMotion.yOffset.heading2), marginBottom: 12 }}>
                   <span style={boldWhiteStyle}>That</span>
-                </FadeUp>
-                <FadeUp delay={heroMotion.delay.heading2 + 0.15} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading2} viewport={{ once: true, margin: "200px" }} style={{ marginBottom: 32 }}>
+                </div>
+                <div className="hero-rise" style={{ ...fadeUp(heroMotion.delay.heading2 + 0.15, heroMotion.yOffset.heading2), marginBottom: 32 }}>
                   <span style={boldWhiteStyle}>Delivers</span>
-                </FadeUp>
-                <FadeUp delay={heroMotion.delay.heading3} duration={heroMotion.duration.fade} yOffset={heroMotion.yOffset.heading3} viewport={{ once: true, margin: "200px" }}>
+                </div>
+                <div className="hero-fade-up" style={fadeUp(heroMotion.delay.heading3, heroMotion.yOffset.heading3)}>
                   <span style={regularWhiteStyle}>For Ambitious Brands.</span>
-                </FadeUp>
+                </div>
               </>
             )}
           </div>

@@ -37,7 +37,7 @@ export function AdvertisingPage() {
   return (
     <ServiceLayout>
       <ServiceImageHero
-        src="/SERVICES BANNER/Advertising.png"
+        src="/SERVICES BANNER/Advertising.jpg"
         alt="Advertising performance dashboard on a laptop"
         title="Advertising"
         subtitle="Performance-driven advertising that delivers measurable growth."

@@ -43,7 +43,7 @@ export default function SwissScentCaseStudy() {
           <img src="/images/results/swiss-scent-ref/swisssent2.png" alt="" style={{ width: "100%" }} />
         </div>
         <div>
-          <img src="/images/results/swiss-scent-ref/swisssent3.png" alt="" style={{ width: "95%" }} />
+          <img src="/images/results/swiss-scent-ref/swisssent3.jpg" alt="" style={{ width: "95%" }} />
         </div>
       </div>
 
@@ -107,7 +107,7 @@ export default function SwissScentCaseStudy() {
       </section>
 
       <div className="case-clone-image-block">
-        <img src="/images/results/swiss-scent-ref/swisssent4.png" alt="" />
+        <img src="/images/results/swiss-scent-ref/swisssent4.jpg" alt="" />
       </div>
 
       <section className="case-clone-row" style={{ marginTop: "50px" }}>

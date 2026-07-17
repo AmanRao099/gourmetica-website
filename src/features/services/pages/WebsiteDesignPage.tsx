@@ -45,7 +45,7 @@ export function WebsiteDesignPage() {
   return (
     <ServiceLayout>
       <ServiceImageHero
-        src="/SERVICES BANNER/Website Design.png"
+        src="/SERVICES BANNER/Website Design.jpg"
         alt="Website design and development workspace"
         title="Website Design and Development"
         align="left"

@@ -21,7 +21,7 @@ export default function WorkIndex() {
       <section className="relative w-full h-[420px] md:h-[520px] lg:h-[600px] overflow-hidden bg-black">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/SERVICES BANNER/Advertising.png"
+          src="/SERVICES BANNER/Advertising.jpg"
           alt="Advertising performance dashboard on a laptop"
           className="absolute inset-0 w-full h-full object-cover"
         />

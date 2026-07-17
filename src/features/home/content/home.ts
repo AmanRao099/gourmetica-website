@@ -35,7 +35,7 @@ export const homeContent = {
     description: "We help hospitality brands strengthen their digital presence, generate qualified leads, and achieve sustainable growth.",
     layout: "image-background" as const,
     backgroundImage: "/HOME%20PAGE/VIDEO%20BANNER/0704.mp4", // Or a fallback image if video is not supported, but HeroBlock uses an image url. We can pass a video poster or an image. Let's pass a placeholder image since HeroBlock only supports images.
-    primaryAction: { label: "Book A Call", href: "/getintouch" },
+    primaryAction: { label: "Book A Call", href: "mailto:info@gourmetica.co.uk" },
     secondaryAction: { label: "View Results", href: "/results" },
   },
   logoCloud: {
@@ -68,7 +68,7 @@ export const homeContent = {
       {
         title: "Tailor-Made Strategies. Measurable Growth.",
         description: "At Gourmetica, we don't believe in generic marketing. Every strategy we develop is built around your objectives, your market, and your ambitions. Combining strategy, creativity, and technology, we help brands strengthen their digital presence, generate qualified leads, and achieve sustainable growth.",
-        image: "/images/banner/ChatGPT Image 4 Tem 2026 11_15_58.png",
+        image: "/images/banner/ChatGPT Image 4 Tem 2026 11_15_58.jpg",
       }
     ]
   },
@@ -123,7 +123,7 @@ export const homeContent = {
   cta: {
     title: "Ready to grow your business?",
     description: "Let's discuss your goals and build a marketing strategy that delivers measurable results.",
-    primaryAction: { label: "Book A Call Now", href: "/getintouch" },
+    primaryAction: { label: "Book A Call Now", href: "mailto:info@gourmetica.co.uk" },
     theme: "brand" as const
   }
 };
