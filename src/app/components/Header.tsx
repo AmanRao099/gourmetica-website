@@ -52,7 +52,7 @@ export default function Header() {
               <Link href="/results" role="menuitem" onClick={() => setIsOpen(false)}>Results</Link>
             </li>
             <li className="nav-item" role="none">
-              <Link href="/tably" role="menuitem" onClick={() => setIsOpen(false)}>Products</Link>
+              <Link href="/tably" role="menuitem" onClick={() => setIsOpen(false)}>Product</Link>
             </li>
             <li className="nav-item" role="none">
               <Link href="/aboutus" role="menuitem" onClick={() => setIsOpen(false)}>About Us</Link>
