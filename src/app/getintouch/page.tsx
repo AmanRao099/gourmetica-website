@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { FormEvent } from "react";
 import { Section, Container, Grid, Box, Stack, Flex } from "@/core/primitives";
 import { Heading, Text } from "@/core/typography";
@@ -9,27 +10,44 @@ import { Reveal } from "@/core/motion";
 const CONTACT_EMAIL = "info@gourmetica.co.uk";
 
 export default function GetInTouch() {
-  /* No form backend exists: submitting opens the visitor's email client with a
-     pre-filled message to Gourmetica containing every field they entered. */
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setStatus("submitting");
+
     const form = e.currentTarget;
     const val = (id: string) =>
       (form.querySelector<HTMLInputElement | HTMLTextAreaElement>(`#${id}`)?.value ?? "").trim();
 
-    const fullName = `${val("first_name")} ${val("last_name")}`.trim();
-    const subject = `Discovery Call Request — ${fullName}`;
-    const body = [
-      `Name: ${fullName}`,
-      `Email: ${val("email")}`,
-      `Phone: ${val("phone")}`,
-      `Website / Company: ${val("website") || "-"}`,
-      "",
-      "How can we help:",
-      val("message"),
-    ].join("\n");
+    const data = {
+      name: `${val("first_name")} ${val("last_name")}`.trim(),
+      email: val("email"),
+      phone: val("phone"),
+      website: val("website") || "-",
+      message: val("message"),
+      _subject: `Discovery Call Request — ${`${val("first_name")} ${val("last_name")}`.trim()}`,
+    };
 
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        form.reset();
+      } else {
+        setStatus("error");
+      }
+    } catch (err) {
+      setStatus("error");
+    }
   };
 
   return (
@@ -146,84 +164,123 @@ export default function GetInTouch() {
             <Box className="lg:col-span-7">
               <Reveal delay={0.1}>
                 <Box className="bg-white border border-neutral-200/60 p-8 rounded-md shadow-sm">
-                  <Heading level={3} size="heading-md" className="mb-2">
-                    Schedule A Consultation
-                  </Heading>
-                  <Text size="body-sm" className="text-neutral-500 mb-8">
-                    Provide your details below and a strategist will connect within 24 hours.
-                  </Text>
+                  {status === "success" ? (
+                    <Box className="text-center py-12">
+                      <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+                        <i className="fa fa-check" aria-hidden="true"></i>
+                      </div>
+                      <Heading level={3} size="heading-md" className="mb-3 text-neutral-900">
+                        Request Received!
+                      </Heading>
+                      <Text size="body" className="text-neutral-600 max-w-md mx-auto leading-relaxed">
+                        Thank you for booking a call. A Gourmetica growth strategist will connect with you within 24 hours.
+                      </Text>
+                      <Button 
+                        onClick={() => setStatus("idle")} 
+                        className="mt-8 bg-neutral-900 hover:bg-neutral-800 text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto"
+                      >
+                        Submit Another Request
+                      </Button>
+                    </Box>
+                  ) : (
+                    <>
+                      <Heading level={3} size="heading-md" className="mb-2">
+                        Schedule A Consultation
+                      </Heading>
+                      <Text size="body-sm" className="text-neutral-500 mb-8">
+                        Provide your details below and a strategist will connect within 24 hours.
+                      </Text>
 
-                  <form className="space-y-6" onSubmit={handleSubmit}>
-                    <Grid columns={1} gap="md" className="sm:grid-cols-2">
-                      <Stack gap="xs">
-                        <label htmlFor="first_name" className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-700">First Name *</label>
-                        <input 
-                          type="text" 
-                          id="first_name" 
-                          required 
-                          placeholder="John" 
-                          className="border border-neutral-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all rounded-sm px-4 py-3 w-full bg-stone/20 text-neutral-800 placeholder-neutral-400 font-body text-sm font-semibold"
-                        />
-                      </Stack>
-                      <Stack gap="xs">
-                        <label htmlFor="last_name" className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-700">Last Name *</label>
-                        <input 
-                          type="text" 
-                          id="last_name" 
-                          required 
-                          placeholder="Doe" 
-                          className="border border-neutral-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all rounded-sm px-4 py-3 w-full bg-stone/20 text-neutral-800 placeholder-neutral-400 font-body text-sm font-semibold"
-                        />
-                      </Stack>
-                    </Grid>
+                      {status === "error" && (
+                        <div className="p-4 bg-red-50 text-red-700 text-sm rounded-sm font-semibold mb-6 flex items-center gap-2">
+                          <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                          <span>Something went wrong. Please try again or email us directly at info@gourmetica.co.uk.</span>
+                        </div>
+                      )}
 
-                    <Stack gap="xs">
-                      <label htmlFor="email" className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-700">Email Address *</label>
-                      <input 
-                        type="email" 
-                        id="email" 
-                        required 
-                        placeholder="john.doe@company.com" 
-                        className="border border-neutral-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all rounded-sm px-4 py-3 w-full bg-stone/20 text-neutral-800 placeholder-neutral-400 font-body text-sm font-semibold"
-                      />
-                    </Stack>
+                      <form className="space-y-6" onSubmit={handleSubmit}>
+                        <Grid columns={1} gap="md" className="sm:grid-cols-2">
+                          <Stack gap="xs">
+                            <label htmlFor="first_name" className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-700">First Name *</label>
+                            <input 
+                              type="text" 
+                              id="first_name" 
+                              name="first_name"
+                              required 
+                              placeholder="John" 
+                              className="border border-neutral-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all rounded-sm px-4 py-3 w-full bg-stone/20 text-neutral-800 placeholder-neutral-400 font-body text-sm font-semibold"
+                            />
+                          </Stack>
+                          <Stack gap="xs">
+                            <label htmlFor="last_name" className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-700">Last Name *</label>
+                            <input 
+                              type="text" 
+                              id="last_name" 
+                              name="last_name"
+                              required 
+                              placeholder="Doe" 
+                              className="border border-neutral-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all rounded-sm px-4 py-3 w-full bg-stone/20 text-neutral-800 placeholder-neutral-400 font-body text-sm font-semibold"
+                            />
+                          </Stack>
+                        </Grid>
 
-                    <Stack gap="xs">
-                      <label htmlFor="phone" className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-700">Phone Number *</label>
-                      <input 
-                        type="tel" 
-                        id="phone" 
-                        required 
-                        placeholder="+44 7123 456789" 
-                        className="border border-neutral-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all rounded-sm px-4 py-3 w-full bg-stone/20 text-neutral-800 placeholder-neutral-400 font-body text-sm font-semibold"
-                      />
-                    </Stack>
+                        <Stack gap="xs">
+                          <label htmlFor="email" className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-700">Email Address *</label>
+                          <input 
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            required 
+                            placeholder="john.doe@company.com" 
+                            className="border border-neutral-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all rounded-sm px-4 py-3 w-full bg-stone/20 text-neutral-800 placeholder-neutral-400 font-body text-sm font-semibold"
+                          />
+                        </Stack>
 
-                    <Stack gap="xs">
-                      <label htmlFor="website" className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-700">Website / Company name</label>
-                      <input 
-                        type="text" 
-                        id="website" 
-                        placeholder="www.mybusiness.com" 
-                        className="border border-neutral-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all rounded-sm px-4 py-3 w-full bg-stone/20 text-neutral-800 placeholder-neutral-400 font-body text-sm font-semibold"
-                      />
-                    </Stack>
+                        <Stack gap="xs">
+                          <label htmlFor="phone" className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-700">Phone Number *</label>
+                          <input 
+                            type="tel" 
+                            id="phone" 
+                            name="phone"
+                            required 
+                            placeholder="+44 7123 456789" 
+                            className="border border-neutral-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all rounded-sm px-4 py-3 w-full bg-stone/20 text-neutral-800 placeholder-neutral-400 font-body text-sm font-semibold"
+                          />
+                        </Stack>
 
-                    <Stack gap="xs">
-                      <label htmlFor="message" className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-700">How can we help your business? *</label>
-                      <textarea 
-                        id="message" 
-                        rows={5} 
-                        required 
-                        placeholder="Tell us about your business goals, current bottlenecks, and what services you are interested in..."
-                        className="border border-neutral-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all rounded-sm px-4 py-3 w-full bg-stone/20 text-neutral-800 placeholder-neutral-400 font-body text-sm font-semibold resize-none"
-                      />
-                    </Stack>
+                        <Stack gap="xs">
+                          <label htmlFor="website" className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-700">Website / Company name</label>
+                          <input 
+                            type="text" 
+                            id="website" 
+                            name="website"
+                            placeholder="www.mybusiness.com" 
+                            className="border border-neutral-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all rounded-sm px-4 py-3 w-full bg-stone/20 text-neutral-800 placeholder-neutral-400 font-body text-sm font-semibold"
+                          />
+                        </Stack>
 
-                    <Button type="submit" className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto w-full">
-                      Book A Call
-                    </Button>
-                  </form>
+                        <Stack gap="xs">
+                          <label htmlFor="message" className="font-heading font-bold text-xs uppercase tracking-wider text-neutral-700">How can we help your business? *</label>
+                          <textarea 
+                            id="message" 
+                            name="message"
+                            rows={5} 
+                            required 
+                            placeholder="Tell us about your business goals, current bottlenecks, and what services you are interested in..."
+                            className="border border-neutral-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all rounded-sm px-4 py-3 w-full bg-stone/20 text-neutral-800 placeholder-neutral-400 font-body text-sm font-semibold resize-none"
+                          />
+                        </Stack>
+
+                        <Button 
+                          type="submit" 
+                          disabled={status === "submitting"}
+                          className="bg-primary hover:bg-[#bd1a1d] text-white rounded-none px-[22px] pt-[15px] pb-[13px] font-bold uppercase tracking-[0.05em] text-[12px] h-auto w-full disabled:opacity-50"
+                        >
+                          {status === "submitting" ? "Sending..." : "Book A Call"}
+                        </Button>
+                      </form>
+                    </>
+                  )}
                 </Box>
               </Reveal>
             </Box>
