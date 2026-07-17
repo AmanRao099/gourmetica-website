@@ -7,7 +7,7 @@ import { Heading, Text } from "@/core/typography";
 import { Button } from "@/core/components";
 import { Reveal } from "@/core/motion";
 
-const CONTACT_EMAIL = "nikhjilbajantri86@gmail.com";
+const CONTACT_EMAIL = "info@gourmetica.co.uk";
 
 export default function GetInTouch() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
