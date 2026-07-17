@@ -183,7 +183,7 @@ function Blob({ className }: { className: string }) {
   );
 }
 
-export default function Products() {
+export default function TablyPage() {
   const trustClients = TRUST_BRAND_NAMES
     .map((name) => CLIENTS.find((c) => c.name === name))
     .filter((c): c is NonNullable<typeof c> => Boolean(c));
