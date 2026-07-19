@@ -95,7 +95,7 @@ export const FooterBlock = React.forwardRef<HTMLDivElement, FooterBlockProps>(
 
             {/* Copyright Site Info */}
             <div className="site-info">
-              <p>Copyright &copy; 2024 Gourmetica All rights reserved.</p>
+              <p>Copyright &copy; 2026 Gourmetica All rights reserved.</p>
               <p>
                 Gourmetica is a brand of Ozkaya Engineering and Consultancy Ltd, <br />
                 Ozkaya Engineering and Consultancy Ltd (t/a Gourmetica) - Registered in England No. 13509943

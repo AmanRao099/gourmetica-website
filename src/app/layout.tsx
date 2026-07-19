@@ -28,6 +28,7 @@ const montFont = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://gourmetica.co.uk"),
   title: {
     default: "Gourmetica | Growth Marketing Agency",
     template: "%s | Gourmetica"

@@ -124,7 +124,7 @@ export const ALL_CASE_STUDIES: ExtendedCaseStudy[] = [
     slug: "great-british-doner",
     title: "Great British Doner",
     category: "Multi-Location & Franchise",
-    image: "/images/results/GBD/download.jpg",
+    image: "/images/banner/gbd-banner.jpeg",
     excerpt: "Supporting franchise expansion and local location acquisition for Great British Doner through custom web development and social campaigns."
   }
 ];
