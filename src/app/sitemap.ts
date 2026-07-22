@@ -3,6 +3,9 @@ import { ALL_CASE_STUDIES } from "@/constants/results";
 import { ARTICLES } from "@/constants/articles";
 import { getServiceSlugs } from "@/features/services/repositories/service.repository";
 
+// Required by `output: 'export'` — metadata routes must be emitted as files.
+export const dynamic = "force-static";
+
 const BASE_URL = "https://gourmetica.co.uk";
 
 export default function sitemap(): MetadataRoute.Sitemap {
