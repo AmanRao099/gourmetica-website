@@ -17,6 +17,9 @@ import { Typewriter } from "./Typewriter";
 
 const TRUST_BRAND_NAMES = ["Ivy Tree", "Otto Kitchen", "Rustiq"];
 
+/* Single word — typed, held, deleted, retyped in the two-column headline. */
+const VENUE_WORDS = ["restaurant"];
+
 const FEATURES = [
   {
     title: "Launch Your Website in Days",
@@ -34,10 +37,6 @@ const FEATURES = [
     image: "/product/card3.jpg",
   },
 ];
-
-/* Venue words cycled in the two-column headline — same device as the
-   benchmark title the client pointed to. */
-const VENUE_WORDS = ["restaurant", "pub", "cafe"];
 
 /**
  * Product video with a scroll-driven expansion: pinned while in view, it
