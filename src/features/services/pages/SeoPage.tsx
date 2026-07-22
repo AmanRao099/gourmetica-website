@@ -2,7 +2,6 @@ import { PageContainer } from '@/core/primitives';
 import { ServiceLayout } from '../layouts/ServiceLayout';
 import { ServiceImageHero } from '../components/ServiceImageHero';
 import { SplitBackgroundBlock } from '@/blocks';
-import { ServiceBodyImage } from '../components/ServiceBodyImage';
 import { ServiceSectionHeading } from '../components/ServiceSectionHeading';
 import { ServiceBodyText } from '../components/ServiceBodyText';
 import { ServiceFeatureListGrid } from '../components/ServiceFeatureListGrid';
@@ -48,9 +47,6 @@ export function SeoPage() {
       <SplitBackgroundBlock>
         <PageContainer size="standard" className="pb-[60px] md:pb-[80px]">
           <ServiceBodyText paragraphs={INTRO_PARAGRAPHS} />
-        </PageContainer>
-        <PageContainer size="standard" className="pb-[60px] md:pb-[80px]">
-          <ServiceBodyImage src="/images/services-ref/seo/bannerseo.jpg.png" alt="Google search results mockup" maxWidth={999} />
         </PageContainer>
         <PageContainer size="standard" className="pb-[60px] md:pb-[80px] flex flex-col gap-6">
           <ServiceSectionHeading heading="Gain long Terms Success through our proven SEO expertise" />

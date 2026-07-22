@@ -35,7 +35,7 @@ export function BrandingPage() {
       <ServiceImageHero
         src="/SERVICES BANNER/Branding.jpg"
         alt="Brand identity moodboard being designed on a laptop"
-        title="Restaurant Branding"
+        title="Branding"
         subtitle="Be the best choice for your customers - every time. A memorable logo and consistent branding are keys to getting inside customers' minds and staying there."
       />
       <SplitBackgroundBlock>
